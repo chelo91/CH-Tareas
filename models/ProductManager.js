@@ -11,6 +11,6 @@ export default class ProductManager {
         this.arrayProduct.push(product);
     }
     getProductById(id) {
-        return this.arrayProduct.find(product => product.id === id)
+        return this.arrayProduct.find(product => product.getId() === id)
     }
 }
