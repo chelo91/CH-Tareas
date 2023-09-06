@@ -20,8 +20,17 @@ const product2 = {
     stock: 20,
 };
 
-productManager.addProduct(product);
-productManager.addProduct(product2);
+const product3 = {
+    title: 'producto prueba4',
+    description: 'Este es un producto prueba4',
+    price: 100,
+    thumbnail: 'Sin imagen',
+    code: 'abc123',
+    stock: 20,
+};
+console.log(productManager.addProduct(product));
+console.log(productManager.addProduct(product2));
+console.log(productManager.addProduct(product3));
 console.log("Obtenemos productos ");
 console.log(productManager);
 

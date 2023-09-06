@@ -6,12 +6,19 @@ export default class ProductManager {
     get getProducts() {
         return this.arryProduct
     }
-    addProduct(product) {
-        product.id = this.nextProductId;
-        this.arrayProduct.push(product);
-        this.nextProductId++;
+    addProduct(newProduct) {
+        if (this.getProductByCode(newProduct.code) == null) {
+            newProduct.id = this.nextProductId;
+            this.arrayProduct.push(newProduct);
+            this.nextProductId++;
+            return newProduct.id;
+        }
+        return null;
     }
     getProductById(id) {
         return this.arrayProduct.find(product => product.id === id) || null;
+    }
+    getProductByCode(code) {
+        return this.arrayProduct.find(product => product.code === code) || null;
     }
 }
