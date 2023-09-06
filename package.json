@@ -1,0 +1,14 @@
+{
+  "name": "ch-tarea2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "type": "module",
+  "devDependencies": {},
+  "scripts": {
+    "start": "node app.js",
+    "test": "node test.js"
+  },
+  "author": "Marcelo Aguirre",
+  "license": "ISC"
+}
