@@ -3,8 +3,8 @@ export default class ProductManager {
         this.arrayProduct = [];
         this.nextProductId = 1;
     }
-    get getProducts() {
-        return this.arryProduct
+    getProducts() {
+        return this.arrayProduct ;
     }
     addProduct(newProduct) {
         if (this.getProductByCode(newProduct.code) == null) {
@@ -13,6 +13,7 @@ export default class ProductManager {
             this.nextProductId++;
             return newProduct.id;
         }
+        console.error("Not found");
         return null;
     }
     getProductById(id) {

@@ -32,7 +32,7 @@ console.log(productManager.addProduct(product));
 console.log(productManager.addProduct(product2));
 console.log(productManager.addProduct(product3));
 console.log("Obtenemos productos ");
-console.log(productManager);
+console.log(productManager.getProducts());
 
 console.log("Buscamos la id 1");
 console.log(productManager.getProductById(1));
