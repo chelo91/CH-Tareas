@@ -20,7 +20,7 @@ class ProductManager {
                 if (existFile) {
                     return this.loadFile();
                 } else {
-                    return this.writeFile();
+                    return this.saveFile();
                 }
             }).catch((err) => {
                 console.error(err);
@@ -52,7 +52,7 @@ class ProductManager {
         }
         newProduct.id = this.nextProductId;
         this.arrayProduct.push(newProduct);
-        this.writeFile();
+        this.saveFile();
         this.nextProductId++;
         return newProduct.id;
     }
@@ -113,7 +113,7 @@ class ProductManager {
             }
         });
     }
-    async writeFile() {
+    async saveFile() {
         return new Promise((resolve, reject) => {
             try {
                 fs.writeFileSync(this.path, JSON.stringify(this.arrayProduct), (err) => {
