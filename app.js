@@ -1,7 +1,6 @@
 import ProductManager from './models/ProductManager.js';
 
 const productManager = new ProductManager("./files/productos.json");
-
 const product = {
     title: 'producto prueba',
     description: 'Este es un producto prueba',
@@ -21,14 +20,13 @@ const product2 = {
 };
 
 const product3 = {
-    title: 'producto prueba4',
+    title: 'Producto Modificado',
     description: 'Este es un producto prueba4',
     price: 100,
     thumbnail: 'Sin imagen',
-    code: 'abc123',
+    code: 'abc14',
     stock: 20,
 };
 console.log(productManager.addProduct(product));
-console.log(productManager.addProduct(product2));
-console.log(productManager.addProduct(product3));
-productManager.writeFile();
+console.log(productManager.updateProduct(1, product3));
+productManager.saveFile();
