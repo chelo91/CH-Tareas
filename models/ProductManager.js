@@ -15,18 +15,7 @@ export default class ProductManager {
         this.arrayProduct = [];
         this.nextProductId = 1;
         this.path = path;
-        this.checkFile()
-            .then((existFile) => {
-                if (existFile) {
-                    console.log("Existe el archivo");
-                    this.loadFile();
-                } else {
-                    console.log("No existe el archivo, se creara uno nuevo");
-                    this.saveFile();
-                }
-            }).catch((err) => {
-                console.error(err);
-            });
+        this.init();
     }
 
     /* GETTER AND SETTER */
@@ -34,7 +23,6 @@ export default class ProductManager {
      * @description Get the arrayProduct
      */
     get getProducts() {
-        this.loadFile();
         return this.arrayProduct;
     }
     /**
@@ -51,6 +39,20 @@ export default class ProductManager {
         return this.path;
     }
 
+    /* INIT */
+    /**
+     * @description Init the productManager
+     */
+    init() {
+        try {
+            if (!(this.loadFile())) {
+                this.saveFile();
+            }
+        } catch (error) {
+            console.error('Error en la inicialización:', error);
+        }
+    }
+
     /* METHODS */
     /**
      * @description Refresh the nextProductId
@@ -62,7 +64,7 @@ export default class ProductManager {
                 maxId = product.id;
             }
         });
-        this.nextProductId = maxId + 1;
+        this.nextProductId = (maxId + 1);
     }
     /**
     * @description Add product to arrayProduct
@@ -72,11 +74,10 @@ export default class ProductManager {
             console.error("Falta propiedades");
             return null;
         }
-        if (!(this.getProductByCode(newProduct.code) == null)) {
+        if ((this.getProductByCode(newProduct.code) != null)) {
             console.error("Codigo repetido");
             return null;
         }
-        console.log(this.getProducts);
         newProduct.id = this.nextProductId;
         this.getProducts.push(newProduct);
         this.saveFile();
@@ -112,7 +113,10 @@ export default class ProductManager {
         if (index !== -1) {
             const propiedades = Object.keys(newProduct);
             propiedades.forEach(prop => {
-                arrayProduct[index].prop = newProduct.prop;
+                //No podemos cambiar ni id, ni code y la propiedas tiene que estar en propProduct
+                if (prop !== 'id' && prop !== 'code' && ProductManager.propProduct.includes(prop)) {
+                    arrayProduct[index][prop] = newProduct[prop];
+                }
             });
         }
         this.saveFile();
@@ -125,64 +129,44 @@ export default class ProductManager {
         const arrayProduct = this.getProducts;
         const index = arrayProduct.findIndex(product => product.id === id);
         if (index !== -1) {
-            this.setProducts = arrayProduct.splice(index, 1);
+            arrayProduct.splice(index, 1);
+            this.setProducts = arrayProduct;
         }
-        this.saveFile();
+        console.log(this.arrayProduct);
+        //this.saveFile();
         return index !== -1;
     }
 
-    /* FILE MANAGER */
-    /**
-     * @description Check if the file exist
-     */
-    async checkFile() {
-        try {
-            if (!fs.existsSync(this.path)) {
-                console.log("No existe el archivo");
-                return false;
-            } else {
-                console.log("Existe el archivo");
-                return true;
-            }
-        } catch (error) {
-            console.error("Error a buscar el archivo");
-            return null
-        }
-    }
+    /* FILE */
     /**
      * @description Load the file
      */
-    async loadFile() {
+    loadFile() {
         try {
-            fs.readFile(this.path, 'utf8', (err, data) => {
-                if (err) {
-                    console.error('Error al leer el archivo:', err);
-                    return false;
-                } else {
-                    this.setProducts = JSON.parse(data);
-                    return true;
-                }
-            });
+            const data = fs.readFileSync(this.path, 'utf8');
+            if (!data) {
+                console.error('Error al leer el archivo');
+                return false;
+            } else {
+                console.log("Archivo cargado")
+                this.setProducts = JSON.parse(data);
+                return true;
+            }
         } catch (error) {
-            console.error('Error al escribir el archivo:', error);
+            console.error('Error al cargar el archivo');
             return false;
         }
     }
     /**
      * @description Save the file
      */
-    async saveFile() {
+    saveFile() {
         try {
-            fs.writeFile(this.path, JSON.stringify(this.arrayProduct), (err) => {
-                if (err) {
-                    console.error('Error al escribir el archivo:', err);
-                    return false;
-                } else {
-                    return true;
-                }
-            });
+            fs.writeFileSync(this.path, JSON.stringify(this.arrayProduct));
+            console.log('Archivo guardado');
+            return true;
         } catch (error) {
-            console.error('Error al escribir el archivo:', error);
+            console.error('Error al escribir el archivo');
             return false;
         }
     }
