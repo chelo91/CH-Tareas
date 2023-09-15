@@ -1,6 +1,8 @@
 import ProductManager from './models/ProductManager.js';
 
-const productManager = new ProductManager();
+const productManager = new ProductManager("./files/test.json");
+
+console.log(productManager.getProducts);
 
 const product = {
     title: 'producto prueba',
@@ -11,30 +13,23 @@ const product = {
     stock: 25,
 };
 
-const product2 = {
-    title: 'producto prueba2',
-    description: 'Este es un producto prueba2',
-    price: 100,
-    thumbnail: 'Sin imagen',
-    code: 'abc1234',
-    stock: 20,
-};
+console.log(productManager.addProduct(product));
 
-const product3 = {
-    title: 'producto prueba4',
-    description: 'Este es un producto prueba4',
-    price: 100,
+console.log(productManager.getProducts);
+
+const productUpdate = {
+    title: 'producto prueba modificado',
+    description: 'Este es un producto prueba modificado',
+    price: 200,
     thumbnail: 'Sin imagen',
     code: 'abc123',
-    stock: 20,
+    stock: 25,
 };
-console.log(productManager.addProduct(product));
-console.log(productManager.addProduct(product2));
-console.log(productManager.addProduct(product3));
-console.log("Obtenemos productos ");
-console.log(productManager.getProducts());
 
-console.log("Buscamos la id 1");
-console.log(productManager.getProductById(1));
-console.log("Buscamos la id 5");
-console.log(productManager.getProductById(5));
+console.log(productManager.updateProduct(1, productUpdate));
+
+console.log(productManager.getProducts);
+
+console.log(productManager.deleteProduct(1));
+
+console.log(productManager.getProducts);

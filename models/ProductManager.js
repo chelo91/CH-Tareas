@@ -23,6 +23,7 @@ export default class ProductManager {
      * @description Get the arrayProduct
      */
     get getProducts() {
+        this.init();
         return this.arrayProduct;
     }
     /**
@@ -45,7 +46,9 @@ export default class ProductManager {
      */
     init() {
         try {
-            if (!(this.loadFile())) {
+            if (this.existFile()) {
+                this.loadFile();
+            } else {
                 this.saveFile();
             }
         } catch (error) {
@@ -132,8 +135,7 @@ export default class ProductManager {
             arrayProduct.splice(index, 1);
             this.setProducts = arrayProduct;
         }
-        console.log(this.arrayProduct);
-        //this.saveFile();
+        this.saveFile();
         return index !== -1;
     }
 
@@ -162,11 +164,25 @@ export default class ProductManager {
      */
     saveFile() {
         try {
-            fs.writeFileSync(this.path, JSON.stringify(this.arrayProduct));
+            fs.writeFileSync(this.path, JSON.stringify(this.getProducts));
             console.log('Archivo guardado');
             return true;
         } catch (error) {
             console.error('Error al escribir el archivo');
+            return false;
+        }
+    }
+    /**
+     *  @description Check if the file exist
+     */
+    existFile() {
+        try {
+            if (fs.existsSync(this.path)) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (error) {
             return false;
         }
     }

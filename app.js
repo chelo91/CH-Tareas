@@ -51,6 +51,7 @@ const products = [
     }];
 
 products.forEach(prod => {
+    console.log("Agrego el producto ");
     productManager.addProduct(prod);
 });
 
@@ -66,4 +67,5 @@ const newProduct6 = {
 }
 
 //productManager.updateProduct(6, newProduct6);
+console.log("Elimino el producto ");
 productManager.deleteProduct(4);
