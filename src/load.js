@@ -85,7 +85,13 @@ const products = [
         stock: 30,
     }];
 
-products.forEach(prod => {
+/*await products.forEach(prod => async () =>{
     console.log("Agrego el producto ");
-    productManager.addProduct(prod);
-});
+    await productManager.addProduct(prod);
+});*/
+const addProductsAsync = async () => {
+    for (const prod of products) {
+        console.log("Agrego el producto");
+        await productManager.addProduct(prod);
+    }
+}

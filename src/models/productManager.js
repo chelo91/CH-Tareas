@@ -1,4 +1,4 @@
-import fs from 'fs';
+import { promises as fs } from 'fs';
 
 export default class ProductManager {
 
@@ -44,7 +44,7 @@ export default class ProductManager {
      */
     async _loadFile() {
         try {
-            const data = await fs.promises.readFile(this.path, 'utf8');
+            const data = await fs.readFile(this.path, 'utf8');
             if (!data) {
                 console.error('Error al leer el archivo');
                 return false;
@@ -63,23 +63,17 @@ export default class ProductManager {
      */
     async _saveFile() {
         try {
-            //No se me ocurre solucion estetica para esto // Si llamo getProducts hace el load y pierdo lo que quiero guardar
-            await fs.promises.writeFile(this.path, JSON.stringify(this.arrayProduct));
-            console.log('Archivo guardado');
-            return true;
+            await fs.writeFile(this.path, JSON.stringify(this.arrayProduct), (err) => {
+                if (err) {
+                    console.error('Error al escribir el archivo');
+                    return false;
+                } else {
+                    console.log('Archivo guardado');
+                    return true;
+                }
+            });
         } catch (error) {
             console.error('Error al escribir el archivo');
-            return false;
-        }
-    }
-    /**
-     *  @description Check if the file exist
-     */
-    async _existFile() {
-        try {
-            await fs.promises.access(this.path);
-            return true;
-        } catch (error) {
             return false;
         }
     }
@@ -109,15 +103,14 @@ export default class ProductManager {
      */
     async _init() {
         try {
-            const exist = await this._existFile();
-            if (exist) {
-                await this._loadFile();
-            } else {
-                await this._saveFile();
-            }
+            await fs.access(this.path, fs.constants.F_OK);
+            console.log("Archivo existente");
+            await this._loadFile();
         } catch (error) {
-            console.error('Error en la inicialización:', error);
+            console.log("Archivo inexistente");
+            await this._saveFile();
         }
+
     }
     /**
     * @description Add product to arrayProduct
@@ -127,13 +120,15 @@ export default class ProductManager {
             console.error("Falta propiedades");
             return null;
         }
-        if ((this.getProductByCode(newProduct.code) != null)) {
+        const isRepeat = await this.getProductByCode(newProduct.code);
+        if (isRepeat != null) {
             console.error("Codigo repetido");
             return null;
         }
         newProduct.id = this.nextProductId;
-        await this.getAndLoadProducts().push(newProduct);
-        this._saveFile();
+        const array = await this.getAndLoadProducts();
+        array.push(newProduct);
+        await this._saveFile();
         this.nextProductId++;
         return newProduct.id;
     }
