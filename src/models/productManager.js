@@ -40,6 +40,20 @@ export default class ProductManager {
 
     /* PRIVATE */
     /**
+     * @description Init the productManager
+     */
+        async _init() {
+            try {
+                await fs.access(this.path, fs.constants.F_OK);
+                console.log("Archivo existente");
+                await this._loadFile();
+            } catch (error) {
+                console.log("Archivo inexistente");
+                await this._saveFile();
+            }
+    
+        }
+    /**
      * @description Load the file
      */
     async _loadFile() {
@@ -99,35 +113,24 @@ export default class ProductManager {
 
     /* METHODS */
     /**
-     * @description Init the productManager
-     */
-    async _init() {
-        try {
-            await fs.access(this.path, fs.constants.F_OK);
-            console.log("Archivo existente");
-            await this._loadFile();
-        } catch (error) {
-            console.log("Archivo inexistente");
-            await this._saveFile();
-        }
-
-    }
-    /**
     * @description Add product to arrayProduct
     */
     async addProduct(newProduct) {
+        // Check if the product has all the properties
         if (!this._checkProductProp(newProduct)) {
             console.error("Falta propiedades");
             return null;
         }
+        // Check if the code is repeated and reload the file .json
         const isRepeat = await this.getProductByCode(newProduct.code);
         if (isRepeat != null) {
             console.error("Codigo repetido");
             return null;
         }
         newProduct.id = this.nextProductId;
-        const array = await this.getAndLoadProducts();
-        array.push(newProduct);
+        // I comment this line because I reload up in getProductByCode
+        //const array = await this.getAndLoadProducts();
+        this.getProducts.push(newProduct);
         await this._saveFile();
         this.nextProductId++;
         return newProduct.id;
