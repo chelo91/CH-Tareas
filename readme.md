@@ -4,6 +4,6 @@
 #### Comisión: 47320
 ##### Profesor: Pablo Toloso
 
-- [x] Entrega 1
-- [x] Entrega 2
-- [ ] Entrega 3
+- [x] Entrega 1 - Clases
+- [x] Entrega 2 - FS
+- [ ] Entrega 3 - Express
