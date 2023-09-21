@@ -1,2 +1,2 @@
 PORT=3000
-PATH=./src/files/productos.json
+PATH_PRODUCTS="./src/files/productos.json"

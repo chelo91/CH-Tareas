@@ -1,6 +1,9 @@
-import ProductManager from './models/ProductManager.js';
+import ProductManager from './models/productManager.js';
+import dotenv from 'dotenv';
+dotenv.config();
+const path = process.env.PATH_PRODUCTS || "./src/files/productos.json";
 
-const productManager = new ProductManager("./files/productos.json");
+const productManager = new ProductManager(path);
 const products = [
     {
         title: 'Laptop HP Pavilion',
@@ -25,7 +28,8 @@ const products = [
         thumbnail: 'https://example.com/tv1.jpg',
         code: 'SonyTV55',
         stock: 20,
-    }, {
+    },
+    {
         title: 'Apple iPhone 13 Pro Max',
         description: 'El iPhone 13 Pro Max de Apple con pantalla Super Retina XDR de 6.7 pulgadas, triple cámara, chip A15 Bionic y hasta 1TB de almacenamiento.',
         price: 1099.99,
@@ -48,24 +52,40 @@ const products = [
         thumbnail: 'https://example.com/canon5d.jpg',
         code: 'Canon5DMarkIV',
         stock: 15,
+    },
+    {
+        title: 'Sony Alpha 7 III',
+        description: 'Cámara Sony Alpha 7 III con sensor CMOS de fotograma completo de 24.2 MP, grabación de video 4K, estabilización de imagen de 5 ejes y visor electrónico OLED de alta resolución.',
+        price: 1999.99,
+        thumbnail: 'https://example.com/sonyalpha7iii.jpg',
+        code: 'SonyAlpha7III',
+        stock: 20,
+    }, {
+        title: 'Altavoces Bluetooth Sony SRS-X9',
+        description: 'Altavoces Bluetooth Sony SRS-X9 con calidad de sonido excepcional, conexión NFC, y compatibilidad con audio de alta resolución.',
+        price: 699.99,
+        thumbnail: 'https://example.com/sonysrsx9.jpg',
+        code: 'SonySRSX9',
+        stock: 10,
+    },
+    {
+        title: 'Mouse Gaming Logitech G Pro X Superlight',
+        description: 'Mouse Gaming Logitech G Pro X Superlight con sensor HERO de alta precisión, diseño ultraligero y botones personalizables.',
+        price: 149.99,
+        thumbnail: 'https://example.com/logitechgprox.jpg',
+        code: 'LogitechGProX',
+        stock: 25,
+    },
+    {
+        title: 'Teclado Inalámbrico Logitech MX Keys',
+        description: 'Teclado inalámbrico Logitech MX Keys con retroiluminación inteligente, teclas cóncavas y compatibilidad con múltiples dispositivos.',
+        price: 99.99,
+        thumbnail: 'https://example.com/logitechmxkeys.jpg',
+        code: 'LogitechMXKeys',
+        stock: 30,
     }];
 
 products.forEach(prod => {
     console.log("Agrego el producto ");
     productManager.addProduct(prod);
 });
-
-//productManager.deleteProduct(2);
-
-const newProduct6 = {
-    title: 'Sony Alpha 7 III',
-    description: 'Cámara Sony Alpha 7 III con sensor CMOS de fotograma completo de 24.2 MP, grabación de video 4K, estabilización de imagen de 5 ejes y visor electrónico OLED de alta resolución.',
-    price: 1999.99,
-    thumbnail: 'https://example.com/sonyalpha7iii.jpg',
-    code: 'SonyAlpha7III',
-    stock: 20,
-}
-
-//productManager.updateProduct(6, newProduct6);
-console.log("Elimino el producto ");
-productManager.deleteProduct(4);

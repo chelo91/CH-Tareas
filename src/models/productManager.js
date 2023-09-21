@@ -15,7 +15,7 @@ export default class ProductManager {
         this.arrayProduct = [];
         this.nextProductId = 1;
         this.path = path;
-        this.init();
+        this._init();
     }
 
     /* GETTER AND SETTER */
@@ -23,7 +23,7 @@ export default class ProductManager {
      * @description Get the arrayProduct
      */
     get getProducts() {
-        this.init();
+        this._init();
         return this.arrayProduct;
     }
     /**
@@ -31,7 +31,7 @@ export default class ProductManager {
      */
     set setProducts(newArrayProduct) {
         this.arrayProduct = newArrayProduct;
-        this.refreshLastId();
+        this._refreshLastId();
     }
     /**
      * @description Get the path
@@ -40,27 +40,25 @@ export default class ProductManager {
         return this.path;
     }
 
-    /* INIT */
+    /* PRIVATE */
     /**
      * @description Init the productManager
      */
-    init() {
+    _init() {
         try {
-            if (this.existFile()) {
-                this.loadFile();
+            if (this._existFile()) {
+                this._loadFile();
             } else {
-                this.saveFile();
+                this._saveFile();
             }
         } catch (error) {
             console.error('Error en la inicialización:', error);
         }
     }
-
-    /* METHODS */
     /**
      * @description Refresh the nextProductId
      */
-    refreshLastId() {
+    _refreshLastId() {
         let maxId = 0;
         this.arrayProduct.forEach(product => {
             if (product.id > maxId) {
@@ -70,10 +68,61 @@ export default class ProductManager {
         this.nextProductId = (maxId + 1);
     }
     /**
+     * @description Check if the product has all the properties
+     */
+    _checkProductProp(product) {
+        return ProductManager.propProduct.every((prop) => product.hasOwnProperty(prop));
+    }
+    /**
+     * @description Load the file
+     */
+    _loadFile() {
+        try {
+            const data = fs.readFileSync(this.path, 'utf8');
+            if (!data) {
+                console.error('Error al leer el archivo');
+                return false;
+            } else {
+                console.log("Archivo cargado")
+                this.setProducts = JSON.parse(data);
+                return true;
+            }
+        } catch (error) {
+            console.error('Error al cargar el archivo');
+            return false;
+        }
+    }
+    /**
+     * @description Save the file
+     */
+    _saveFile() {
+        try {
+            //No se me ocurre solucion estetica para esto // Si llamo getProducts hace el load y pierdo lo que quiero guardar
+            fs.writeFileSync(this.path, JSON.stringify(this.arrayProduct));
+            console.log('Archivo guardado');
+            return true;
+        } catch (error) {
+            console.error('Error al escribir el archivo');
+            return false;
+        }
+    }
+    /**
+     *  @description Check if the file exist
+     */
+    _existFile() {
+        try {
+            return fs.existsSync(this.path);
+        } catch (error) {
+            return false;
+        }
+    }
+
+    /* METHODS */
+    /**
     * @description Add product to arrayProduct
     */
     addProduct(newProduct) {
-        if (!this.checkProductProp(newProduct)) {
+        if (!this._checkProductProp(newProduct)) {
             console.error("Falta propiedades");
             return null;
         }
@@ -83,16 +132,11 @@ export default class ProductManager {
         }
         newProduct.id = this.nextProductId;
         this.getProducts.push(newProduct);
-        this.saveFile();
+        this._saveFile();
         this.nextProductId++;
         return newProduct.id;
     }
-    /**
-     * @description Check if the product has all the properties
-     */
-    checkProductProp(product) {
-        return ProductManager.propProduct.every((prop) => product.hasOwnProperty(prop));
-    }
+
 
     /* CRUD */
     /**
@@ -113,17 +157,19 @@ export default class ProductManager {
     updateProduct(id, newProduct) {
         const arrayProduct = this.getProducts;
         const index = arrayProduct.findIndex(product => product.id === id);
-        if (index !== -1) {
-            const propiedades = Object.keys(newProduct);
-            propiedades.forEach(prop => {
-                //No podemos cambiar ni id, ni code y la propiedas tiene que estar en propProduct
-                if (prop !== 'id' && prop !== 'code' && ProductManager.propProduct.includes(prop)) {
-                    arrayProduct[index][prop] = newProduct[prop];
-                }
-            });
+        if (index === -1) {
+            return false;
         }
-        this.saveFile();
-        return index !== -1;
+
+        const propiedades = Object.keys(newProduct);
+        propiedades.forEach(prop => {
+            //No podemos cambiar ni id, ni code y la propiedas tiene que estar en propProduct
+            if (prop !== 'id' && prop !== 'code' && ProductManager.propProduct.includes(prop)) {
+                arrayProduct[index][prop] = newProduct[prop];
+            }
+        });
+        this._saveFile();
+        return true;
     }
     /**
      * @description Delete the product
@@ -131,59 +177,12 @@ export default class ProductManager {
     deleteProduct(id) {
         const arrayProduct = this.getProducts;
         const index = arrayProduct.findIndex(product => product.id === id);
-        if (index !== -1) {
-            arrayProduct.splice(index, 1);
-            this.setProducts = arrayProduct;
+        if (index === -1) {
+            return false
         }
-        this.saveFile();
-        return index !== -1;
-    }
-
-    /* FILE */
-    /**
-     * @description Load the file
-     */
-    loadFile() {
-        try {
-            const data = fs.readFileSync(this.path, 'utf8');
-            if (!data) {
-                console.error('Error al leer el archivo');
-                return false;
-            } else {
-                console.log("Archivo cargado")
-                this.setProducts = JSON.parse(data);
-                return true;
-            }
-        } catch (error) {
-            console.error('Error al cargar el archivo');
-            return false;
-        }
-    }
-    /**
-     * @description Save the file
-     */
-    saveFile() {
-        try {
-            fs.writeFileSync(this.path, JSON.stringify(this.getProducts));
-            console.log('Archivo guardado');
-            return true;
-        } catch (error) {
-            console.error('Error al escribir el archivo');
-            return false;
-        }
-    }
-    /**
-     *  @description Check if the file exist
-     */
-    existFile() {
-        try {
-            if (fs.existsSync(this.path)) {
-                return true;
-            } else {
-                return false;
-            }
-        } catch (error) {
-            return false;
-        }
+        arrayProduct.splice(index, 1);
+        this.setProducts = arrayProduct;
+        this._saveFile();
+        return true;
     }
 }

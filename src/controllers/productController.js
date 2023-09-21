@@ -5,18 +5,20 @@ import dotenv from 'dotenv';
 export const router = express.Router();
 
 dotenv.config();
-const path = process.env.PATH || "./src/files/productos.json";
+const path = process.env.PATH_PRODUCTS || "./src/files/productos.json";
 
 router.get('/', (req, res) => {
     const productManager = new ProductManager(path);
-    res.send(path);
+    const limit = req.query.limit;
+    const products = productManager.getProducts;
+    if (limit && limit < products.length && limit > 0) {
+        products.length = limit;
+    }
+    return res.json(products);
 });
 
-/*
-El servidor debe contar con los siguientes endpoints:
-ruta ‘/products’, la cual debe leer el archivo de productos y devolverlos dentro de un objeto. 
-Agregar el soporte para recibir por query param el valor ?limit= el cual recibirá un límite de resultados.
-Si no se recibe query de límite, se devolverán todos los productos
-Si se recibe un límite, sólo devolver el número de productos solicitados
-ruta ‘/products/:pid’, la cual debe recibir por req.params el pid (product Id), y devolver sólo el producto solicitado, en lugar de todos los productos
-*/
+router.get('/:pid', (req, res) => {
+    const productManager = new ProductManager(path);
+    const pid = parseInt(req.params.pid);
+    return res.json(productManager.getProductById(pid) || { Response: "Product not found" });
+});
