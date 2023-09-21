@@ -15,7 +15,6 @@ export default class ProductManager {
         this.arrayProduct = [];
         this.nextProductId = 1;
         this.path = path;
-        this._init();
     }
 
     /* GETTER AND SETTER */
@@ -23,7 +22,6 @@ export default class ProductManager {
      * @description Get the arrayProduct
      */
     get getProducts() {
-        this._init();
         return this.arrayProduct;
     }
     /**
@@ -42,17 +40,47 @@ export default class ProductManager {
 
     /* PRIVATE */
     /**
-     * @description Init the productManager
+     * @description Load the file
      */
-    _init() {
+    async _loadFile() {
         try {
-            if (this._existFile()) {
-                this._loadFile();
+            const data = await fs.promises.readFile(this.path, 'utf8');
+            if (!data) {
+                console.error('Error al leer el archivo');
+                return false;
             } else {
-                this._saveFile();
+                console.log("Archivo cargado")
+                this.setProducts = JSON.parse(data);
+                return true;
             }
         } catch (error) {
-            console.error('Error en la inicialización:', error);
+            console.error('Error al cargar el archivo');
+            return false;
+        }
+    }
+    /**
+     * @description Save the file
+     */
+    async _saveFile() {
+        try {
+            //No se me ocurre solucion estetica para esto // Si llamo getProducts hace el load y pierdo lo que quiero guardar
+            await fs.promises.writeFile(this.path, JSON.stringify(this.arrayProduct));
+            console.log('Archivo guardado');
+            return true;
+        } catch (error) {
+            console.error('Error al escribir el archivo');
+            return false;
+        }
+    }
+    /**
+     *  @description Check if the file exist
+     */
+    async _existFile() {
+        try {
+            await fs.promises.access(this.path);
+            return true;
+        } catch (error) {
+            return false;
         }
     }
     /**
@@ -73,55 +101,28 @@ export default class ProductManager {
     _checkProductProp(product) {
         return ProductManager.propProduct.every((prop) => product.hasOwnProperty(prop));
     }
-    /**
-     * @description Load the file
-     */
-    _loadFile() {
-        try {
-            const data = fs.readFileSync(this.path, 'utf8');
-            if (!data) {
-                console.error('Error al leer el archivo');
-                return false;
-            } else {
-                console.log("Archivo cargado")
-                this.setProducts = JSON.parse(data);
-                return true;
-            }
-        } catch (error) {
-            console.error('Error al cargar el archivo');
-            return false;
-        }
-    }
-    /**
-     * @description Save the file
-     */
-    _saveFile() {
-        try {
-            //No se me ocurre solucion estetica para esto // Si llamo getProducts hace el load y pierdo lo que quiero guardar
-            fs.writeFileSync(this.path, JSON.stringify(this.arrayProduct));
-            console.log('Archivo guardado');
-            return true;
-        } catch (error) {
-            console.error('Error al escribir el archivo');
-            return false;
-        }
-    }
-    /**
-     *  @description Check if the file exist
-     */
-    _existFile() {
-        try {
-            return fs.existsSync(this.path);
-        } catch (error) {
-            return false;
-        }
-    }
+
 
     /* METHODS */
     /**
+     * @description Init the productManager
+     */
+    async _init() {
+        try {
+            const exist = await this._existFile();
+            if (exist) {
+                await this._loadFile();
+            } else {
+                await this._saveFile();
+            }
+        } catch (error) {
+            console.error('Error en la inicialización:', error);
+        }
+    }
+    /**
     * @description Add product to arrayProduct
     */
-    addProduct(newProduct) {
+    async addProduct(newProduct) {
         if (!this._checkProductProp(newProduct)) {
             console.error("Falta propiedades");
             return null;
@@ -131,31 +132,38 @@ export default class ProductManager {
             return null;
         }
         newProduct.id = this.nextProductId;
-        this.getProducts.push(newProduct);
+        await this.getAndLoadProducts().push(newProduct);
         this._saveFile();
         this.nextProductId++;
         return newProduct.id;
     }
-
-
     /* CRUD */
+    /**
+     * @description Get and load the products
+     */
+    async getAndLoadProducts() {
+        await this._init();
+        return this.getProducts;
+    }
     /**
      * @description Get the product by id
      */
-    getProductById(id) {
-        return this.getProducts.find(product => product.id === id) || (console.log('Not found'), null);
+    async getProductById(id) {
+        const array = await this.getAndLoadProducts();
+        return array.find(product => product.id === id) || (console.log('Not found'), null);
     }
     /**
      * @description Get the product by code
      */
-    getProductByCode(code) {
-        return this.getProducts.find(product => product.code === code) || (console.log('Not found'), null);
+    async getProductByCode(code) {
+        const array = await this.getAndLoadProducts();
+        return array.find(product => product.code === code) || (console.log('Not found'), null);
     }
     /**
      * @description Update the product
      */
-    updateProduct(id, newProduct) {
-        const arrayProduct = this.getProducts;
+    async updateProduct(id, newProduct) {
+        const arrayProduct = await this.getAndLoadProducts();
         const index = arrayProduct.findIndex(product => product.id === id);
         if (index === -1) {
             return false;
@@ -168,21 +176,21 @@ export default class ProductManager {
                 arrayProduct[index][prop] = newProduct[prop];
             }
         });
-        this._saveFile();
+        await this._saveFile();
         return true;
     }
     /**
      * @description Delete the product
      */
-    deleteProduct(id) {
-        const arrayProduct = this.getProducts;
+    async deleteProduct(id) {
+        const arrayProduct = this.getAndLoadProducts();
         const index = arrayProduct.findIndex(product => product.id === id);
         if (index === -1) {
             return false
         }
         arrayProduct.splice(index, 1);
         this.setProducts = arrayProduct;
-        this._saveFile();
+        await this._saveFile();
         return true;
     }
 }

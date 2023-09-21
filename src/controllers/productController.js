@@ -7,18 +7,19 @@ export const router = express.Router();
 dotenv.config();
 const path = process.env.PATH_PRODUCTS || "./src/files/productos.json";
 
-router.get('/', (req, res) => {
+router.get('/', async (req, res) => {
     const productManager = new ProductManager(path);
     const limit = req.query.limit;
-    const products = productManager.getProducts;
+    const products = await productManager.getAndLoadProducts();
     if (limit && limit < products.length && limit > 0) {
         products.length = limit;
     }
     return res.json(products);
 });
 
-router.get('/:pid', (req, res) => {
+router.get('/:pid', async (req, res) => {
     const productManager = new ProductManager(path);
     const pid = parseInt(req.params.pid);
-    return res.json(productManager.getProductById(pid) || { Response: "Product not found" });
+    const result = await productManager.getProductById(pid);
+    return res.json(result || { Response: "Product not found" });
 });
