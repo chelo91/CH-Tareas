@@ -1,19 +1,9 @@
 import { promises as fs } from 'fs';
 import { validateProps } from '../helper/utilsValidate.js';
-export default class ProductManager {
+export default class CartManager {
 
     /* PROPERTIES */
     constructor(path) {
-        ProductManager.propProduct = [
-            { name: 'title', type: 'string' },
-            { name: 'description', type: 'string' },
-            { name: 'code', type: 'string', readOnly: true },
-            { name: 'price', type: 'number' },
-            { name: 'status', type: 'boolean' },
-            { name: 'stock', type: 'number' },
-            { name: 'category', type: 'string' },
-            { name: 'thumbnail', type: 'arrayOfStrings' }
-        ];
         this.arrayProduct = [];
         this.nextProductId = 1;
         this.path = path;
