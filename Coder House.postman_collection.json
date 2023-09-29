@@ -1,0 +1,278 @@
+{
+	"info": {
+		"_postman_id": "10d22f86-bf32-46ef-9066-4cc22b02d33e",
+		"name": "Coder House",
+		"description": "# Tareas Coder House\n\n## Curso: Programación Backend\n\n### Alumno: Marcelo Aguirre\n\n#### Comisión: 47320\n\n##### Profesor: Pablo Toloso",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "10945997"
+	},
+	"item": [
+		{
+			"name": "Products",
+			"item": [
+				{
+					"name": "GetProducts",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/products",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "FindProductById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/products/:id",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"products",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CreateProduct",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"Mouse Gaming Logitech G Pro X Superlight\",//string\r\n    \"description\": \"Mouse Gaming Logitech G Pro X Superlight con sensor HERO de alta precisión, diseño ultraligero y botones personalizables\",//string\r\n    \"code\": \"LogitechGProX2\",//string\r\n    \"price\": 149.99,//number\r\n    \"status\": true,//boolean\r\n    \"stock\": 25,//number\r\n    \"category\": \"Periferico\",//string\r\n    \"thumbnail\": [\"https://example.com/logitechgprox.jpg\"] //array de strings\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/products",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateProduct",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"Mouse Gaming Logitech G Pro X Superlight\", //string\r\n    \"description\": \"Mouse Gaming Logitech G Pro X Superlight con sensor HERO de alta precisión, diseño ultraligero y botones personalizables\", //string\r\n    \"price\": 149.99, //number\r\n    \"status\": true, //boolean\r\n    \"stock\": 25, //number\r\n    \"category\": \"Periferico\", //string\r\n    \"thumbnail\": [\r\n        \"https://example.com/logitechgprox.jpg\"\r\n    ] //array de strings\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/products/:id",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"products",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteProduct",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/products/:id",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"products",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Cart",
+			"item": [
+				{
+					"name": "GetCarts",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/carts",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"carts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetCartsById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/carts/:cid",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"carts",
+								":cid"
+							],
+							"variable": [
+								{
+									"key": "cid",
+									"value": "4"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CreateCarts",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/carts",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"carts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AddProductToCart",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"quantity\": 5\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/carts/:cid/product/:pid",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"carts",
+								":cid",
+								"product",
+								":pid"
+							],
+							"variable": [
+								{
+									"key": "cid",
+									"value": "5"
+								},
+								{
+									"key": "pid",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "url",
+			"value": "http://localhost:9999",
+			"type": "string"
+		}
+	]
+}

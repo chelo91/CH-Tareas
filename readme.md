@@ -14,3 +14,6 @@
 - [X] Organizar o juntar todas las funciones auxiliares. 
 - [x] Optimizacion en fs.existsSync(this.path)
 - [x] Optimizar DeleteProduct y UpdateProduct
+---
+## Postman
+El archvio se encuenta en la carpeta principal como Coder House.postman_collection.json
