@@ -1,1 +1,142 @@
-[{"title":"Portátil Dell XPS 13","description":"Portátil Dell XPS 13 con pantalla InfinityEdge de 13.4 pulgadas, procesador Intel Core i7, 16 GB de RAM y 512 GB de SSD.","price":1299.99,"thumbnail":"https://example.com/dellxps13.jpg","code":"XPS13","stock":25,"id":5},{"title":"Altavoces Bluetooth Sony SRS-X9","description":"Altavoces Bluetooth Sony SRS-X9 con calidad de sonido excepcional, conexión NFC, y compatibilidad con audio de alta resolución.","price":699.99,"thumbnail":"https://example.com/sonysrsx9.jpg","code":"SonySRSX9","stock":10,"id":8},{"title":"Mouse Gaming Logitech G Pro X Superlight","description":"Mouse Gaming Logitech G Pro X Superlight con sensor HERO de alta precisión, diseño ultraligero y botones personalizables.","price":149.99,"thumbnail":"https://example.com/logitechgprox.jpg","code":"LogitechGProX","stock":25,"id":9},{"title":"Teclado Inalámbrico Logitech MX Keys","description":"Teclado inalámbrico Logitech MX Keys con retroiluminación inteligente, teclas cóncavas y compatibilidad con múltiples dispositivos.","price":99.99,"thumbnail":"https://example.com/logitechmxkeys.jpg","code":"LogitechMXKeys","stock":30,"id":10},{"title":"Mouse Gaming Logitech G Pro X Superlight","description":"Mouse Gaming Logitech G Pro X Superlight con sensor HERO de alta precisión, diseño ultraligero y botones personalizables","code":"LogitechGProX2","price":149.99,"status":true,"stock":25,"category":"Periferico","thumbnail":["https://example.com/logitechgprox.jpg"],"id":11},{"title":"Mouse Gaming Logitech G Pro X Superlight","description":"Mouse Gaming Logitech G Pro X Superlight con sensor HERO de alta precisión, diseño ultraligero y botones personalizables","code":"LogiteeechGProX2","price":149.99,"status":true,"stock":25,"category":"Periferico","thumbnail":["https://example.com/logitechgprox.jpg"],"id":12},{"title":"Mouse Gaming Logitech G Pro X Superlight","description":"Mouse Gaming Logitech G Pro X Superlight con sensor HERO de alta precisión, diseño ultraligero y botones personalizables","code":"asdsadasd","price":149.99,"status":true,"stock":25,"category":"Periferico","thumbnail":["https://example.com/logitechgprox.jpg"],"id":13},{"title":"Mouse Gaming Logitech G Pro X Superlight","description":"Mouse Gaming Logitech G Pro X Superlight con sensor HERO de alta precisión, diseño ultraligero y botones personalizables","code":"dsadasd","price":149.99,"status":true,"stock":25,"category":"Periferico","thumbnail":["https://example.com/logitechgprox.jpg"],"id":14},{"title":"Mouse Gaming Logitech G Pro X Superlight","description":"Mouse Gaming Logitech G Pro X Superlight con sensor HERO de alta precisión, diseño ultraligero y botones personalizables","code":"asddasddsadasdsadasd","price":149.99,"status":true,"stock":25,"category":"Periferico","thumbnail":["https://example.com/logitechgprox.jpg"],"id":15},{"title":"Mouse Gaming Logitech G Pro X Superlight","description":"Mouse Gaming Logitech G Pro X Superlight con sensor HERO de alta precisión, diseño ultraligero y botones personalizables","code":"asddasddsdddadasdsadasd","price":149.99,"status":true,"stock":25,"category":"Periferico","thumbnail":["https://example.com/logitechgprox.jpg"],"id":16},{"title":"Mouse Gaming Logitech G Pro X Superlight","description":"Mouse Gaming Logitech G Pro X Superlight con sensor HERO de alta precisión, diseño ultraligero y botones personalizables","code":"ddas","price":149.99,"status":true,"stock":25,"category":"Periferico","thumbnail":["https://example.com/logitechgprox.jpg"],"id":17},{"title":"Mouse Gaming Logitech G Pro X Superlight","description":"Mouse Gaming Logitech G Pro X Superlight con sensor HERO de alta precisión, diseño ultraligero y botones personalizables","code":"ddanjjs","price":149.99,"status":true,"stock":25,"category":"Periferico","thumbnail":["https://example.com/logitechgprox.jpg"],"id":18},{"title":"Mouse Gaming Logitech G Pro X Superlight","description":"Mouse Gaming Logitech G Pro X Superlight con sensor HERO de alta precisión, diseño ultraligero y botones personalizables","code":"kjkjkjkjkj","price":"ghgjhg","status":true,"stock":25,"category":"Periferico","thumbnail":["https://example.com/logitechgprox.jpg"],"id":19},{"title":"Mouse Gaming Logitech G Pro X Superlight","description":"Mouse Gaming Logitech G Pro X Superlight con sensor HERO de alta precisión, diseño ultraligero y botones personalizables","code":"rewrwerewr","price":149.99,"status":true,"stock":25,"category":"Periferico","thumbnail":["https://example.com/logitechgprox.jpg"],"id":20},{"title":"Mouse Gaming Logitech G Pro X Superlight","description":"Mouse Gaming Logitech G Pro X Superlight con sensor HERO de alta precisión, diseño ultraligero y botones personalizables","code":"asdsaddddsadsadasd","price":149.99,"status":true,"stock":25,"category":"Periferico","thumbnail":["https://example.com/logitechgprox.jpg"],"id":21},{"title":"Mouse Gaming Logitech G Pro X Superlight","description":"Mouse Gaming Logitech G Pro X Superlight con sensor HERO de alta precisión, diseño ultraligero y botones personalizables","code":"dddddd","price":149.99,"status":true,"stock":25,"category":"Periferico","thumbnail":["https://example.com/logitechgprox.jpg"],"id":22},{"title":"Mouse Gaming Logitech G Pro X Superlight","description":"Mouse Gaming Logitech G Pro X Superlight con sensor HERO de alta precisión, diseño ultraligero y botones personalizables","code":"ddddfdd","price":149.99,"status":true,"stock":25,"category":"Periferico","thumbnail":["https://example.com/logitechgprox.jpg"],"id":23},{"title":"Mouse Gaming Logitech G Pro X Superlight","description":"Mouse Gaming Logitech G Pro X Superlight con sensor HERO de alta precisión, diseño ultraligero y botones personalizables","code":"ddddffdd","price":149.99,"status":true,"stock":25,"category":"Periferico","thumbnail":["https://example.com/logitechgprox.jpg"],"id":24},{"title":"Mouse Gaming Logitech G Pro X Superlight","description":"Mouse Gaming Logitech G Pro X Superlight con sensor HERO de alta precisión, diseño ultraligero y botones personalizables","code":"ddddfjgfdd","price":149.99,"status":true,"stock":25,"category":"Periferico","thumbnail":["https://example.com/logitechgprox.jpg"],"id":25},{"title":"Mouse Gaming Logitech G Pro X Superlight","description":"Mouse Gaming Logitech G Pro X Superlight con sensor HERO de alta precisión, diseño ultraligero y botones personalizables","code":"ddddfjfgfdd","price":149.99,"status":true,"stock":25,"category":"Periferico","thumbnail":["https://example.com/logitechgprox.jpg"],"id":26},{"title":"Mouse Gaming Logitech G Pro X Superlight","description":"Mouse Gaming Logitech G Pro X Superlight con sensor HERO de alta precisión, diseño ultraligero y botones personalizables","code":"ddddfjfdgfdd","price":149.99,"status":true,"stock":25,"category":"Periferico","thumbnail":[2],"id":27},{"title":"Mouse Gaming Logitech G Pro X Superlight","description":"Mouse Gaming Logitech G Pro X Superlight con sensor HERO de alta precisión, diseño ultraligero y botones personalizables","code":"dddddfjfdgfdd","price":149.99,"status":true,"stock":25,"category":"Periferico","thumbnail":[2],"id":28},{"title":"Mouse Gaming Logitech G Pro X Superlight","description":"Mouse Gaming Logitech G Pro X Superlight con sensor HERO de alta precisión, diseño ultraligero y botones personalizables","code":"dddddsfjfdgfdd","price":149.99,"status":true,"stock":25,"category":"Periferico","thumbnail":[2],"id":29},{"title":"Mouse Gaming Logitech G Pro X Superlight","description":"Mouse Gaming Logitech G Pro X Superlight con sensor HERO de alta precisión, diseño ultraligero y botones personalizables","code":"dddddsfjdfdgfdd","price":149.99,"status":true,"stock":25,"category":"Periferico","thumbnail":[2],"id":30},{"title":"Mouse Gaming Logitech G Pro X Superlight","description":"Mouse Gaming Logitech G Pro X Superlight con sensor HERO de alta precisión, diseño ultraligero y botones personalizables","code":"LogiteschGProX2","price":149.99,"status":true,"stock":25,"category":"Periferico","thumbnail":["https://example.com/logitechgprox.jpg"],"id":31},{"title":"Mouse Gaming Logitech G Pro X Superlight","description":"Mouse Gaming Logitech G Pro X Superlight con sensor HERO de alta precisión, diseño ultraligero y botones personalizables","code":"LogiteschGProX4","price":149.99,"status":true,"stock":25,"category":"Periferico","thumbnail":[],"id":32},{"title":"Mouse Gaming Logitech G Pro X Superlight","description":"Mouse Gaming Logitech G Pro X Superlight con sensor HERO de alta precisión, diseño ultraligero y botones personalizables","code":"LogitechGProX4","price":149.99,"status":true,"stock":25,"category":"Periferico","thumbnail":["https://example.com/logitechgprox.jpg"],"id":33}]
+[
+    {
+        "title": "Laptop ASUS ROG",
+        "description": "Potente laptop para juegos con pantalla Full HD.",
+        "code": "P001",
+        "price": 1499.99,
+        "status": true,
+        "stock": 30,
+        "category": "Computadoras",
+        "thumbnail": [
+            "image1.jpg",
+            "image2.jpg"
+        ],
+        "id": 1
+    },
+    {
+        "title": "Smartphone Google Pixel 6",
+        "description": "Teléfono inteligente con cámara de alta calidad.",
+        "code": "P002",
+        "price": 799.99,
+        "status": true,
+        "stock": 50,
+        "category": "Teléfonos",
+        "thumbnail": [
+            "image3.jpg",
+            "image4.jpg"
+        ],
+        "id": 2
+    },
+    {
+        "title": "Router WiFi Mesh",
+        "description": "Router de malla para una conexión WiFi rápida y confiable.",
+        "code": "P003",
+        "price": 129.99,
+        "status": true,
+        "stock": 20,
+        "category": "Redes",
+        "thumbnail": [
+            "image5.jpg",
+            "image6.jpg"
+        ],
+        "id": 3
+    },
+    {
+        "title": "Auriculares Bluetooth Sony",
+        "description": "Auriculares inalámbricos con cancelación de ruido.",
+        "code": "P004",
+        "price": 199.99,
+        "status": true,
+        "stock": 40,
+        "category": "Audio",
+        "thumbnail": [
+            "image7.jpg",
+            "image8.jpg"
+        ],
+        "id": 4
+    },
+    {
+        "title": "Impresora HP LaserJet",
+        "description": "Impresora láser de alta velocidad para la oficina.",
+        "code": "P005",
+        "price": 299.99,
+        "status": true,
+        "stock": 15,
+        "category": "Impresoras",
+        "thumbnail": [
+            "image9.jpg",
+            "image10.jpg"
+        ],
+        "id": 5
+    },
+    {
+        "title": "Monitor Gaming Acer",
+        "description": "Monitor curvo de alta tasa de actualización para juegos.",
+        "code": "P006",
+        "price": 399.99,
+        "status": true,
+        "stock": 25,
+        "category": "Monitores",
+        "thumbnail": [
+            "image11.jpg",
+            "image12.jpg"
+        ],
+        "id": 6
+    },
+    {
+        "title": "Teclado Mecánico Corsair",
+        "description": "Teclado mecánico para jugadores con retroiluminación RGB.",
+        "code": "P007",
+        "price": 129.99,
+        "status": true,
+        "stock": 35,
+        "category": "Periféricos",
+        "thumbnail": [
+            "image13.jpg",
+            "image14.jpg"
+        ],
+        "id": 7
+    },
+    {
+        "title": "Disco Duro Externo WD",
+        "description": "Unidad de almacenamiento externo de 2 TB con USB 3.0.",
+        "code": "P008",
+        "price": 79.99,
+        "status": true,
+        "stock": 60,
+        "category": "Almacenamiento",
+        "thumbnail": [
+            "image15.jpg",
+            "image16.jpg"
+        ],
+        "id": 8
+    },
+    {
+        "title": "Cámara de Seguridad Nest",
+        "description": "Cámara de seguridad para el hogar con visión nocturna.",
+        "code": "P009",
+        "price": 149.99,
+        "status": true,
+        "stock": 10,
+        "category": "Seguridad",
+        "thumbnail": [
+            "image17.jpg",
+            "image18.jpg"
+        ],
+        "id": 9
+    },
+    {
+        "title": "Tableta Gráfica Wacom",
+        "description": "Tableta gráfica para ilustradores y diseñadores.",
+        "code": "P010",
+        "price": 249.99,
+        "status": true,
+        "stock": 18,
+        "category": "Diseño",
+        "thumbnail": [
+            "image19.jpg",
+            "image20.jpg"
+        ],
+        "id": 10
+    }
+]

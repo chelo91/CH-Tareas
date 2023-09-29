@@ -1,97 +1,152 @@
-/*import ProductManager from './models/productManager.js';
-import dotenv from 'dotenv';
-dotenv.config();
-const path = process.env.PATH_PRODUCTS || "./src/files/productos.json";
+import { url, port } from './src/helper/utilsPath.js';
+import axios from 'axios';
 
-const productManager = new ProductManager(path);
 const products = [
     {
-        title: 'Laptop HP Pavilion',
-        description: 'Laptop HP Pavilion con procesador Intel Core i5, pantalla Full HD de 15.6 pulgadas, 8 GB de RAM y 256 GB de almacenamiento SSD.',
+        title: 'Laptop ASUS ROG',
+        description: 'Potente laptop para juegos con pantalla Full HD.',
+        code: 'P001',
+        price: 1499.99,
+        status: true,
+        stock: 30,
+        category: 'Computadoras',
+        thumbnail: ['image1.jpg', 'image2.jpg'],
+    },
+    {
+        title: 'Smartphone Google Pixel 6',
+        description: 'Teléfono inteligente con cámara de alta calidad.',
+        code: 'P002',
         price: 799.99,
-        thumbnail: 'https://example.com/laptop1.jpg',
-        code: 'HP123',
+        status: true,
         stock: 50,
+        category: 'Teléfonos',
+        thumbnail: ['image3.jpg', 'image4.jpg'],
     },
     {
-        title: 'Teléfono Samsung Galaxy S21',
-        description: 'Samsung Galaxy S21 con pantalla AMOLED de 6.2 pulgadas, cámara de 12 MP, 128 GB de almacenamiento, y soporte 5G.',
-        price: 999.99,
-        thumbnail: 'https://example.com/phone1.jpg',
-        code: 'S21-256GB',
-        stock: 30,
-    },
-    {
-        title: 'Smart TV Sony Bravia',
-        description: 'Smart TV Sony Bravia de 55 pulgadas con resolución 4K, Android TV, y tecnología HDR para una experiencia de visualización excepcional.',
-        price: 899.99,
-        thumbnail: 'https://example.com/tv1.jpg',
-        code: 'SonyTV55',
+        title: 'Router WiFi Mesh',
+        description: 'Router de malla para una conexión WiFi rápida y confiable.',
+        code: 'P003',
+        price: 129.99,
+        status: true,
         stock: 20,
+        category: 'Redes',
+        thumbnail: ['image5.jpg', 'image6.jpg'],
     },
     {
-        title: 'Apple iPhone 13 Pro Max',
-        description: 'El iPhone 13 Pro Max de Apple con pantalla Super Retina XDR de 6.7 pulgadas, triple cámara, chip A15 Bionic y hasta 1TB de almacenamiento.',
-        price: 1099.99,
-        thumbnail: 'https://example.com/iphone13.jpg',
-        code: 'iPhone13ProMax',
+        title: 'Auriculares Bluetooth Sony',
+        description: 'Auriculares inalámbricos con cancelación de ruido.',
+        code: 'P004',
+        price: 199.99,
+        status: true,
         stock: 40,
+        category: 'Audio',
+        thumbnail: ['image7.jpg', 'image8.jpg'],
     },
     {
-        title: 'Portátil Dell XPS 13',
-        description: 'Portátil Dell XPS 13 con pantalla InfinityEdge de 13.4 pulgadas, procesador Intel Core i7, 16 GB de RAM y 512 GB de SSD.',
-        price: 1299.99,
-        thumbnail: 'https://example.com/dellxps13.jpg',
-        code: 'XPS13',
-        stock: 25,
-    },
-    {
-        title: 'Cámara Canon EOS 5D Mark IV',
-        description: 'Cámara Canon EOS 5D Mark IV con sensor CMOS de fotograma completo de 30.4 MP, grabación de video 4K y pantalla táctil de 3.2 pulgadas.',
-        price: 2499.99,
-        thumbnail: 'https://example.com/canon5d.jpg',
-        code: 'Canon5DMarkIV',
+        title: 'Impresora HP LaserJet',
+        description: 'Impresora láser de alta velocidad para la oficina.',
+        code: 'P005',
+        price: 299.99,
+        status: true,
         stock: 15,
+        category: 'Impresoras',
+        thumbnail: ['image9.jpg', 'image10.jpg'],
     },
     {
-        title: 'Sony Alpha 7 III',
-        description: 'Cámara Sony Alpha 7 III con sensor CMOS de fotograma completo de 24.2 MP, grabación de video 4K, estabilización de imagen de 5 ejes y visor electrónico OLED de alta resolución.',
-        price: 1999.99,
-        thumbnail: 'https://example.com/sonyalpha7iii.jpg',
-        code: 'SonyAlpha7III',
-        stock: 20,
-    }, {
-        title: 'Altavoces Bluetooth Sony SRS-X9',
-        description: 'Altavoces Bluetooth Sony SRS-X9 con calidad de sonido excepcional, conexión NFC, y compatibilidad con audio de alta resolución.',
-        price: 699.99,
-        thumbnail: 'https://example.com/sonysrsx9.jpg',
-        code: 'SonySRSX9',
-        stock: 10,
-    },
-    {
-        title: 'Mouse Gaming Logitech G Pro X Superlight',
-        description: 'Mouse Gaming Logitech G Pro X Superlight con sensor HERO de alta precisión, diseño ultraligero y botones personalizables.',
-        price: 149.99,
-        thumbnail: 'https://example.com/logitechgprox.jpg',
-        code: 'LogitechGProX',
+        title: 'Monitor Gaming Acer',
+        description: 'Monitor curvo de alta tasa de actualización para juegos.',
+        code: 'P006',
+        price: 399.99,
+        status: true,
         stock: 25,
+        category: 'Monitores',
+        thumbnail: ['image11.jpg', 'image12.jpg'],
     },
     {
-        title: 'Teclado Inalámbrico Logitech MX Keys',
-        description: 'Teclado inalámbrico Logitech MX Keys con retroiluminación inteligente, teclas cóncavas y compatibilidad con múltiples dispositivos.',
-        price: 99.99,
-        thumbnail: 'https://example.com/logitechmxkeys.jpg',
-        code: 'LogitechMXKeys',
-        stock: 30,
-    }];
+        title: 'Teclado Mecánico Corsair',
+        description: 'Teclado mecánico para jugadores con retroiluminación RGB.',
+        code: 'P007',
+        price: 129.99,
+        status: true,
+        stock: 35,
+        category: 'Periféricos',
+        thumbnail: ['image13.jpg', 'image14.jpg'],
+    },
+    {
+        title: 'Disco Duro Externo WD',
+        description: 'Unidad de almacenamiento externo de 2 TB con USB 3.0.',
+        code: 'P008',
+        price: 79.99,
+        status: true,
+        stock: 60,
+        category: 'Almacenamiento',
+        thumbnail: ['image15.jpg', 'image16.jpg'],
+    },
+    {
+        title: 'Cámara de Seguridad Nest',
+        description: 'Cámara de seguridad para el hogar con visión nocturna.',
+        code: 'P009',
+        price: 149.99,
+        status: true,
+        stock: 10,
+        category: 'Seguridad',
+        thumbnail: ['image17.jpg', 'image18.jpg'],
+    },
+    {
+        title: 'Tableta Gráfica Wacom',
+        description: 'Tableta gráfica para ilustradores y diseñadores.',
+        code: 'P010',
+        price: 249.99,
+        status: true,
+        stock: 18,
+        category: 'Diseño',
+        thumbnail: ['image19.jpg', 'image20.jpg'],
+    },
+];
 
-/*await products.forEach(prod => async () =>{
-    console.log("Agrego el producto ");
-    await productManager.addProduct(prod);
-});/*
-const addProductsAsync = async () => {
-    for (const prod of products) {
-        console.log("Agrego el producto");
-        await productManager.addProduct(prod);
+
+
+const loadAxios = async () => {
+    const response = await axios.get(`${url}:${port}/api/products`);
+    await sleep(500);
+    console.log("Todos los Productos");
+    console.log(response.data);
+    const productsApi = response.data.payload || [];
+    console.log("ELIMINO todos los Productos");
+    console.log(productsApi.data)
+    for (let i = 0; i < productsApi.length; i++) {
+        try {
+            const response = await axios.delete(`${url}:${port}/api/products/${productsApi[i].id}`);
+            console.log(response.data);
+        } catch (error) {
+            console.error(error.response);
+        }
+        await sleep(500);
     }
-}*/
+    console.log("Los vuelvo a agregar");
+    for (let i = 0; i < products.length; i++) {
+        try {
+            const response = await axios.post(`${url}:${port}/api/products`, products[i]);
+            console.log(response.data);
+        } catch (error) {
+            console.error(error.response);
+        }
+        await sleep(500);
+    }
+    /*console.log("Creo carritos");
+    for (let i = 0; i < 5; i++) {
+        try {
+            const response = await axios.post(`${url}:${port}/api/carts`);
+            console.log(response.data);
+        } catch (error) {
+            console.error(error.response);
+        }
+        await sleep(500);
+    }*/
+};
+function sleep(ms) {
+    return new Promise((resolve) => {
+        setTimeout(resolve, ms);
+    });
+}
+loadAxios();
