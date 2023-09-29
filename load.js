@@ -1,4 +1,4 @@
-import ProductManager from './models/productManager.js';
+/*import ProductManager from './models/productManager.js';
 import dotenv from 'dotenv';
 dotenv.config();
 const path = process.env.PATH_PRODUCTS || "./src/files/productos.json";
@@ -88,10 +88,10 @@ const products = [
 /*await products.forEach(prod => async () =>{
     console.log("Agrego el producto ");
     await productManager.addProduct(prod);
-});*/
+});/*
 const addProductsAsync = async () => {
     for (const prod of products) {
         console.log("Agrego el producto");
         await productManager.addProduct(prod);
     }
-}
+}*/

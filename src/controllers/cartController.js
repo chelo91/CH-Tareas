@@ -1,23 +1,68 @@
 import ProductManager from '../models/productManager.js';
-import dotenv from 'dotenv';
-dotenv.config();
-const path = process.env.PATH_PRODUCTS || "./db/carts.json";
+import CartManager from '../models/cartManager.js';
+import { pathProd, pathCart } from '../helper/utilsPath.js';
+import { sucessMessage, errorMessage, sucessMessageCreate, sucessMessageUpdate, sucessMessageDelete } from '../helper/utilsResponse.js';
 
 const createCart = async (req, res) => {
-    /*const productManager = new ProductManager(path);
-    const limit = req.query.limit;
-    const products = await productManager.getAndLoadProducts();
-    if (limit && limit < products.length && limit > 0) {
-        products.length = limit;
-    }
-    return res.json(products);*/
+    const cartManager = new CartManager(pathCart);
+    const idCart = await cartManager.addCart();
+    return res.status(200).json(sucessMessageCreate({ id: idCart }));
 };
 
-const get = async (req, res) => {
-    /*const productManager = new ProductManager(path);
+const addProductToCart = async (req, res) => {
+    const cartManager = new CartManager(pathCart);
+    const productManager = new ProductManager(pathProd);
+    const cid = parseInt(req.params.cid);
     const pid = parseInt(req.params.pid);
-    const result = await productManager.getProductById(pid);
-    return res.json(result || { Response: "Product not found" });*/
+    const quantity = parseInt(req.body.quantity);
+    if (isNaN(quantity) || isNaN(cid) || isNaN(pid)) {
+        return res.status(400).json(errorMessage("Invalid props"));
+    }
+    if (quantity <= 0) {
+        return res.status(400).json(errorMessage("Quantity must be greater than 0"));
+    }
+    const cart = await cartManager.getCartById(cid);
+    if (!cart) {
+        return res.status(404).json(errorMessage("Cart not found"));
+    }
+    const product = await productManager.getProductById(pid);
+    if (!product) {
+        return res.status(404).json(errorMessage("Product not found"));
+    }
+    const newProduct = {
+        id: product.id,
+        quantity: quantity
+    };
+    cartManager.addProduct(cid, newProduct)
+        .then((result) => {
+            res.status(200).json(sucessMessageUpdate(result));
+        })
+        .catch((error) => {
+            res.status(400).json(errorMessage("Error adding product to cart"));
+        });
+    /*if (result) {
+        return res.status(200).json(sucessMessageUpdate(result));
+    } else {
+        return res.status(400).json(errorMessage("Error adding product to cart"));
+    }*/
+
 };
 
-export { getAllProducts, getProductById };
+const getCarts = async (req, res) => {
+    const cartManager = new CartManager(pathCart);
+    const carts = await cartManager.getAndLoadCarts();
+    return res.status(200).json(sucessMessage(carts));
+};
+
+const getCartById = async (req, res) => {
+    const cartManager = new CartManager(pathCart);
+    const cid = parseInt(req.params.cid);
+    const cart = await cartManager.getCartById(cid);
+    if (cart) {
+        return res.status(200).json(sucessMessage(cart));
+    } else {
+        return res.status(404).json(errorMessage("Cart not found"));
+    }
+};
+
+export { createCart, addProductToCart, getCartById, getCarts };

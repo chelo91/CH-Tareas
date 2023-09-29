@@ -6,7 +6,9 @@
 ---
 - [x] Entrega 1 - Clases
 - [x] Entrega 2 - FS
-- [ ] Entrega 3 - Express
+- [x] Entrega 3 - Express
+- [ ] Entrega 4 - Cart
+
 ---
 ## Puntos a Mejorar de la Entrega 2
 - [X] Organizar o juntar todas las funciones auxiliares. 

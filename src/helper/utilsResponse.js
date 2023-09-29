@@ -22,12 +22,12 @@ const errorMessage = (message) => {
     return baseMessage('error', null, message);
 }
 const sucessMessageCreate = (id) => {
-    return baseMessage('success', id, 'Product is created');
+    return baseMessage('success', id, 'Created correctly');
 }
 const sucessMessageUpdate = (product) => {
-    return baseMessage('success', product, 'Product is updated');
+    return baseMessage('success', product, 'Updated correctly');
 }
 const sucessMessageDelete = (id) => {
-    return baseMessage('success', id, 'Product is deleted');
+    return baseMessage('success', id, 'Deleted correctly');
 }
 export { sucessMessage, errorMessage, sucessMessageCreate, sucessMessageUpdate, sucessMessageDelete };

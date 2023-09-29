@@ -1,5 +1,7 @@
 import { promises as fs } from 'fs';
 import { validateProps } from '../helper/utilsValidate.js';
+import { loadFile, saveFile } from '../helper/utilsFs.js';
+
 export default class ProductManager {
 
     /* PROPERTIES */
@@ -14,7 +16,7 @@ export default class ProductManager {
             { name: 'category', type: 'string' },
             { name: 'thumbnail', type: 'arrayOfStrings' }
         ];
-        this.arrayProduct = [];
+        this.arrayProducts = [];
         this.nextProductId = 1;
         this.path = path;
     }
@@ -24,13 +26,13 @@ export default class ProductManager {
      * @description Get the arrayProduct
      */
     get getProducts() {
-        return this.arrayProduct;
+        return this.arrayProducts;
     }
     /**
      * @description Set the arrayProduct
      */
     set setProducts(newArrayProduct) {
-        this.arrayProduct = newArrayProduct;
+        this.arrayProducts = newArrayProduct;
         this._refreshLastId();
     }
     /**
@@ -46,50 +48,12 @@ export default class ProductManager {
      */
     async _init() {
         try {
-            await fs.access(this.path, fs.constants.F_OK);
+            await fs.access(this.getPath, fs.constants.F_OK);
             console.log("Archivo existente");
-            await this._loadFile();
+            this.setProducts = await loadFile(this.getPath);
         } catch (error) {
-            console.log("Archivo inexistente");
-            await this._saveFile();
-        }
-
-    }
-    /**
-     * @description Load the file
-     */
-    async _loadFile() {
-        try {
-            const data = await fs.readFile(this.path, 'utf8');
-            if (!data) {
-                console.error('Error al leer el archivo');
-                return false;
-            } else {
-                console.log("Archivo cargado")
-                this.setProducts = JSON.parse(data);
-                return true;
-            }
-        } catch (error) {
-            console.error('Error al cargar el archivo');
-            return false;
-        }
-    }
-    /**
-     * @description Save the file
-     */
-    async _saveFile() {
-        try {
-            await fs.writeFile(this.path, JSON.stringify(this.arrayProduct), (err) => {
-                if (err) {
-                    console.error('Error al escribir el archivo');
-                    return false;
-                }
-            });
-            console.log('Archivo guardado');
-            return true;
-        } catch (error) {
-            console.error('Error al escribir el archivo');
-            return false;
+            console.log(error);
+            await saveFile(this.getPath, this.getProducts);
         }
     }
     /**
@@ -97,7 +61,7 @@ export default class ProductManager {
      */
     _refreshLastId() {
         let maxId = 0;
-        this.arrayProduct.forEach(product => {
+        this.getProducts.forEach(product => {
             if (product.id > maxId) {
                 maxId = product.id;
             }
@@ -132,7 +96,7 @@ export default class ProductManager {
             // I comment this line because I reload up in getProductByCode
             //const array = await this.getAndLoadProducts();
             this.getProducts.push(newProduct);
-            await this._saveFile();
+            await saveFile(this.getPath, this.getProducts);
             this.nextProductId++;
             return newProduct.id;
         }
@@ -177,21 +141,21 @@ export default class ProductManager {
                 bdProduct[prop.name] = newProduct[prop.name];
             }
         });
-        await this._saveFile();
+        await saveFile(this.getPath, this.getProducts);
         return bdProduct;
     }
     /**
      * @description Delete the product
      */
     async deleteProduct(pid) {
-        const arrayProduct = await this.getAndLoadProducts();
-        const index = arrayProduct.findIndex(product => product.id === pid);
+        const arrayProducts = await this.getAndLoadProducts();
+        const index = arrayProducts.findIndex(product => product.id === pid);
         if (index === -1) {
             throw new Error("Codigo no encontrado");
         }
-        arrayProduct.splice(index, 1);
-        this.setProducts = arrayProduct;
-        await this._saveFile();
+        arrayProducts.splice(index, 1);
+        this.setProducts = arrayProducts;
+        await saveFile(this.getPath, this.getProducts);
         return true;
     }
 }

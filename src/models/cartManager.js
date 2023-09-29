@@ -1,26 +1,32 @@
 import { promises as fs } from 'fs';
-import { validateProps } from '../helper/utilsValidate.js';
+//import { validateProps } from '../helper/utilsValidate.js';
+import { loadFile, saveFile } from '../helper/utilsFs.js';
+
 export default class CartManager {
 
     /* PROPERTIES */
     constructor(path) {
-        this.arrayProduct = [];
-        this.nextProductId = 1;
+        /*CartManager.propProduct = [
+            { name: 'id', type: 'number' },
+            { name: 'quantity', type: 'number' }
+        ];*/
+        this.arrayCarts = [];
+        this.nextCartId = 1;
         this.path = path;
     }
 
     /* GETTER AND SETTER */
     /**
-     * @description Get the arrayProduct
+     * @description Get the arrayCarts
      */
-    get getProducts() {
-        return this.arrayProduct;
+    get getCarts() {
+        return this.arrayCarts;
     }
     /**
-     * @description Set the arrayProduct
+     * @description Set the arrayCarts
      */
-    set setProducts(newArrayProduct) {
-        this.arrayProduct = newArrayProduct;
+    set setCarts(newArrayCarts) {
+        this.arrayCarts = newArrayCarts;
         this._refreshLastId();
     }
     /**
@@ -32,156 +38,91 @@ export default class CartManager {
 
     /* PRIVATE */
     /**
-     * @description Init the productManager
+     * @description Init the cartManager
      */
     async _init() {
         try {
-            await fs.access(this.path, fs.constants.F_OK);
+            await fs.access(this.getPath, fs.constants.F_OK);
             console.log("Archivo existente");
-            await this._loadFile();
+            this.setCarts = await loadFile(this.getPath);
         } catch (error) {
             console.log("Archivo inexistente");
-            await this._saveFile();
-        }
-
-    }
-    /**
-     * @description Load the file
-     */
-    async _loadFile() {
-        try {
-            const data = await fs.readFile(this.path, 'utf8');
-            if (!data) {
-                console.error('Error al leer el archivo');
-                return false;
-            } else {
-                console.log("Archivo cargado")
-                this.setProducts = JSON.parse(data);
-                return true;
-            }
-        } catch (error) {
-            console.error('Error al cargar el archivo');
-            return false;
+            await saveFile(this.getPath, this.getCarts);
         }
     }
     /**
-     * @description Save the file
-     */
-    async _saveFile() {
-        try {
-            await fs.writeFile(this.path, JSON.stringify(this.arrayProduct), (err) => {
-                if (err) {
-                    console.error('Error al escribir el archivo');
-                    return false;
-                }
-            });
-            console.log('Archivo guardado');
-            return true;
-        } catch (error) {
-            console.error('Error al escribir el archivo');
-            return false;
-        }
-    }
-    /**
-     * @description Refresh the nextProductId
+     * @description Refresh the nextCartId
      */
     _refreshLastId() {
         let maxId = 0;
-        this.arrayProduct.forEach(product => {
-            if (product.id > maxId) {
-                maxId = product.id;
+        this.getCarts.forEach(cart => {
+            if (cart.id > maxId) {
+                maxId = cart.id;
             }
         });
-        this.nextProductId = (maxId + 1);
+        this.nextCartId = (maxId + 1);
     }
     /**
      * @description Check if the product has all the properties
      */
-    _checkProductProp(product, update = false) {
-        return validateProps(ProductManager.propProduct, product, update);
+    /*_checkProductProp(product, update = false) {
+        return validateProps(CartManager.propProduct, product, update);
         //return ProductManager.propProduct.every((prop) => product.hasOwnProperty(prop.name));
-    }
+    }*/
 
 
     /* METHODS */
     /**
+     * @description Add a new cart
+     */
+    async addCart() {
+        const arrayCarts = await this.getAndLoadCarts();
+        const result = this.nextCartId;
+        const newCart = {
+            id: result,
+            products: []
+        };
+        this.nextCartId++;
+        arrayCarts.push(newCart);
+        await saveFile(this.getPath, this.getCarts);
+        return result;
+    }
+    /**
     * @description Add product to arrayProduct
     */
-    async addProduct(newProduct) {
-        // Check if the product has all the properties
-        const isValid = this._checkProductProp(newProduct);
+    async addProduct(idCart, newProduct) {
+        return this.getCartById(idCart)
+            .then(async (cart) => {
+                let returnProduct = null;
 
-        if (isValid) {
-            // Check if the code is repeated and reload the file .json
-            const isRepeat = await this.getProductByCode(newProduct.code);
-            if (isRepeat != null) {
-                throw new Error("Codigo repetido");
-            }
-            newProduct.id = this.nextProductId;
-            console.log(newProduct);
-            // I comment this line because I reload up in getProductByCode
-            //const array = await this.getAndLoadProducts();
-            this.getProducts.push(newProduct);
-            await this._saveFile();
-            this.nextProductId++;
-            return newProduct.id;
-        }
+                const productInCart = cart.products.find(product => product.id === newProduct.id);
+                if (productInCart) {
+                    productInCart.quantity += newProduct.quantity;
+                    returnProduct = productInCart;
+                } else {
+                    cart.products.push(newProduct);
+                    returnProduct = newProduct;
+                }
+                await saveFile(this.getPath, this.getCarts);
+                return returnProduct;
+            })
+            .catch(error => {
+                throw new Error("Cart not found");
+            });
     }
     /* CRUD */
     /**
-     * @description Get and load the products
+     * @description Get and load the carts
      */
-    async getAndLoadProducts() {
+    async getAndLoadCarts() {
         await this._init();
-        return this.getProducts;
+        return this.getCarts;
     }
     /**
-     * @description Get the product by id
+     * @description Get the cart by id
      */
-    async getProductById(pid) {
-        const array = await this.getAndLoadProducts();
-        return array.find(product => product.id === pid) || (console.log('Not found'), null);
-    }
-    /**
-     * @description Get the product by code
-     */
-    async getProductByCode(code) {
-        const array = await this.getAndLoadProducts();
-        return array.find(product => product.code === code) || (console.log('Not found'), null);
-    }
-    /**
-     * @description Update the product
-     */
-    async updateProduct(pid, newProduct) {
-        const arrayProduct = await this.getAndLoadProducts();
-        const index = arrayProduct.findIndex(product => product.id === pid);
-        if (index === -1) {
-            throw new Error("Producto no encontrado");
-        }
-        if (!this._checkProductProp(newProduct, true)) {
-            return;
-        }
-        const bdProduct = arrayProduct[index];
-        ProductManager.propProduct.forEach(prop => {
-            if (!prop.readOnly) {
-                bdProduct[prop.name] = newProduct[prop.name];
-            }
-        });
-        await this._saveFile();
-        return bdProduct;
-    }
-    /**
-     * @description Delete the product
-     */
-    async deleteProduct(pid) {
-        const arrayProduct = await this.getAndLoadProducts();
-        const index = arrayProduct.findIndex(product => product.id === pid);
-        if (index === -1) {
-            throw new Error("Codigo no encontrado");
-        }
-        arrayProduct.splice(index, 1);
-        this.setProducts = arrayProduct;
-        await this._saveFile();
-        return true;
+    async getCartById(pid) {
+        const array = await this.getAndLoadCarts();
+        return array.find(cart => cart.id === pid) || (console.log('Not found'), null);
     }
 }
