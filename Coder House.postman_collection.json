@@ -59,13 +59,63 @@
 						"method": "POST",
 						"header": [],
 						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"title\": \"Mouse Gaming Logitech G Pro X Superlight\",//string\r\n    \"description\": \"Mouse Gaming Logitech G Pro X Superlight con sensor HERO de alta precisión, diseño ultraligero y botones personalizables\",//string\r\n    \"code\": \"LogitechGProX2\",//string\r\n    \"price\": 149.99,//number\r\n    \"status\": true,//boolean\r\n    \"stock\": 25,//number\r\n    \"category\": \"Periferico\",//string\r\n    \"thumbnail\": [\"https://example.com/logitechgprox.jpg\"] //array de strings\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "title",
+									"value": "Laptop ASUS ROG",
+									"description": "string",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "Potente laptop para juegos con pantalla Full HD.",
+									"description": "string",
+									"type": "text"
+								},
+								{
+									"key": "code",
+									"value": "P001",
+									"description": "string",
+									"type": "text"
+								},
+								{
+									"key": "price",
+									"value": "1499.99",
+									"description": "number",
+									"type": "text"
+								},
+								{
+									"key": "status",
+									"value": "true",
+									"description": "boolean",
+									"type": "text"
+								},
+								{
+									"key": "stock",
+									"value": "30",
+									"description": "number",
+									"type": "text"
+								},
+								{
+									"key": "category",
+									"value": "Computadoras",
+									"description": "string",
+									"type": "text"
+								},
+								{
+									"key": "thumbnail",
+									"description": "file",
+									"type": "file",
+									"src": "Captura de pantalla 2023-04-11 181815.png"
+								},
+								{
+									"key": "thumbnail",
+									"description": "file",
+									"type": "file",
+									"src": "Captura de pantalla 2023-04-20 103743.png"
 								}
-							}
+							]
 						},
 						"url": {
 							"raw": "{{url}}/api/products",
@@ -132,7 +182,7 @@
 							"variable": [
 								{
 									"key": "id",
-									"value": "1"
+									"value": "7"
 								}
 							]
 						}
@@ -234,11 +284,11 @@
 							"variable": [
 								{
 									"key": "cid",
-									"value": "5"
+									"value": "4"
 								},
 								{
 									"key": "pid",
-									"value": "5"
+									"value": "8"
 								}
 							]
 						}
