@@ -3,6 +3,15 @@ const validateProps = (propProduct, product, update = false) => {
 
         //solo valido el campo que sea solo lectura cuando se vaya a crear un producto
         if (!update || (update && !prop.readOnly)) {
+            if (product[prop.name] == null || product[prop.name] == undefined) {
+                throw new Error(`El campo ${prop.name} no es correcto`);
+            }
+            if (prop.type == 'string' && product[prop.name].trim() === '') {
+                throw new Error(`El campo ${prop.name} es un string vacio`);
+            }
+            if (prop.type == 'number' && isNaN(product[prop.name])) {
+                throw new Error(`El campo ${prop.name} no es un numero`);
+            }
             if (!product.hasOwnProperty(prop.name)) {
                 throw new Error(`El producto no tiene la propiedad ${prop.name}`);
             }

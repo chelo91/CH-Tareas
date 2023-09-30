@@ -1,3 +1,4 @@
 PORT=3000
-PATH_PRODUCTS="./src/files/productos.json"
-PATH_CARTS="./src/files/carritos.json"
+PATH_PRODUCTS="./db/products.json"
+PATH_CARTS="./db/carts.json"
+PATH_IMG="../../public/img/"

@@ -1,4 +1,17 @@
 import { promises as fs } from 'fs';
+/*import multer from "multer";
+/import axios from 'axios';*/
+
+/*const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, pathImg);
+    },
+    filename: function (req, file, cb) {
+        cb(null, `${Date.now()}-${file.originalname}`);
+    }
+});
+const upload = multer({ storage: storage });*/
+
 
 const loadFile = async (path) => {
     try {
@@ -32,4 +45,21 @@ const saveFile = async (path, array) => {
     }
 }
 
-export { loadFile, saveFile };
+/*const uploadImage = async (path, image) => {
+
+    const response = await axios.get(image, { responseType: 'arraybuffer' });
+    const storage = multer.diskStorage({
+        destination: function (req, file, cb) {
+            cb(null, path);
+        },
+        filename: function (req, file, cb) {
+            cb(null, `${Date.now()}-${file.originalname}`);
+        }
+    });
+    const upload = multer({ storage: storage });
+    const result = await upload.single(image);
+    console.log(result);
+    return result;
+}*/
+
+export { loadFile, saveFile/*, /*uploadImage*/ };

@@ -14,7 +14,7 @@ export default class ProductManager {
             { name: 'status', type: 'boolean' },
             { name: 'stock', type: 'number' },
             { name: 'category', type: 'string' },
-            { name: 'thumbnail', type: 'arrayOfStrings' }
+            { name: 'thumbnail', type: 'arrayOfStrings', readOnly: true }
         ];
         this.arrayProducts = [];
         this.nextProductId = 1;

@@ -10,7 +10,7 @@ const products = [
         status: true,
         stock: 30,
         category: 'Computadoras',
-        thumbnail: ['image1.jpg', 'image2.jpg'],
+        thumbnail: [],
     },
     {
         title: 'Smartphone Google Pixel 6',
@@ -20,7 +20,7 @@ const products = [
         status: true,
         stock: 50,
         category: 'Teléfonos',
-        thumbnail: ['image3.jpg', 'image4.jpg'],
+        thumbnail: [],
     },
     {
         title: 'Router WiFi Mesh',
@@ -30,7 +30,7 @@ const products = [
         status: true,
         stock: 20,
         category: 'Redes',
-        thumbnail: ['image5.jpg', 'image6.jpg'],
+        thumbnail: [],
     },
     {
         title: 'Auriculares Bluetooth Sony',
@@ -40,7 +40,7 @@ const products = [
         status: true,
         stock: 40,
         category: 'Audio',
-        thumbnail: ['image7.jpg', 'image8.jpg'],
+        thumbnail: [],
     },
     {
         title: 'Impresora HP LaserJet',
@@ -50,7 +50,7 @@ const products = [
         status: true,
         stock: 15,
         category: 'Impresoras',
-        thumbnail: ['image9.jpg', 'image10.jpg'],
+        thumbnail: [],
     },
     {
         title: 'Monitor Gaming Acer',
@@ -60,7 +60,7 @@ const products = [
         status: true,
         stock: 25,
         category: 'Monitores',
-        thumbnail: ['image11.jpg', 'image12.jpg'],
+        thumbnail: [],
     },
     {
         title: 'Teclado Mecánico Corsair',
@@ -70,7 +70,7 @@ const products = [
         status: true,
         stock: 35,
         category: 'Periféricos',
-        thumbnail: ['image13.jpg', 'image14.jpg'],
+        thumbnail: [],
     },
     {
         title: 'Disco Duro Externo WD',
@@ -80,7 +80,7 @@ const products = [
         status: true,
         stock: 60,
         category: 'Almacenamiento',
-        thumbnail: ['image15.jpg', 'image16.jpg'],
+        thumbnail: [],
     },
     {
         title: 'Cámara de Seguridad Nest',
@@ -90,7 +90,7 @@ const products = [
         status: true,
         stock: 10,
         category: 'Seguridad',
-        thumbnail: ['image17.jpg', 'image18.jpg'],
+        thumbnail: [],
     },
     {
         title: 'Tableta Gráfica Wacom',
@@ -100,7 +100,7 @@ const products = [
         status: true,
         stock: 18,
         category: 'Diseño',
-        thumbnail: ['image19.jpg', 'image20.jpg'],
+        thumbnail: [],
     },
 ];
 
@@ -112,7 +112,7 @@ const loadAxios = async () => {
     console.log("Todos los Productos");
     console.log(response.data);
     const productsApi = response.data.payload || [];
-    console.log("ELIMINO todos los Productos");
+    /*console.log("ELIMINO todos los Productos");
     console.log(productsApi.data)
     for (let i = 0; i < productsApi.length; i++) {
         try {
@@ -122,7 +122,7 @@ const loadAxios = async () => {
             console.error(error.response);
         }
         await sleep(500);
-    }
+    }*/
     console.log("Los vuelvo a agregar");
     for (let i = 0; i < products.length; i++) {
         try {

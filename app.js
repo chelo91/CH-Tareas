@@ -9,6 +9,8 @@ dotenv.config();
 const port = process.env.PORT || 8080;
 const app = express(port);
 app.use(bodyParser.json());
+app.use(express.urlencoded({ extend: true }));
+app.use(express.static('public'));
 
 app.use("/api/products", productRouter);
 app.use("/api/carts", cartRouter);
