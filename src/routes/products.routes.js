@@ -1,26 +1,13 @@
-import { getProducts, getProductById, createProduct, updateProduct, deleteProduct } from '../controllers/productController.js';
 import express from "express";
-
-import { pathImg } from '../helper/utilsPath.js';
-import multer from "multer";
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, pathImg);
-    },
-    filename: function (req, file, cb) {
-        cb(null, `${Date.now()}-${file.originalname}`);
-    }
-});
-const upload = multer({ storage: storage });
+//import multer from "multer";
+import { getProducts, getProductById, createProduct, updateProduct, deleteProduct } from '../controllers/productController.js';
+import { upload } from '../midleware/uploadImageMulter.js';
+import { parseCreateProduct } from '../midleware/parserCreateProduct.js';
 
 export const router = express.Router();
 
 router.get('/', getProducts);
 router.get('/:pid', getProductById);
-router.post('/', upload.array('thumbnail'), createProduct);
+router.post('/', upload.array('thumbnail'), parseCreateProduct, createProduct);
 router.put('/:pid', updateProduct);
 router.delete('/:pid', deleteProduct);
-/*router.post('/image', upload.array('image'), (req, res) => {
-    console.log(req.file);
-    res.send('ok');
-});*/
