@@ -1,0 +1,50 @@
+[
+    {
+        "title": "Laptop ASUS ROG",
+        "description": "Potente laptop para juegos con pantalla Full HD.",
+        "code": "P001",
+        "price": 1499.99,
+        "status": true,
+        "stock": 30,
+        "category": "Computadoras",
+        "thumbnail": [
+            "public/img/1696094644738-Captura de pantalla 2023-04-11 181815.png",
+            "public/img/1696094644740-Captura de pantalla 2023-04-13 145136.png",
+            "public/img/1696094644742-Captura de pantalla 2023-04-20 103743.png"
+        ],
+        "id": 1
+    },
+    {
+        "title": "Smartphone Google Pixel 6",
+        "description": "Teléfono inteligente con cámara de alta calidad.",
+        "code": "P002",
+        "price": 799.99,
+        "status": true,
+        "stock": 50,
+        "category": "Teléfonos",
+        "thumbnail": [],
+        "id": 2
+    },
+    {
+        "title": "Router WiFi Mesh",
+        "description": "Router de malla para una conexión WiFi rápida y confiable.",
+        "code": "P003",
+        "price": 129.99,
+        "status": true,
+        "stock": 20,
+        "category": "Redes",
+        "thumbnail": [],
+        "id": 3
+    },
+    {
+        "title": "Auriculares Bluetooth Sony",
+        "description": "Auriculares inalámbricos con cancelación de ruido.",
+        "code": "P004",
+        "price": 199.99,
+        "status": true,
+        "stock": 40,
+        "category": "Audio",
+        "thumbnail": [],
+        "id": 4
+    }
+]

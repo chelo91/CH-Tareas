@@ -1,5 +1,4 @@
 import express from "express";
-//import multer from "multer";
 import { getProducts, getProductById, createProduct, updateProduct, deleteProduct } from '../controllers/productController.js';
 import { upload } from '../midleware/uploadImageMulter.js';
 import { parseCreateProduct } from '../midleware/parserCreateProduct.js';

@@ -1,6 +1,6 @@
 import ProductManager from '../models/productManager.js';
 import CartManager from '../models/cartManager.js';
-import { pathProd, pathCart } from '../helper/utilsPath.js';
+import { pathProd, pathCart } from '../helper/utilsVars.js';
 import { sucessMessage, errorMessage, sucessMessageCreate, sucessMessageUpdate, sucessMessageDelete } from '../helper/utilsResponse.js';
 
 const createCart = async (req, res) => {

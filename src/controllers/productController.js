@@ -1,6 +1,7 @@
 import ProductManager from '../models/productManager.js';
 import { sucessMessage, errorMessage, sucessMessageCreate, sucessMessageUpdate, sucessMessageDelete } from '../helper/utilsResponse.js';
-import { pathProd } from '../helper/utilsPath.js';
+import { pathProd } from '../helper/utilsVars.js';
+import { io } from '../helper/utilsServerVars.js';
 
 const getProducts = async (req, res) => {
 	const productManager = new ProductManager(pathProd);
@@ -36,6 +37,8 @@ const createProduct = async (req, res) => {
 	}
 	productManager.addProduct(newProd)
 		.then((pid) => {
+			newProd.id = pid;
+			io.emit('create-product', newProd);
 			return res.status(200).json(sucessMessageCreate({ id: pid }));
 		}).catch((err) => {
 			return res.status(400).json(errorMessage(err.message));
@@ -56,6 +59,7 @@ const deleteProduct = async (req, res) => {
 	const pid = parseInt(req.params.pid);
 	productManager.deleteProduct(pid)
 		.then(() => {
+			io.emit('delete-product', pid);
 			return res.status(200).json(sucessMessageDelete({ id: pid }));
 		}).catch((err) => {
 			return res.status(400).json(errorMessage(err.message));

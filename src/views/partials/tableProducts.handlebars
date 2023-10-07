@@ -1,0 +1,30 @@
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col" data-field="id">ID</th>
+            <th scope="col" data-field="title">Tittle</th>
+            <th scope="col" data-field="description">Decription</th>
+            <th scope="col" data-field="code">Code</th>
+            <th scope="col" data-field="price">Price</th>
+            <th scope="col" data-field="status">Status</th>
+            <th scope="col" data-field="stock">Stock</th>
+            <th scope="col" data-field="category">Category</th>
+            <!--<th data-field="thumbnail">Thumbnail</th>-->
+        </tr>
+    </thead>
+    <tbody>
+        {{#each products}}
+            <tr>
+                <td>{{this.id}}</td>
+                <td>{{this.title}}</td>
+                <td>{{this.description}}</td>
+                <td>{{this.code}}</td>
+                <td>{{this.price}}</td>
+                <td>{{this.status}}</td>
+                <td>{{this.stock}}</td>
+                <td>{{this.category}}</td>
+                <!--<td>{{this.thumbnail}}</td>-->
+            </tr>
+        {{/each}}
+    </tbody>
+</table>
