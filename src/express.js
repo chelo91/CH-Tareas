@@ -22,4 +22,4 @@ export const startExpressServer = () => {
 
     app.use("/", viewsRouter);
     app.use("/now", viewsRouter);
-}  
+}

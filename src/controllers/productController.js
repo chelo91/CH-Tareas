@@ -44,6 +44,7 @@ const createProduct = async (req, res) => {
 			return res.status(400).json(errorMessage(err.message));
 		});
 };
+
 const updateProduct = async (req, res) => {
 	const productManager = new ProductManager(pathProd);
 	const pid = parseInt(req.params.pid);
@@ -54,6 +55,7 @@ const updateProduct = async (req, res) => {
 			return res.status(400).json(errorMessage(err.message));
 		});
 };
+
 const deleteProduct = async (req, res) => {
 	const productManager = new ProductManager(pathProd);
 	const pid = parseInt(req.params.pid);
@@ -65,4 +67,5 @@ const deleteProduct = async (req, res) => {
 			return res.status(400).json(errorMessage(err.message));
 		});
 };
+
 export { getProducts, getProductById, createProduct, updateProduct, deleteProduct };
