@@ -1,11 +1,57 @@
 <h1>Estoy en el RealTimeProducts</h1>
-
+{{> tableProducts products=products }}
 <script src="socket.io/socket.io.js"></script>
 <script>
     const socket = io();
+    let products = [];
 
-    socket.on('product-message', ({ socketId, message }) => {
-        Swal.fire(message);
+    document.addEventListener("DOMContentLoaded", function () {
+        socket.on('products', (initialProducts) => {
+            products = initialProducts;
+            refreshTable();
+        });
+
+        socket.on('create-product', ({ product }) => {
+            Swal.fire({
+                icon: 'success',
+                title: 'Producto creado',
+                text: "" + product.id + " - " + product.title,
+                timer: 1500,
+                timerProgressBar: true
+            });
+            products.push(product);
+            refreshTable();
+        });
+
+        socket.on('delete-product', ({ id }) => {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Producto eliminado',
+                text: "ID: " + id,
+                timer: 1500,
+                timerProgressBar: true
+            });
+            products = products.filter(product => product.id !== id);
+            refreshTable();
+        });
+
+        function refreshTable() {
+            const tbody = document.getElementById("tableProductsBody");
+            tbody.innerHTML = "";
+            products.forEach((product) => {
+                const row = document.createElement("tr");
+                row.innerHTML = `<td>${product.id}</td>
+                                <td>${product.title}</td>
+                                <td>${product.description}</td>
+                                <td>${product.code}</td>
+                                <td>${product.price}</td>
+                                <td>${product.status}</td>
+                                <td>${product.stock}</td>
+                                <td>${product.category}</td>`;
+
+                tbody.appendChild(row);
+            });
+        }
     });
 
 

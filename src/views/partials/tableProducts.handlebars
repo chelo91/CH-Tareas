@@ -1,4 +1,4 @@
-<table class="table">
+<table id="tableProducts" class="table">
     <thead>
         <tr>
             <th scope="col" data-field="id">ID</th>
@@ -12,7 +12,7 @@
             <!--<th data-field="thumbnail">Thumbnail</th>-->
         </tr>
     </thead>
-    <tbody>
+    <tbody id="tableProductsBody">
         {{#each products}}
             <tr>
                 <td>{{this.id}}</td>

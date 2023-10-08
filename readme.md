@@ -7,13 +7,15 @@
 - [x] Entrega 1 - Clases
 - [x] Entrega 2 - FS
 - [x] Entrega 3 - Express
-- [ ] Entrega 4 - Cart
+- [X] Entrega 4 - Cart y Multer
+- [ ] Entrega 5 - Socket.io y Handlebars
 
----
-## Puntos a Mejorar de la Entrega 2
-- [X] Organizar o juntar todas las funciones auxiliares. 
-- [x] Optimizacion en fs.existsSync(this.path)
-- [x] Optimizar DeleteProduct y UpdateProduct
----
+
 ## Postman
 El archvio se encuenta en la carpeta principal como Coder House.postman_collection.json
+
+## Socket.io
+Los 3 eventos que utilizamos son products, create-product y delete-product.
+
+## JSON
+Hay un JSON de respaldo en la carpeta principal como products.backup.json en caso de borrar todos los json productos de products.json

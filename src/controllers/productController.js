@@ -38,7 +38,7 @@ const createProduct = async (req, res) => {
 	productManager.addProduct(newProd)
 		.then((pid) => {
 			newProd.id = pid;
-			io.emit('create-product', newProd);
+			io.emit('create-product', { product: newProd });
 			return res.status(200).json(sucessMessageCreate({ id: pid }));
 		}).catch((err) => {
 			return res.status(400).json(errorMessage(err.message));
@@ -59,7 +59,7 @@ const deleteProduct = async (req, res) => {
 	const pid = parseInt(req.params.pid);
 	productManager.deleteProduct(pid)
 		.then(() => {
-			io.emit('delete-product', pid);
+			io.emit('delete-product', { id: pid });
 			return res.status(200).json(sucessMessageDelete({ id: pid }));
 		}).catch((err) => {
 			return res.status(400).json(errorMessage(err.message));
