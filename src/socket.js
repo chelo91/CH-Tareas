@@ -1,9 +1,9 @@
 import { io } from './helper/utilsServerVars.js';
-import ProductManager from './models/productManager.js';
-import { pathProd } from './helper/utilsVars.js';
+import ProductManager from './dao/mongo/products.mongo.js';
+import { mongoUrl } from './helper/utilsVars.js';
 
-const productManager = new ProductManager(pathProd);
-const products = await productManager.getAndLoadProducts();
+const productManager = new ProductManager(mongoUrl);
+const products = await productManager.getProducts();
 
 export const startSocketServer = async () => {
 

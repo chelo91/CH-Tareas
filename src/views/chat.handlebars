@@ -1,4 +1,9 @@
-{{> tableProducts products=products }}
+<div class="container chat-container">
+    {{> messages }}
+    <input type="text" id="chat-input" class="form-control" placeholder="Escribe tu mensaje...">
+</div>
+
+
 <script src="socket.io/socket.io.js"></script>
 <script>
     const socket = io();
@@ -84,3 +89,22 @@
         messageInput.value = '';
     });*/
 </script>
+
+<style>
+    .chat-container {
+        max-width: 400px;
+        margin: 0 auto;
+    }
+
+    .message {
+        background-color: #f1f1f1;
+        padding: 10px;
+        margin: 10px 0;
+        border-radius: 10px;
+    }
+
+    .user-message {
+        background-color: #007bff;
+        color: white;
+    }
+</style>

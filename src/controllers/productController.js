@@ -1,12 +1,11 @@
-import ProductManager from '../models/productManager.js';
+import ProductManager from '../dao/mongo/products.mongo.js';
 import { sucessMessage, errorMessage, sucessMessageCreate, sucessMessageUpdate, sucessMessageDelete } from '../helper/utilsResponse.js';
-import { pathProd } from '../helper/utilsVars.js';
 import { io } from '../helper/utilsServerVars.js';
 
 const getProducts = async (req, res) => {
-	const productManager = new ProductManager(pathProd);
+	const productManager = new ProductManager();
 	const limit = req.query.limit;
-	const products = await productManager.getAndLoadProducts();
+	const products = await productManager.getProducts();
 	if (limit && limit < products.length && limit > 0) {
 		products.length = limit;
 	}
@@ -14,8 +13,8 @@ const getProducts = async (req, res) => {
 };
 
 const getProductById = async (req, res) => {
-	const productManager = new ProductManager(pathProd);
-	const pid = parseInt(req.params.pid);
+	const productManager = new ProductManager();
+	const pid = req.params.pid || null;
 	const result = await productManager.getProductById(pid);
 	if (result) {
 		return res.status(404).json(errorMessage("Product not found"));
@@ -24,7 +23,7 @@ const getProductById = async (req, res) => {
 };
 
 const createProduct = async (req, res) => {
-	const productManager = new ProductManager(pathProd);
+	const productManager = new ProductManager();
 	const newProd = {
 		title: req.body.title,
 		description: req.body.description,
@@ -46,8 +45,8 @@ const createProduct = async (req, res) => {
 };
 
 const updateProduct = async (req, res) => {
-	const productManager = new ProductManager(pathProd);
-	const pid = parseInt(req.params.pid);
+	const productManager = new ProductManager();
+	const pid = req.params.pid || null;
 	productManager.updateProduct(pid, req.body)
 		.then((prod) => {
 			return res.status(200).json(sucessMessageUpdate(prod));
@@ -57,8 +56,8 @@ const updateProduct = async (req, res) => {
 };
 
 const deleteProduct = async (req, res) => {
-	const productManager = new ProductManager(pathProd);
-	const pid = parseInt(req.params.pid);
+	const productManager = new ProductManager();
+	const pid = req.params.pid || null;
 	productManager.deleteProduct(pid)
 		.then(() => {
 			io.emit('delete-product', { id: pid });

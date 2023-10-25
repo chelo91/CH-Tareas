@@ -1,58 +1,39 @@
 import { promises as fs } from 'fs';
-//import { validateProps } from '../helper/utilsValidate.js';
-import { loadFile, saveFile } from '../helper/utilsFs.js';
+import CartsInterface from '../interface/carts.interface.js';
+import { loadFile, saveFile } from '../../helper/utilsFs.js';
+import { pathCart } from '../../helper/utilsVars.js';
 
-export default class CartManager {
+export default class Carts extends CartsInterface {
 
     /* PROPERTIES */
-    constructor(path) {
-        /*CartManager.propProduct = [
-            { name: 'id', type: 'number' },
-            { name: 'quantity', type: 'number' }
-        ];*/
+    constructor() {
+        super();
         this.arrayCarts = [];
         this.nextCartId = 1;
-        this.path = path;
+        this.conection = pathCart;
     }
-
     /* GETTER AND SETTER */
-    /**
-     * @description Get the arrayCarts
-     */
     get getCarts() {
         return this.arrayCarts;
     }
-    /**
-     * @description Set the arrayCarts
-     */
     set setCarts(newArrayCarts) {
         this.arrayCarts = newArrayCarts;
         this._refreshLastId();
     }
-    /**
-     * @description Get the path
-     */
-    get getPath() {
-        return this.path;
+    get getConection() {
+        return this.conection;
     }
-
     /* PRIVATE */
-    /**
-     * @description Init the cartManager
-     */
     async _init() {
         try {
-            await fs.access(this.getPath, fs.constants.F_OK);
+            await fs.access(this.getConection, fs.constants.F_OK);
             console.log("Archivo existente");
-            this.setCarts = await loadFile(this.getPath);
+            this.setCarts = await loadFile(this.getConection);
         } catch (error) {
             console.log("Archivo inexistente");
-            await saveFile(this.getPath, this.getCarts);
+            await saveFile(this.getConection, this.getCarts);
         }
     }
-    /**
-     * @description Refresh the nextCartId
-     */
     _refreshLastId() {
         let maxId = 0;
         this.getCarts.forEach(cart => {
@@ -62,21 +43,9 @@ export default class CartManager {
         });
         this.nextCartId = (maxId + 1);
     }
-    /**
-     * @description Check if the product has all the properties
-     */
-    /*_checkProductProp(product, update = false) {
-        return validateProps(CartManager.propProduct, product, update);
-        //return ProductManager.propProduct.every((prop) => product.hasOwnProperty(prop.name));
-    }*/
-
-
     /* METHODS */
-    /**
-     * @description Add a new cart
-     */
     async addCart() {
-        const arrayCarts = await this.getAndLoadCarts();
+        const arrayCarts = await this.getCarts();
         const result = this.nextCartId;
         const newCart = {
             id: result,
@@ -84,12 +53,9 @@ export default class CartManager {
         };
         this.nextCartId++;
         arrayCarts.push(newCart);
-        await saveFile(this.getPath, this.getCarts);
+        await saveFile(this.getConection, this.getCarts);
         return result;
     }
-    /**
-    * @description Add product to arrayProduct
-    */
     async addProduct(idCart, newProduct) {
         return this.getCartById(idCart)
             .then(async (cart) => {
@@ -103,7 +69,7 @@ export default class CartManager {
                     cart.products.push(newProduct);
                     returnProduct = newProduct;
                 }
-                await saveFile(this.getPath, this.getCarts);
+                await saveFile(this.getConection, this.getCarts);
                 return returnProduct;
             })
             .catch(error => {
@@ -111,18 +77,12 @@ export default class CartManager {
             });
     }
     /* CRUD */
-    /**
-     * @description Get and load the carts
-     */
-    async getAndLoadCarts() {
+    async getCarts() {
         await this._init();
         return this.getCarts;
     }
-    /**
-     * @description Get the cart by id
-     */
     async getCartById(pid) {
-        const array = await this.getAndLoadCarts();
+        const array = await this.getCarts();
         return array.find(cart => cart.id === pid) || (console.log('Not found'), null);
     }
 }

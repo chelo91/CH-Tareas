@@ -1,21 +1,20 @@
-import ProductManager from '../models/productManager.js';
-import CartManager from '../models/cartManager.js';
-import { pathProd, pathCart } from '../helper/utilsVars.js';
+import ProductManager from '../dao/mongo/products.mongo.js';
+import CartManager from '../dao/mongo/carts.mongo.js';
 import { sucessMessage, errorMessage, sucessMessageCreate, sucessMessageUpdate, sucessMessageDelete } from '../helper/utilsResponse.js';
 
 const createCart = async (req, res) => {
-    const cartManager = new CartManager(pathCart);
+    const cartManager = new CartManager();
     const idCart = await cartManager.addCart();
     return res.status(200).json(sucessMessageCreate({ id: idCart }));
 };
 
 const addProductToCart = async (req, res) => {
-    const cartManager = new CartManager(pathCart);
-    const productManager = new ProductManager(pathProd);
-    const cid = parseInt(req.params.cid);
-    const pid = parseInt(req.params.pid);
+    const cartManager = new CartManager();
+    const productManager = new ProductManager();
+    const cid = req.params.cid || null;
+    const pid = req.params.pid || null;
     const quantity = parseInt(req.body.quantity);
-    if (isNaN(quantity) || isNaN(cid) || isNaN(pid)) {
+    if (isNaN(quantity) || cid != null || pid != null) {
         return res.status(400).json(errorMessage("Invalid props"));
     }
     if (quantity <= 0) {
@@ -49,14 +48,14 @@ const addProductToCart = async (req, res) => {
 };
 
 const getCarts = async (req, res) => {
-    const cartManager = new CartManager(pathCart);
-    const carts = await cartManager.getAndLoadCarts();
+    const cartManager = new CartManager();
+    const carts = await cartManager.getCarts();
     return res.status(200).json(sucessMessage(carts));
 };
 
 const getCartById = async (req, res) => {
-    const cartManager = new CartManager(pathCart);
-    const cid = parseInt(req.params.cid);
+    const cartManager = new CartManager();
+    const cid = req.params.cid;
     const cart = await cartManager.getCartById(cid);
     if (cart) {
         return res.status(200).json(sucessMessage(cart));
