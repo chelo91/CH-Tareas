@@ -1,96 +1,127 @@
-<div class="container chat-container">
-    {{> messages }}
-    <input type="text" id="chat-input" class="form-control" placeholder="Escribe tu mensaje...">
+<div class="righted">
+    <button id="btn-login" type="button" class="btn btn-primary">Login</button>
 </div>
-
+<div class="container chat-container">
+    <div id="div-messages">
+    </div>
+    <input type="text" id="chat-input" class="form-control" placeholder="Escribe tu mensaje..." disabled>
+</div>
 
 <script src="socket.io/socket.io.js"></script>
 <script>
     const socket = io();
     let products = [];
+    let loggedEmail = "";
 
     document.addEventListener("DOMContentLoaded", function () {
-        socket.on('products', (initialProducts) => {
-            products = initialProducts;
-            refreshTable();
-        });
-
-        socket.on('create-product', ({ product }) => {
-            Swal.fire({
-                icon: 'success',
-                title: 'Producto creado',
-                text: "" + product._id + " - " + product.title,
-                timer: 1500,
-                timerProgressBar: true
+        const inputChat = document.getElementById('chat-input');
+        const btnLogin = document.getElementById('btn-login');
+        const divMessages = document.getElementById("div-messages");
+        btnLogin.addEventListener("click", async (e) => {
+            const { value: email } = await Swal.fire({
+                title: 'Login',
+                input: 'email',
+                inputLabel: 'Ingrese un email',
+                inputPlaceholder: 'pepe@pepe.com'
             });
-            products.push(product);
-            refreshTable();
+            if (email) {
+                loggedEmail = email;
+                Swal.fire(`Logueado con exito: ${email}`);
+                socket.emit('login', email);
+                document.getElementById("chat-input").disabled = false;
+            }
         });
 
-        socket.on('delete-product', ({ _id }) => {
-            Swal.fire({
-                icon: 'warning',
-                title: 'Producto eliminado',
-                text: "ID: " + _id,
-                timer: 1500,
-                timerProgressBar: true
+        socket.on('messages', (messages) => {
+            messages.forEach((message) => {
+                addMessage(message);
+                /*const divMessage = document.createElement("div");
+                divMessage.classList.add("message");
+                if (email === loggedEmail) {
+                    divMessage.classList.add("user-message");
+                }
+                divMessage.textContent = `${email}: ${message}`;
+                divMessages.appendChild(divMessage);*/
             });
-            products = products.filter(product => product._id !== _id);
-            refreshTable();
         });
-
-        function refreshTable() {
-            const tbody = document.getElementById("tableProductsBody");
-            tbody.innerHTML = "";
-            products.forEach((product) => {
-                const row = document.createElement("tr");
-                row.innerHTML = `<td>${product._id}</td>
-                                <td>${product.title}</td>
-                                <td>${product.description}</td>
-                                <td>${product.code}</td>
-                                <td>${product.price}</td>
-                                <td>${product.status}</td>
-                                <td>${product.stock}</td>
-                                <td>${product.category}</td>`;
-
-                tbody.appendChild(row);
-            });
-        }
-    });
-
-
-    /*const messageList = document.getElementById('message-list');
-    const messageInput = document.getElementById('message-input');
-    const sendButton = document.getElementById('send-button');
-
-    // Función para agregar un mensaje al DOM
-    function addMessage(socketId, message) {
-        const listItem = document.createElement('li');
-        listItem.textContent = `${socketId}: ${message}`;
-        messageList.appendChild(listItem);
-    }
-
-    // Escucha eventos 'message' y actualiza la lista de mensajes
-    socket.on('product', ({ socketId, message }) => {
-        addMessage(socketId, message);
-    });
-
-    // Escucha el evento 'messages' inicial para cargar los mensajes existentes
-    socket.on('products', (initialMessages) => {
-        initialMessages.forEach(({ socketId, message }) => {
-            addMessage(socketId, message);
+        socket.on('new-message', (message) => {
+            /*const divMessage = document.createElement("div");
+            divMessage.classList.add("message");
+            if (message.email === loggedEmail) {
+                divMessage.classList.add("user-message");
+            }
+            divMessage.textContent = `${message.email}: <br>${message.message}`;
+            divMessages.appendChild(divMessage);*/
+            addMessage(message);
         });
-    });
+        inputChat.addEventListener('keydown', function (event) {
+            if (event.key === 'Enter' || event.keyCode === 13) {
+                if (inputChat.value !== '') {
+                    const message = inputChat.value;
+                    socket.emit('send-message', { email: loggedEmail, message: message, session: socket.id });
+                    inputChat.value = '';
+                }
+            }
+        });
+        const addMessage = (message) => {
+            const divMessage = document.createElement("div");
 
-    // Enviar mensaje cuando se hace clic en el botón
-    sendButton.addEventListener('click', () => {
-        const message = messageInput.value;
-        socket.emit('product', message);
-        messageInput.value = '';
-    });*/
+            if (message.email === loggedEmail) {
+                divMessage.classList.add("user-message");
+            }
+
+            divMessage.classList.add("message");
+            // Crear elementos para el email y el mensaje
+            const emailElement = document.createElement("div");
+            emailElement.classList.add("message-email");
+            emailElement.textContent = message.email;
+
+            const messageElement = document.createElement("div");
+            messageElement.classList.add("message-text");
+            messageElement.textContent = message.message;
+
+            // Agregar los elementos al divMessage
+            divMessage.appendChild(emailElement);
+            divMessage.appendChild(messageElement);
+
+            divMessages.appendChild(divMessage);
+
+
+
+            /*const divMessage = document.createElement("div");
+            const emailElement = document.createElement("div");
+            const messageElement = document.createElement("div");
+            divMessage.appendChild(emailElement);
+            divMessage.appendChild(messageElement);
+
+            divMessages.appendChild(divMessage);
+
+
+            divMessage.classList.add("message");
+            if (message.email === loggedEmail) {
+                divMessage.classList.add("user-message");
+            }
+            divMessage.textContent = `${message.email}: <br>${message.message}`;
+            divMessages.appendChild(divMessage);*/
+        };
+    });
 </script>
 
 <style>
+    .message-email {
+        font-weight: bold;
+    }
+
+    .message-text {
+        margin-top: 5px;
+    }
+
+    #div-messages {
+        overflow-x: hidden;
+        overflow-y: scroll;
+        max-height: 70%;
+    }
+
     .chat-container {
         max-width: 400px;
         margin: 0 auto;
@@ -106,5 +137,10 @@
     .user-message {
         background-color: #007bff;
         color: white;
+        text-align: right;
+    }
+
+    .righted {
+        text-align: right;
     }
 </style>

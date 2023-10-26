@@ -65,6 +65,7 @@ export default class Products extends ProductManagerInterface {
         return productModel.find({ code: code })
     }
     async updateProduct(pid, newProduct) {
+        let bdProduct;
         Products.propProduct.forEach(prop => {
             if (!prop.readOnly) {
                 bdProduct[prop.name] = newProduct[prop.name];

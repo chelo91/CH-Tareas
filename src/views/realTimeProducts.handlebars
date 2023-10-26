@@ -53,34 +53,4 @@
         }
     });
 
-
-    /*const messageList = document.getElementById('message-list');
-    const messageInput = document.getElementById('message-input');
-    const sendButton = document.getElementById('send-button');
-
-    // Función para agregar un mensaje al DOM
-    function addMessage(socketId, message) {
-        const listItem = document.createElement('li');
-        listItem.textContent = `${socketId}: ${message}`;
-        messageList.appendChild(listItem);
-    }
-
-    // Escucha eventos 'message' y actualiza la lista de mensajes
-    socket.on('product', ({ socketId, message }) => {
-        addMessage(socketId, message);
-    });
-
-    // Escucha el evento 'messages' inicial para cargar los mensajes existentes
-    socket.on('products', (initialMessages) => {
-        initialMessages.forEach(({ socketId, message }) => {
-            addMessage(socketId, message);
-        });
-    });
-
-    // Enviar mensaje cuando se hace clic en el botón
-    sendButton.addEventListener('click', () => {
-        const message = messageInput.value;
-        socket.emit('product', message);
-        messageInput.value = '';
-    });*/
 </script>
