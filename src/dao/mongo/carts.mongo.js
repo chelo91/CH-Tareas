@@ -40,46 +40,28 @@ export default class Carts extends CartManagerInterface {
     }
     async addProduct(idCart, newProduct) {
         const cart = await this.getCartById(idCart);
-        const product = await productModel.findById(newProduct._id);
+        const product = await productModel.findById(newProduct.id);
         if (product.length === 0) {
             throw new Error("Product not found");
         }
-        const productCart = {
-            _id: product.id,
-            cantidad: product.quantity
-        };
-        cart.products.push(productCart);
-        return cart.save();
-        /*return this.getCartById(idCart)
-            .then(async (cart) => {
-                let returnProduct = null;
 
-                const productInCart = cart.products.find(product => product.id === newProduct.id);
-                if (productInCart) {
-                    productInCart.quantity += newProduct.quantity;
-                    returnProduct = productInCart;
-                } else {
-                    cart.products.push(newProduct);
-                    returnProduct = newProduct;
-                }
-                await saveFile(this.getConection, this.getCarts);
-                return returnProduct;
-            })
-            .catch(error => {
-                throw new Error("Cart not found");
-            });*/
+        const productInCart = cart.products.find(product => product.productId == newProduct.id);
+        if (productInCart !== undefined) {
+            productInCart.quantity += newProduct.quantity;
+        } else {
+            const productToCart = {
+                productId: newProduct.id,
+                quantity: newProduct.quantity
+            };
+            cart.products.push(productToCart);
+        }
+        return cart.save();
     }
     /* CRUD */
     async getCarts() {
         return cartModel.find({});
-
-        /*await this._init();
-        return this.getCarts;*/
     }
     async getCartById(pid) {
-        return cartModel.find({ _id: pid });
-
-        /* const array = await this.getAndLoadCarts();
-         return array.find(cart => cart.id === pid) || (console.log('Not found'), null);*/
+        return cartModel.findById(pid);
     }
 }
