@@ -20,7 +20,7 @@ export const startSocketServer = async () => {
         // Manejar mensajes entrantes desde el cliente
         socket.on('login', (email) => {
             console.log(`Usuario ${email} logueado`);
-            io.emit('messages', messages);
+            socket.emit('messages', messages);
         });
 
         socket.on('send-message', async (message) => {
