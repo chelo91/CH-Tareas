@@ -9,7 +9,8 @@
 - [x] Entrega 3 - Express
 - [X] Entrega 4 - Cart y Multer
 - [X] Entrega 5 - Socket.io y Handlebars
-- [ ] Entrega 6 - Mongoose y Chat
+- [X] Entrega 6 - Mongoose y Chat
+- [X] Entrega 7 - Mongoose y mejoras en Cart
 
 ## Postman
 El archvio se encuenta en la carpeta principal como Coder House.postman_collection.json
