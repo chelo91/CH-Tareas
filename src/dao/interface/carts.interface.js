@@ -14,7 +14,7 @@ export default class CartsInterface {
     async addProduct(idCart, newProduct) {
         throw new Error('addProduct method not implemented');
     }
-    async getCarts() {
+    async getCarts(query) {
         throw new Error('addProduct method not implemented');
     }
     async getCartById(pid) {

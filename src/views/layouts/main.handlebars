@@ -10,6 +10,8 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
     crossorigin="anonymous"></script>
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
   <!-- SweetAlert2 11.1.9 -->
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
@@ -22,6 +24,68 @@
     <h1>{{myPage.title}}</h1>
     {{{body}}}
   </main>
+  <script>
+    document.addEventListener("DOMContentLoaded", async function () {
+      let cart = localStorage.getItem("cart") || null;
+      if (cart !== null) {
+        try {
+          const response = await fetch(`/api/carts/${cart}`, {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          });
+          if (!response.ok) {
+            let cart = null;
+            console.error("Error al obtener el carrito");
+          }
+        } catch (error) {
+          let cart = null;
+          console.error("Error en la solicitud:", error);
+        }
+      }
+      if (cart === null) {
+        try {
+          const response = await fetch("/api/carts", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          });
+          if (response.ok) {
+            const data = await response.json();
+            const cartId = data.payload._id || null;
+            localStorage.setItem("cart", cartId);
+          } else {
+            console.error("Error al crear el carrito");
+          }
+        } catch (error) {
+          console.error("Error en la solicitud:", error);
+        }
+      }
+    });
+
+    function handleCartIconClick(id) {
+      const cart = localStorage.getItem("cart");
+      fetch(`/api/carts/${cart}/product/${id}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        }
+      })
+        .then((res) => {
+          if (res.ok) {
+            Swal.fire('Producto agregado al carrito')
+          } else {
+            Swal.fire('Error al agregar producto al carrito')
+          }
+        })
+        .catch((err) => {
+          console.error(err);
+          Swal.fire('Error al agregar producto al carrito')
+        });
+    }
+  </script>
 </body>
 
 </html>

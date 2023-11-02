@@ -1,0 +1,32 @@
+<table id="tableCart" class="table">
+    <thead>
+        <tr>
+            <th scope="col" data-field="_id">ID</th>
+            <th scope="col" data-field="title">Tittle</th>
+            <th scope="col" data-field="description">Decription</th>
+            <th scope="col" data-field="code">Code</th>
+            <th scope="col" data-field="price">Price</th>
+            <th scope="col" data-field="status">Status</th>
+            <th scope="col" data-field="stock">Stock</th>
+            <th scope="col" data-field="category">Category</th>
+            <th scope="col" data-field="quantity">Cantidad</th>
+            <!--<th data-field="thumbnail">Thumbnail</th>-->
+        </tr>
+    </thead>
+    <tbody id="tableCartBody">
+        {{#each products}}
+            <tr>
+                <td>{{this.product._id}}</td>
+                <td>{{this.product.title}}</td>
+                <td>{{this.product.description}}</td>
+                <td>{{this.product.code}}</td>
+                <td>{{this.product.price}}</td>
+                <td>{{this.product.status}}</td>
+                <td>{{this.product.stock}}</td>
+                <td>{{this.product.category}}</td>
+                <td>{{this.quantity}}</td>
+                <!--<td>{{this.thumbnail}}</td>-->
+            </tr>
+        {{/each}}
+    </tbody>
+</table>

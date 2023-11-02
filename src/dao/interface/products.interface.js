@@ -11,7 +11,7 @@ export default class ProductsInterface {
     async addProduct(newProduct) {
         throw new Error('addProduct method not implemented');
     }
-    async getProducts() {
+    async getProducts(query) {
         throw new Error('addProduct method not implemented');
     }
     async getProductById(pid) {

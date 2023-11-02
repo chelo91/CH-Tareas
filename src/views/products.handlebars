@@ -1,0 +1,80 @@
+{{> tableProducts }}
+<nav aria-label="">
+    <ul id="ul-pagination" class="pagination">
+        <li class="page-item"><a id="prePageButton" class="page-link">Anterior</a></li>
+        <li class="page-item"><a id="nextPageButton" class="page-link">Siguiente</a></li>
+    </ul>
+</nav>
+
+<script>
+    let response = [];
+
+    let products = [];
+    let currentPage = 1;
+    const productsPerPage = 10;
+    let order = "";
+    let category = "";
+    let available = "";
+    document.addEventListener("DOMContentLoaded", function () {
+        function loadProducts(page) {
+            const url = `/api/products?page=${page}&limit=${productsPerPage}`;
+            const xhr = new XMLHttpRequest();
+            xhr.open("GET", url, true);
+            xhr.onload = function () {
+                if (xhr.status === 200) {
+                    response = JSON.parse(xhr.responseText);
+                    refreshTable();
+                } else {
+                    console.error("Error al cargar productos");
+                }
+            };
+            xhr.send();
+        }
+        function handlePagination(next = true) {
+            auxCurrentPage = next ? currentPage + 1 : currentPage - 1;
+            if (auxCurrentPage > 0 && auxCurrentPage <= response.payload.totalPages) {
+                currentPage = auxCurrentPage;
+                loadProducts(currentPage);
+            }
+
+        }
+        function refreshTable() {
+            const tbody = document.getElementById("tableProductsBody");
+            tbody.innerHTML = "";
+            response.payload.docs.forEach((product) => {
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                                <td>${product._id}</td>
+                                <td>${product.title}</td>
+                                <td>${product.description}</td>
+                                <td>${product.code}</td>
+                                <td>${product.price}</td>
+                                <td>${product.status}</td>
+                                <td>${product.stock}</td>
+                                <td>${product.category}</td>
+                                <td>
+                                    <a href="/products/${product._id}"><i class="bi bi-book"></i></a>
+                                    <a class="cart-icon"><i class="bi bi-cart"></i></a>
+                                </td>`;
+                const cartIcon = row.querySelector(".cart-icon");
+                cartIcon.addEventListener("click", () => {
+                    handleCartIconClick(product._id);
+                });
+                tbody.appendChild(row);
+            });
+        }
+
+        const nextPageButton = document.getElementById("nextPageButton");
+        nextPageButton.addEventListener("click", function () {
+            handlePagination(true);
+        });
+        const prePageButton = document.getElementById("prePageButton");
+        prePageButton.addEventListener("click", function () {
+            handlePagination(false);
+        });
+
+        // Inicialmente, carga los productos de la primera página
+        loadProducts(currentPage);
+    });
+
+</script>

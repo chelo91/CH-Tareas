@@ -3,6 +3,7 @@ import CartManagerInterface from '../interface/carts.interface.js';
 import cartModel from '../models/carts.model.js'
 import productModel from '../models/products.model.js';
 import { mongoUrl } from '../../helper/utilsVars.js';
+import mongoosePaginate from 'mongoose-paginate-v2'
 
 export default class Carts extends CartManagerInterface {
 
@@ -27,30 +28,17 @@ export default class Carts extends CartManagerInterface {
     async addCart() {
         const newCart = new cartModel();
         return newCart.save();
-        /*const arrayCarts = await this.getAndLoadCarts();
-        const result = this.nextCartId;
-        const newCart = {
-            id: result,
-            products: []
-        };
-        this.nextCartId++;
-        arrayCarts.push(newCart);
-        await saveFile(this.getConection, this.getCarts);
-        return result;*/
     }
     async addProduct(idCart, newProduct) {
         const cart = await this.getCartById(idCart);
         const product = await productModel.findById(newProduct.id);
-        if (product.length === 0) {
-            throw new Error("Product not found");
-        }
 
-        const productInCart = cart.products.find(product => product.productId == newProduct.id);
+        const productInCart = cart.products.find(row => row.product.id == newProduct.id);
         if (productInCart !== undefined) {
             productInCart.quantity += newProduct.quantity;
         } else {
             const productToCart = {
-                productId: newProduct.id,
+                product: newProduct.id,
                 quantity: newProduct.quantity
             };
             cart.products.push(productToCart);
@@ -58,10 +46,40 @@ export default class Carts extends CartManagerInterface {
         return cart.save();
     }
     /* CRUD */
-    async getCarts() {
-        return cartModel.find({});
+    async getCarts(query) {
+        const carts = await cartModel.paginate(
+            query.filters,
+            {
+                page: query.page,
+                limit: query.limit,
+                lean: true,
+                sort: query.order
+            }
+        );
+        return carts;
     }
-    async getCartById(pid) {
-        return cartModel.findById(pid);
+    async getCartById(cid, lean = false) {
+        if (lean) {
+            return cartModel.findById(cid).lean();
+        }
+        return cartModel.findById(cid);
+    }
+    async deleteCart(cid) {
+        return cartModel.findByIdAndDelete(cid);
+    }
+    async deleteProductCart(cid, pid) {
+        return cartModel.updateOne(
+            { _id: cid },
+            { $pull: { products: { product: pid } } }
+        );
+    }
+    async updateCart(cid, cart) {
+        return cartModel.findByIdAndUpdate(cid, cart);
+    }
+    async updateCartProductQuantity(cid, pid, quantity) {
+        return cartModel.updateOne(
+            { _id: cid, "products.product": pid },
+            { $set: { "products.$.quantity": quantity } }
+        );
     }
 }

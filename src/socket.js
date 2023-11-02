@@ -6,7 +6,7 @@ import { mongoUrl } from './helper/utilsVars.js';
 const productManager = new ProductManager();
 const messageManager = new MessageManager();
 
-const products = await productManager.getProducts();
+const products = await productManager.getAllProducts();
 const messages = await messageManager.getMessages();
 
 export const startSocketServer = async () => {

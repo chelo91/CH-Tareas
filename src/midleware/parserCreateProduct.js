@@ -1,4 +1,4 @@
-export const parseCreateProduct = (req, res, next) => {
+export const parserCreateProduct = (req, res, next) => {
     req.body.price = parseFloat(req.body.price); // Campo 'price' como número (se convierte a flotante)
     if (typeof req.body.status == "string") {
         if (req.body.status.toLowerCase() == "true") {

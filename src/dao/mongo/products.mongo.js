@@ -1,8 +1,9 @@
 import mongoose from 'mongoose';
 import ProductManagerInterface from '../interface/products.interface.js';
 import productModel from '../models/products.model.js';
-import { validateProps } from '../../helper/utilsValidate.js';
+import { validateProps } from '../../midleware/validateProps.js';
 import { mongoUrl } from '../../helper/utilsVars.js';
+import mongoosePaginate from 'mongoose-paginate-v2'
 
 export default class Products extends ProductManagerInterface {
 
@@ -55,10 +56,26 @@ export default class Products extends ProductManagerInterface {
         }
     }
     /* CRUD */
-    async getProducts() {
-        return productModel.find({}).lean();
+    async getProducts(query) {
+        const products = await productModel.paginate(
+            query.filters,
+            {
+                page: query.page,
+                limit: query.limit,
+                lean: true,
+                sort: query.order
+            }
+        );
+        return products;
     }
-    async getProductById(pid) {
+    async getAllProducts() {
+        const products = await productModel.find({}).lean();
+        return products;
+    }
+    async getProductById(pid, lean = false) {
+        if (lean) {
+            return productModel.findById(pid).lean();
+        }
         return productModel.findById(pid);
     }
     async getProductByCode(code) {

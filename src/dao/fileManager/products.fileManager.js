@@ -1,6 +1,6 @@
 import { promises as fs } from 'fs';
 import ProductsInterface from '../interface/products.fileManager.js';
-import { validateProps } from '../../helper/utilsValidate.js';
+import { validateProps } from '../../midleware/validateProps.js';
 import { loadFile, saveFile } from '../../helper/utilsFs.js';
 import { pathProd } from '../../helper/utilsVars.js';
 

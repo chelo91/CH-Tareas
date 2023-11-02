@@ -3,17 +3,14 @@ import { sucessMessage, errorMessage, sucessMessageCreate, sucessMessageUpdate, 
 import { io } from '../helper/utilsServerVars.js';
 
 const getProducts = async (req, res) => {
-	try {
-		const productManager = new ProductManager();
-		const limit = req.query.limit;
-		const products = await productManager.getProducts();
-		if (limit && limit < products.length && limit > 0) {
-			products.length = limit;
-		}
-		return res.status(200).json(sucessMessage(products));
-	} catch (err) {
+
+	//try {
+	const productManager = new ProductManager();
+	const products = await productManager.getProducts(res.locals.query);
+	return res.status(200).json(sucessMessage(products));
+	/*} catch (err) {
 		return res.status(400).json(errorMessage("Products not found"));
-	}
+	}*/
 };
 
 const getProductById = async (req, res) => {
@@ -80,7 +77,7 @@ const deleteProduct = async (req, res) => {
 				if (result.deletedCount) {
 					io.emit('delete-product', { id: pid });
 					return res.status(200).json(sucessMessageDelete({ id: pid }));
-				}else{
+				} else {
 					return res.status(404).json(errorMessage("Product not found"));
 				}
 			}).catch((err) => {
