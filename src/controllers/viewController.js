@@ -1,8 +1,6 @@
 import ProductManager from '../dao/mongo/products.mongo.js';
 import CartManager from '../dao/mongo/carts.mongo.js';
 
-//import { pathProd } from '../helper/utilsVars.js';
-
 const pages = [
     { name: "home", title: "Home", url: "/" },
     { name: "products", title: "Productos", url: "/products" },
@@ -11,35 +9,19 @@ const pages = [
 ];
 
 const home = async (req, res) => {
-    cleanPages;
-    pages[0].isActive = true;
-    res.render('home', { pages: pages, myPage: pages[0] });
+    res.render('home', { pages: pages, myPage: pages[0], user: req.session.user });
 };
 
 const products = async (req, res) => {
-    //const productManager = new ProductManager();
-    //const products = await productManager.getProducts({ page: 1, limit: 5, order: null, filters: {} });
-    cleanPages;
-    pages[0].isActive = true;
-    res.render('products', { pages: pages, myPage: pages[1] });
+    res.render('products', { pages: pages, myPage: pages[1], user: req.session.user });
 };
 
 const realTime = (req, res) => {
-    cleanPages;
-    pages[1].isActive = true;
-    res.render('realTimeProducts', { pages: pages, myPage: pages[2] });
+    res.render('realTimeProducts', { pages: pages, myPage: pages[2], user: req.session.user });
 };
 
 const chat = (req, res) => {
-    cleanPages;
-    pages[2].isActive = true;
-    res.render('chat', { pages: pages, myPage: pages[3] });
-};
-
-const cleanPages = () => {
-    pages.forEach(page => {
-        page.isActive = false;
-    });
+    res.render('chat', { pages: pages, myPage: pages[3], user: req.session.user });
 };
 
 const productById = async (req, res) => {
@@ -49,8 +31,7 @@ const productById = async (req, res) => {
     if (product == null) {
         res.status(404).send("Product not found");
     }
-    cleanPages;
-    res.render('productDetail', { pages: pages, product: product });
+    res.render('productDetail', { pages: pages, product: product, user: req.session.user });
 };
 
 const cartById = async (req, res) => {
@@ -60,8 +41,38 @@ const cartById = async (req, res) => {
     if (cart == null) {
         res.status(404).send("Cart not found");
     }
-    cleanPages;
-    res.render('cartDetail', { pages: pages, cart: cart });
+    res.render('cartDetail', { pages: pages, cart: cart, user: req.session.user });
 };
 
-export { home, products, realTime, chat, productById, cartById };
+const login = (req, res) => {
+    res.render('login', { pages: pages, user: req.session.user });
+};
+
+const register = (req, res) => {
+    res.render('register', { pages: pages, user: req.session.user });
+};
+
+const logout = async (req, res) => {
+    try {
+        req.session.destroy(err => {
+            if (err) {
+                return res.redirect('/');
+            }
+            return res.redirect('/login');
+        })
+    } catch (e) {
+        return res.redirect('/');
+    }
+};
+
+const profile = (req, res) => {
+    if (req.session.user == null) {
+        return res.redirect('/login');
+    }
+    if (req.params.id != req.session.user.id) {
+        return res.redirect('/login');
+    }
+    res.render('profile', { pages: pages, user: req.session.user });
+};
+
+export { home, products, realTime, chat, productById, cartById, login, register, logout, profile };

@@ -1,10 +1,10 @@
-<div class="righted">
+<!--<div class="righted">
     <button id="btn-login" type="button" class="btn btn-primary">Login</button>
-</div>
+</div>-->
 <div class="container chat-container">
     <div id="div-messages">
     </div>
-    <input type="text" id="chat-input" class="form-control" placeholder="Escribe tu mensaje..." disabled>
+    <input type="text" id="chat-input" class="form-control" placeholder="Escribe tu mensaje...">
 </div>
 
 <script src="socket.io/socket.io.js"></script>
@@ -12,46 +12,32 @@
     const socket = io();
     let products = [];
     let loggedEmail = "";
-
+    const email = "{{user.email}}";
     document.addEventListener("DOMContentLoaded", function () {
         const inputChat = document.getElementById('chat-input');
         const btnLogin = document.getElementById('btn-login');
         const divMessages = document.getElementById("div-messages");
-        btnLogin.addEventListener("click", async (e) => {
+        /*btnLogin.addEventListener("click", async (e) => {
             const { value: email } = await Swal.fire({
                 title: 'Login',
                 input: 'email',
                 inputLabel: 'Ingrese un email',
                 inputPlaceholder: 'pepe@pepe.com'
             });
-            if (email) {
-                loggedEmail = email;
-                Swal.fire(`Logueado con exito: ${email}`);
-                socket.emit('login', email);
-                document.getElementById("chat-input").disabled = false;
-            }
-        });
+            if (email) {*/
+        loggedEmail = email;
+        Swal.fire(`Logueado con exito: ${email}`);
+        socket.emit('login', email);
+        document.getElementById("chat-input").disabled = false;
+        /*}
+    });*/
 
         socket.on('messages', (messages) => {
             messages.forEach((message) => {
                 addMessage(message);
-                /*const divMessage = document.createElement("div");
-                divMessage.classList.add("message");
-                if (email === loggedEmail) {
-                    divMessage.classList.add("user-message");
-                }
-                divMessage.textContent = `${email}: ${message}`;
-                divMessages.appendChild(divMessage);*/
             });
         });
         socket.on('new-message', (message) => {
-            /*const divMessage = document.createElement("div");
-            divMessage.classList.add("message");
-            if (message.email === loggedEmail) {
-                divMessage.classList.add("user-message");
-            }
-            divMessage.textContent = `${message.email}: <br>${message.message}`;
-            divMessages.appendChild(divMessage);*/
             addMessage(message);
         });
         inputChat.addEventListener('keydown', function (event) {
@@ -85,24 +71,6 @@
             divMessage.appendChild(messageElement);
 
             divMessages.appendChild(divMessage);
-
-
-
-            /*const divMessage = document.createElement("div");
-            const emailElement = document.createElement("div");
-            const messageElement = document.createElement("div");
-            divMessage.appendChild(emailElement);
-            divMessage.appendChild(messageElement);
-
-            divMessages.appendChild(divMessage);
-
-
-            divMessage.classList.add("message");
-            if (message.email === loggedEmail) {
-                divMessage.classList.add("user-message");
-            }
-            divMessage.textContent = `${message.email}: <br>${message.message}`;
-            divMessages.appendChild(divMessage);*/
         };
     });
 </script>

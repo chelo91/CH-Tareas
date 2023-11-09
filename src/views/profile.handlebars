@@ -1,0 +1,15 @@
+<h2>Perfil</h2>
+{{#if user}}
+    <h5>ID</h5>
+    <p>{{user.id}}</p>
+    <h5>Email</h5>
+    <p>{{user.email}}</p>
+    <h5>Nombre</h5>
+    <p>{{user.first_name}}</p>
+    <h5>Apellido</h5>
+    <p>{{user.last_name}}</p>
+    <h5>Nacimiento</h5>
+    <p>{{user.birth_date}}</p>
+    <h5>Rol</h5>
+    <p>{{user.role}}</p>
+{{/if}}

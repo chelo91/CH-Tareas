@@ -1,10 +1,15 @@
 import express from "express";
-import { home, realTime, chat, products, productById, cartById } from '../controllers/viewController.js';
+import { authView } from "../midleware/auth.js";
+import { home, realTime, chat, products, productById, cartById, login, register, logout, profile } from '../controllers/viewController.js';
 export const router = express.Router();
 
-router.get('/', home);
-router.get('/products', products);
-router.get('/products/:pid', productById);
-router.get('/carts/:cid', cartById);
-router.get('/now', realTime);
-router.get('/chat', chat);
+router.get('/', authView, home);
+router.get('/products', authView, products);
+router.get('/products/:pid', authView, productById);
+router.get('/carts/:cid', authView, cartById);
+router.get('/now', authView, realTime);
+router.get('/chat', authView, chat);
+router.get('/login', login);
+router.get('/register', register);
+router.get('/logout', authView, logout);
+router.get('/profile/:id', authView, profile);
