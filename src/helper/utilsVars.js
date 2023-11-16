@@ -16,5 +16,10 @@ const helperFolder = dirname(__filename);
 const __dirname = path.join(helperFolder, '..');
 const pathImg = path.join(__dirname, "/public/img");
 
+const saltRounds = 10;
 
-export { pathProd, pathCart, port, url, pathImg, __dirname, mongoUrl, secret }
+const clientID = process.env.GITHUB_CLIENT_ID;
+const clientSecret = process.env.GITHUB_CLIENT_SECRET;
+const callbackURL = process.env.GITHUB_CALLBACK_URL;
+
+export { pathProd, pathCart, port, url, pathImg, __dirname, mongoUrl, secret, saltRounds, clientID, clientSecret, callbackURL }

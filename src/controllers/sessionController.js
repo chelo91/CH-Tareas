@@ -1,7 +1,8 @@
-import UsersManager from '../dao/mongo/users.model.js';
+/*import UsersManager from '../dao/mongo/users.model.js';
 import { sucessMessage, errorMessage, sucessMessageCreate, sucessMessageUpdate, sucessMessageDelete } from '../helper/utilsResponse.js';
+import { hashPassword, comparePasswords } from '../helper/utilsPassword.js';
 
-const createUsers = async (req, res) => {
+const register = async (req, res) => {
 	try {
 		const usersManager = new UsersManager();
 
@@ -11,7 +12,7 @@ const createUsers = async (req, res) => {
 		}
 		const newUser = { first_name, last_name, email, birth_date, password };
 		newUser.birth_date = new Date(birth_date);
-
+		newUser.password = hashPassword(password);
 		const user = await usersManager.addUser(newUser);
 		if (!user) {
 			return res.redirect('/register');
@@ -30,7 +31,7 @@ const createUsers = async (req, res) => {
 		return res.redirect('/register');
 	}
 };
-const login = async (req, res) => {
+/*const login = async (req, res) => {
 	try {
 		const usersManager = new UsersManager();
 
@@ -44,7 +45,7 @@ const login = async (req, res) => {
 		if (!user) {
 			return res.redirect('/login');
 		}
-		if (user.password !== password) {
+		if (!comparePasswords(password, user.password)) {
 			return res.redirect('/login');
 		}
 
@@ -62,4 +63,4 @@ const login = async (req, res) => {
 	}
 };
 
-export { createUsers, login };
+export { register, login };*/
