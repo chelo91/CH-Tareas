@@ -1,15 +1,16 @@
 import express from "express";
-import { authView } from "../midleware/auth.js";
+import passport from "passport";
+//import { authView } from "../midleware/auth.js";
 import { home, realTime, chat, products, productById, cartById, login, register, logout, profile } from '../controllers/viewController.js';
 export const router = express.Router();
 
-router.get('/', authView, home);
-router.get('/products', authView, products);
-router.get('/products/:pid', authView, productById);
-router.get('/carts/:cid', authView, cartById);
-router.get('/now', authView, realTime);
-router.get('/chat', authView, chat);
+router.get('/', passport.authenticate('jwt', { session: false }), home);
+router.get('/products', passport.authenticate('jwt', { failureRedirect: '/login' }), products);
+router.get('/products/:pid', passport.authenticate('jwt', { failureRedirect: '/login' }), productById);
+router.get('/carts/:cid', passport.authenticate('jwt', { failureRedirect: '/login' }), cartById);
+router.get('/now', passport.authenticate('jwt', { failureRedirect: '/login' }), realTime);
+router.get('/chat', passport.authenticate('jwt', { failureRedirect: '/login' }), chat);
 router.get('/login', login);
 router.get('/register', register);
-router.get('/logout', authView, logout);
-router.get('/profile/:id', authView, profile);
+router.get('/logout', passport.authenticate('jwt', { failureRedirect: '/login' }), logout);
+router.get('/profile/:id', passport.authenticate('jwt', { failureRedirect: '/login' }), profile);

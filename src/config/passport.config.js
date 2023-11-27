@@ -1,14 +1,22 @@
 import passport from "passport";
-import local from 'passport-local'
-import GitHubStrategy from "passport-github2";
+import passportLocal from 'passport-local'
+import passportJWT from 'passport-jwt'
+import passportGitHub from "passport-github2";
 import UserModel from "../dao/mongo/users.model.js";
 import { hashPassword, comparePasswords } from "../helper/utilsPassword.js";
 import { clientID, clientSecret, callbackURL } from "../helper/utilsVars.js";
+import { generateToken } from "../helper/utilsJwt.js";
 
-const LocalStratey = local.Strategy
+const LocalStratey = passportLocal.Strategy
+const JWTStrategy = passportJWT.Strategy
+
+const extractCookie = req => {
+    return (req && req.cookies) ? req.cookies['cookieJWT'] : null
+}
+
 export const initializePassport = () => {
 
-    passport.use('github', new GitHubStrategy(
+    passport.use('github', new passportGitHub(
         {
             clientID: clientID,
             clientSecret: clientSecret,
@@ -33,7 +41,7 @@ export const initializePassport = () => {
                     password: ''
                 }
                 const result = await usersManager.addUser(newUser)
-                
+
                 return done(null, result)
             } catch (error) {
                 return done('Error to login with github ' + error)
@@ -62,6 +70,9 @@ export const initializePassport = () => {
                 return done(null, false)
             }
 
+            const token = generateToken(user)
+            user.token = token
+
             return done(null, user)
         } catch (e) {
             return done(null, false)
@@ -84,10 +95,21 @@ export const initializePassport = () => {
                 return done(null, false)
             }
 
+            const token = generateToken(user)
+            user.token = token
+
             return done(null, user)
         } catch (err) {
             return done(null, false)
         }
+    }))
+
+    passport.use('jwt', new JWTStrategy({
+        jwtFromRequest: passportJWT.ExtractJwt.fromExtractors([extractCookie]),
+        secretOrKey: 'cookieJWT',
+    }, (jwt_payload, done) => {
+        console.log({ jwt_payload })
+        done(null, jwt_payload.user)
     }))
 
     passport.serializeUser((user, done) => {

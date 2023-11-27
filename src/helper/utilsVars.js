@@ -9,7 +9,8 @@ const pathCart = process.env.PATH_CARTS || "./db/carts.json";
 const port = process.env.PORT || 3000;
 const url = process.env.URL || "http://localhost";
 const mongoUrl = process.env.MONGO_URL;
-const secret = process.env.SECRET_KEY
+const secretSession = process.env.SECRET_SESSION || "";
+const secretJWT = process.env.SECRET_JWT || "";
 
 const __filename = fileURLToPath(import.meta.url);
 const helperFolder = dirname(__filename);
@@ -22,4 +23,4 @@ const clientID = process.env.GITHUB_CLIENT_ID;
 const clientSecret = process.env.GITHUB_CLIENT_SECRET;
 const callbackURL = process.env.GITHUB_CALLBACK_URL;
 
-export { pathProd, pathCart, port, url, pathImg, __dirname, mongoUrl, secret, saltRounds, clientID, clientSecret, callbackURL }
+export { pathProd, pathCart, port, url, pathImg, __dirname, mongoUrl, secretSession, secretJWT, saltRounds, clientID, clientSecret, callbackURL }
