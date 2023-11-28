@@ -1,8 +1,8 @@
 import express from 'express';
 import handlerbars from 'express-handlebars';
-import bodyParser from 'body-parser';
-import session from 'express-session'
-import MongoStore from 'connect-mongo'
+import session from 'express-session';
+import cookieParser from 'cookie-parser'
+//import MongoStore from 'connect-mongo'
 import passport from "passport";
 
 import { app } from './helper/utilsServerVars.js';
@@ -10,11 +10,11 @@ import { router as productsRouter } from './routes/products.routes.js';
 import { router as cartsRouter } from './routes/carts.routes.js';
 import { router as viewsRouter } from './routes/views.routes.js';
 import { router as sessionsRouter } from './routes/sessions.routes.js';
-import { __dirname, mongoUrl, secret } from './helper/utilsVars.js';
+import { __dirname, mongoUrl, secretSession } from './helper/utilsVars.js';
 import { initializePassport } from "./config/passport.config.js";
 
 export const startExpressServer = () => {
-    app.use(session({
+    /*app.use(session({
         store: MongoStore.create({
             mongoUrl,
             dbName: 'ecommerce',
@@ -23,8 +23,16 @@ export const startExpressServer = () => {
         secret: secret,
         resave: true,
         saveUninitialized: true
-    }));
-    app.use(bodyParser.json());
+    }));*/
+    // Session
+    app.use(session({
+        secret: secretSession,
+        resave: true,
+        saveUninitialized: true
+    }))
+    app.use(cookieParser())
+
+    app.use(express.json())
     app.use(express.urlencoded({ extend: true }));
     app.use(express.static('public'));
 

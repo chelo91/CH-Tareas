@@ -8,7 +8,7 @@ router.post('/register',
         if (!req.user) {
             return res.redirect('/register');
         }
-        const user = req.user;
+        /*const user = req.user;
         req.session.user = {
             id: user._id,
             email: user.email,
@@ -16,8 +16,10 @@ router.post('/register',
             last_name: user.last_name,
             birth_date: user.birth_date,
             role: user.role
-        };
-        return res.redirect('/');
+        };*/
+        return res.cookie('cookieJWT', req.user.token).redirect('/')
+
+        //return res.redirect('/');
     })
 
 router.post('/login',
@@ -26,16 +28,7 @@ router.post('/login',
         if (!req.user) {
             return res.redirect('/login');
         }
-        const user = req.user;
-        req.session.user = {
-            id: user._id,
-            email: user.email,
-            first_name: user.first_name,
-            last_name: user.last_name,
-            birth_date: user.birth_date,
-            role: user.role
-        };
-        return res.redirect('/');
+        return res.cookie('cookieJWT', req.user.token).redirect('/')
     })
 
 router.post(
@@ -51,7 +44,7 @@ router.get(
     passport.authenticate('github', { failureRedirect: '/' }),
     async (req, res) => {
         console.log('Callback: ', req.user)
-        const user = req.user;
+        /*const user = req.user;
         req.session.user = {
             id: user._id,
             email: user.email,
@@ -59,7 +52,7 @@ router.get(
             last_name: user.last_name,
             birth_date: user.birth_date,
             role: user.role
-        };
-        res.redirect('/')
+        };*/
+        res.cookie('cookieJWT', req.user.token).redirect('/')
     }
 )

@@ -1,14 +1,23 @@
 import passport from "passport";
-import local from 'passport-local'
-import GitHubStrategy from "passport-github2";
+import passportLocal from 'passport-local'
+import passportJWT from 'passport-jwt'
+import passportGitHub from "passport-github2";
 import UserModel from "../dao/mongo/users.model.js";
 import { hashPassword, comparePasswords } from "../helper/utilsPassword.js";
 import { clientID, clientSecret, callbackURL } from "../helper/utilsVars.js";
+import { generateToken } from "../helper/utilsJwt.js";
+import { secretJWT } from "../helper/utilsVars.js"
 
-const LocalStratey = local.Strategy
+const LocalStratey = passportLocal.Strategy
+const JWTStrategy = passportJWT.Strategy
+
+const extractCookie = req => {
+    return (req && req.cookies) ? req.cookies['cookieJWT'] : null
+}
+
 export const initializePassport = () => {
 
-    passport.use('github', new GitHubStrategy(
+    passport.use('github', new passportGitHub(
         {
             clientID: clientID,
             clientSecret: clientSecret,
@@ -20,21 +29,22 @@ export const initializePassport = () => {
             try {
                 const usersManager = new UserModel();
 
-                const user = await usersManager.getUserByEmail(profile._json.email);
+                let user = await usersManager.getUserByEmail(profile._json.email);
                 if (user) {
                     console.log('User already exits')
-                    return done(null, user)
+                } else {
+                    const newUser = {
+                        first_name: profile._json.name,
+                        last_name: '',
+                        email: profile._json.email,
+                        password: ''
+                    }
+                    user = await usersManager.addUser(newUser)
                 }
+                const token = generateToken(user)
+                user.token = token
 
-                const newUser = {
-                    first_name: profile._json.name,
-                    last_name: '',
-                    email: profile._json.email,
-                    password: ''
-                }
-                const result = await usersManager.addUser(newUser)
-                
-                return done(null, result)
+                return done(null, user)
             } catch (error) {
                 return done('Error to login with github ' + error)
             }
@@ -62,6 +72,9 @@ export const initializePassport = () => {
                 return done(null, false)
             }
 
+            const token = generateToken(user)
+            user.token = token
+
             return done(null, user)
         } catch (e) {
             return done(null, false)
@@ -84,14 +97,25 @@ export const initializePassport = () => {
                 return done(null, false)
             }
 
+            const token = generateToken(user)
+            user.token = token
+
             return done(null, user)
         } catch (err) {
             return done(null, false)
         }
     }))
 
+    passport.use('jwt', new JWTStrategy({
+        jwtFromRequest: passportJWT.ExtractJwt.fromExtractors([extractCookie]),
+        secretOrKey: secretJWT,
+    }, (jwt_payload, done) => {
+        console.log({ jwt_payload })
+        done(null, jwt_payload.user)
+    }))
+
     passport.serializeUser((user, done) => {
-        done(null, user.id)
+        done(null, user._id)
     })
 
     passport.deserializeUser(async (id, done) => {
