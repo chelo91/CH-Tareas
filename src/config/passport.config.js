@@ -6,6 +6,7 @@ import UserModel from "../dao/mongo/users.model.js";
 import { hashPassword, comparePasswords } from "../helper/utilsPassword.js";
 import { clientID, clientSecret, callbackURL } from "../helper/utilsVars.js";
 import { generateToken } from "../helper/utilsJwt.js";
+import { secretJWT } from "../helper/utilsVars.js"
 
 const LocalStratey = passportLocal.Strategy
 const JWTStrategy = passportJWT.Strategy
@@ -28,21 +29,22 @@ export const initializePassport = () => {
             try {
                 const usersManager = new UserModel();
 
-                const user = await usersManager.getUserByEmail(profile._json.email);
+                let user = await usersManager.getUserByEmail(profile._json.email);
                 if (user) {
                     console.log('User already exits')
-                    return done(null, user)
+                } else {
+                    const newUser = {
+                        first_name: profile._json.name,
+                        last_name: '',
+                        email: profile._json.email,
+                        password: ''
+                    }
+                    user = await usersManager.addUser(newUser)
                 }
+                const token = generateToken(user)
+                user.token = token
 
-                const newUser = {
-                    first_name: profile._json.name,
-                    last_name: '',
-                    email: profile._json.email,
-                    password: ''
-                }
-                const result = await usersManager.addUser(newUser)
-
-                return done(null, result)
+                return done(null, user)
             } catch (error) {
                 return done('Error to login with github ' + error)
             }
@@ -106,14 +108,14 @@ export const initializePassport = () => {
 
     passport.use('jwt', new JWTStrategy({
         jwtFromRequest: passportJWT.ExtractJwt.fromExtractors([extractCookie]),
-        secretOrKey: 'cookieJWT',
+        secretOrKey: secretJWT,
     }, (jwt_payload, done) => {
         console.log({ jwt_payload })
         done(null, jwt_payload.user)
     }))
 
     passport.serializeUser((user, done) => {
-        done(null, user.id)
+        done(null, user._id)
     })
 
     passport.deserializeUser(async (id, done) => {
