@@ -1,5 +1,5 @@
 import mongoose from 'mongoose'
-import { mongoUrl } from '../../helper/utilsVars.js';
+import { mongoUrl } from '../../config/const.config.js';
 import userModel from '../models/users.model.js';
 
 export default class Users {

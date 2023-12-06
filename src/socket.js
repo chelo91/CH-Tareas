@@ -1,7 +1,6 @@
 import { io } from './helper/utilsServerVars.js';
 import ProductManager from './dao/mongo/products.mongo.js';
 import MessageManager from './dao/mongo/messages.mongo.js';
-import { mongoUrl } from './helper/utilsVars.js';
 
 const productManager = new ProductManager();
 const messageManager = new MessageManager();

@@ -4,9 +4,9 @@ import passportJWT from 'passport-jwt'
 import passportGitHub from "passport-github2";
 import UserModel from "../dao/mongo/users.model.js";
 import { hashPassword, comparePasswords } from "../helper/utilsPassword.js";
-import { clientID, clientSecret, callbackURL } from "../helper/utilsVars.js";
+import { clientID, clientSecret, callbackURL } from "./const.config.js";
 import { generateToken } from "../helper/utilsJwt.js";
-import { secretJWT } from "../helper/utilsVars.js"
+import { secretJWT } from "./const.config.js"
 
 const LocalStratey = passportLocal.Strategy
 const JWTStrategy = passportJWT.Strategy

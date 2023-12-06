@@ -2,7 +2,7 @@ import mongoose from 'mongoose'
 import CartManagerInterface from '../interface/carts.interface.js';
 import cartModel from '../models/carts.model.js'
 import productModel from '../models/products.model.js';
-import { mongoUrl } from '../../helper/utilsVars.js';
+import { mongoUrl } from '../../config/const.config.js';
 import mongoosePaginate from 'mongoose-paginate-v2'
 
 export default class Carts extends CartManagerInterface {
