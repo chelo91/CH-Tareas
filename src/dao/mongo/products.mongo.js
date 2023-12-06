@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 import ProductManagerInterface from '../interface/products.interface.js';
 import productModel from '../models/products.model.js';
 import { validateProps } from '../../midleware/validateProps.js';
-import { mongoUrl } from '../../helper/utilsVars.js';
+import { mongoUrl } from '../../config/const.config.js';
 import mongoosePaginate from 'mongoose-paginate-v2'
 
 export default class Products extends ProductManagerInterface {

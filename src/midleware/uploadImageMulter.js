@@ -1,5 +1,5 @@
 import multer from "multer";
-import { pathImg } from '../helper/utilsVars.js';
+import { pathImg } from '../config/const.config.js';
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {

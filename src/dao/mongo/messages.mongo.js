@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 import messageModel from '../models/messages.model.js';
-import { mongoUrl } from '../../helper/utilsVars.js';
+import { mongoUrl } from '../../config/const.config.js';
 
 export default class Messages {
 

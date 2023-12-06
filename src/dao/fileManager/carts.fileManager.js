@@ -1,7 +1,7 @@
 import { promises as fs } from 'fs';
 import CartsInterface from '../interface/carts.interface.js';
 import { loadFile, saveFile } from '../../helper/utilsFs.js';
-import { pathCart } from '../../helper/utilsVars.js';
+import { pathCart } from '../../config/const.config.js';
 
 export default class Carts extends CartsInterface {
 

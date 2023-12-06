@@ -1,6 +1,6 @@
 // Require bcrypt
 import bcrypt from "bcrypt";
-import { saltRounds } from "./utilsVars.js";
+import { saltRounds } from "../config/const.config.js";
 
 function hashPassword(plainTextPassword) {
     return bcrypt.hashSync(plainTextPassword, saltRounds);
