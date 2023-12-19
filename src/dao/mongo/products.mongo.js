@@ -1,8 +1,7 @@
 import mongoose from 'mongoose';
 import ProductManagerInterface from '../interface/products.interface.js';
 import productModel from '../models/products.model.js';
-import { validateProps } from '../../midleware/validateProps.js';
-import { mongoUrl } from '../../config/const.config.js';
+import { validateProps } from '../../middlewares/validateProps.js';
 import mongoosePaginate from 'mongoose-paginate-v2'
 
 export default class Products extends ProductManagerInterface {
@@ -10,16 +9,7 @@ export default class Products extends ProductManagerInterface {
     /* PROPERTIES */
     constructor() {
         super();
-        if (!mongoose.connection.readyState) {
-            Products.conection = mongoUrl;
-            mongoose.connect(Products.conection, { dbName: 'ecommerce' })
-                .then(() => {
-                    console.log('DB connected 👊 !!')
-                })
-                .catch(e => {
-                    console.error('Error connecting to DB 😓 ')
-                })
-        }
+
         Products.propProduct = [
             { name: 'title', type: 'string' },
             { name: 'description', type: 'string' },
@@ -31,9 +21,6 @@ export default class Products extends ProductManagerInterface {
             { name: 'thumbnail', type: 'arrayOfStrings', readOnly: true }
         ];
 
-    }
-    get getConection() {
-        return Products.conection;
     }
     /* METHODS */
     _checkProductProp(product, update = false) {

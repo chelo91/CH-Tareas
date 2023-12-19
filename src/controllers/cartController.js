@@ -1,10 +1,9 @@
-import ProductManager from '../dao/mongo/products.mongo.js';
-import CartManager from '../dao/mongo/carts.mongo.js';
+import { Products, Carts } from "../dao/factory.js";
 import { sucessMessage, errorMessage, sucessMessageCreate, sucessMessageUpdate, sucessMessageDelete } from '../helper/utilsResponse.js';
 
 const createCart = async (req, res) => {
     try {
-        const cartManager = new CartManager();
+        const cartManager = new Carts();
         const idCart = await cartManager.addCart();
         return res.status(200).json(sucessMessageCreate(idCart));
     } catch (error) {
@@ -13,8 +12,8 @@ const createCart = async (req, res) => {
 };
 const addProductToCart = async (req, res) => {
     try {
-        const cartManager = new CartManager();
-        const productManager = new ProductManager();
+        const cartManager = new Carts();
+        const productManager = new Products();
         const cid = req.params.cid || null;
         const pid = req.params.pid || null;
         let quantity = parseInt(req.body.quantity);
@@ -53,7 +52,7 @@ const addProductToCart = async (req, res) => {
 };
 const getCarts = async (req, res) => {
     try {
-        const cartManager = new CartManager();
+        const cartManager = new Carts();
         const carts = await cartManager.getCarts(res.locals.query);
         return res.status(200).json(sucessMessage(carts));
     } catch (error) {
@@ -62,7 +61,7 @@ const getCarts = async (req, res) => {
 };
 const getCartById = async (req, res) => {
     try {
-        const cartManager = new CartManager();
+        const cartManager = new Carts();
         const cid = req.params.cid;
         const cart = await cartManager.getCartById(cid);
         if (cart) {
@@ -76,7 +75,7 @@ const getCartById = async (req, res) => {
 };
 const deleteCart = async (req, res) => {
     try {
-        const cartManager = new CartManager();
+        const cartManager = new Carts();
         const cid = req.params.cid;
         cartManager.deleteCart(cid)
             .then((result) => {
@@ -94,7 +93,7 @@ const deleteCart = async (req, res) => {
 };
 const deleteProductCart = async (req, res) => {
     try {
-        const cartManager = new CartManager();
+        const cartManager = new Carts();
         const cid = req.params.cid;
         const pid = req.params.pid;
         cart.deleteProductCart(cid, pid)
@@ -113,7 +112,7 @@ const deleteProductCart = async (req, res) => {
 };
 const updateCart = async (req, res) => {
     try {
-        const cartManager = new CartManager();
+        const cartManager = new Carts();
         const cid = req.params.cid;
         const cart = req.body;
         cartManager.updateCart(cid, cart)
@@ -132,7 +131,7 @@ const updateCart = async (req, res) => {
 }
 const updateCartProductQuantity = async (req, res) => {
     try {
-        const cartManager = new CartManager();
+        const cartManager = new Carts();
         const cid = req.params.cid;
         const pid = req.params.pid;
         const quantity = req.body.quantity;

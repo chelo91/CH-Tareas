@@ -20,9 +20,6 @@ export default class Carts extends CartsInterface {
         this.arrayCarts = newArrayCarts;
         this._refreshLastId();
     }
-    get getConection() {
-        return this.conection;
-    }
     /* PRIVATE */
     async _init() {
         try {

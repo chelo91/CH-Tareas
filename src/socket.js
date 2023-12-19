@@ -1,9 +1,8 @@
 import { io } from './helper/utilsServerVars.js';
-import ProductManager from './dao/mongo/products.mongo.js';
-import MessageManager from './dao/mongo/messages.mongo.js';
+import { Products, Messages } from './dao/factory.js';
 
-const productManager = new ProductManager();
-const messageManager = new MessageManager();
+const productManager = new Products();
+const messageManager = new Messages();
 
 const products = await productManager.getAllProducts();
 const messages = await messageManager.getMessages();

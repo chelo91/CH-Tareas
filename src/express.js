@@ -10,7 +10,7 @@ import { router as productsRouter } from './routes/products.routes.js';
 import { router as cartsRouter } from './routes/carts.routes.js';
 import { router as viewsRouter } from './routes/views.routes.js';
 import { router as sessionsRouter } from './routes/sessions.routes.js';
-import { __dirname, mongoUrl, secretSession } from './config/const.config.js';
+import { __dirname, secretSession } from './config/const.config.js';
 import { initializePassport } from "./config/passport.config.js";
 
 export const startExpressServer = () => {

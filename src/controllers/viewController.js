@@ -1,5 +1,4 @@
-import ProductManager from '../dao/mongo/products.mongo.js';
-import CartManager from '../dao/mongo/carts.mongo.js';
+import { Products, Carts } from '../dao/factory.js';
 
 const pages = [
     { name: "home", title: "Home", url: "/" },
@@ -26,7 +25,7 @@ const chat = (req, res) => {
 
 const productById = async (req, res) => {
     const pid = req.params.pid;
-    const productManager = new ProductManager();
+    const productManager = new Products();
     const product = await productManager.getProductById(pid, true);
     if (product == null) {
         res.status(404).send("Product not found");
@@ -36,7 +35,7 @@ const productById = async (req, res) => {
 
 const cartById = async (req, res) => {
     const cid = req.params.cid;
-    const cartManager = new CartManager();
+    const cartManager = new Carts();
     const cart = await cartManager.getCartById(cid, true);
     if (cart == null) {
         res.status(404).send("Cart not found");
