@@ -4,6 +4,8 @@ import path, { dirname } from 'path';
 import dotenv from 'dotenv';
 dotenv.config();
 
+const persistence = process.env.PERSISTENCE || "MONGO";
+const mongoDBName = process.env.MONGO_DB_NAME || "ecommerce";
 const pathProd = process.env.PATH_PRODUCTS || "./db/products.json";
 const pathCart = process.env.PATH_CARTS || "./db/carts.json";
 const port = process.env.PORT || 3000;
@@ -23,4 +25,4 @@ const clientID = process.env.GITHUB_CLIENT_ID;
 const clientSecret = process.env.GITHUB_CLIENT_SECRET;
 const callbackURL = process.env.GITHUB_CALLBACK_URL;
 
-export { pathProd, pathCart, port, url, pathImg, __dirname, mongoUrl, secretSession, secretJWT, saltRounds, clientID, clientSecret, callbackURL }
+export { pathProd, mongoDBName, pathCart, port, url, pathImg, __dirname, mongoUrl, secretSession, secretJWT, saltRounds, clientID, clientSecret, callbackURL, persistence }

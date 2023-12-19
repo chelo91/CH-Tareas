@@ -15,13 +15,17 @@ const cartSchema = new mongoose.Schema({
                 required: true
             },
         }
-    ]
+    ],
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'users'
+    },
 });
 
-cartSchema.pre('findOne', function() {
+cartSchema.pre('findOne', function () {
     this.populate('products.product')
 })
-cartSchema.pre('find', function() {
+cartSchema.pre('find', function () {
     this.populate('products.product')
 })
 

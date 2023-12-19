@@ -1,8 +1,8 @@
 import express from "express";
 import { getProducts, getProductById, createProduct, updateProduct, deleteProduct } from '../controllers/productController.js';
-import { upload } from '../midleware/uploadImageMulter.js';
-import { parserCreateProduct } from '../midleware/parserCreateProduct.js';
-import { parserQueryString } from "../midleware/parserQueryString.js";
+import { upload } from '../middlewares/uploadImageMulter.js';
+import { parserCreateProduct } from '../middlewares/parserCreateProduct.js';
+import { parserQueryString } from "../middlewares/parserQueryString.js";
 
 export const router = express.Router();
 

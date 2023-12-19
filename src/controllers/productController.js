@@ -1,11 +1,11 @@
-import ProductManager from '../dao/mongo/products.mongo.js';
+import { Products } from "../dao/factory.js";
 import { sucessMessage, errorMessage, sucessMessageCreate, sucessMessageUpdate, sucessMessageDelete } from '../helper/utilsResponse.js';
 import { io } from '../helper/utilsServerVars.js';
 
 const getProducts = async (req, res) => {
 
 	//try {
-	const productManager = new ProductManager();
+	const productManager = new Products();
 	const products = await productManager.getProducts(res.locals.query);
 	return res.status(200).json(sucessMessage(products));
 	/*} catch (err) {
@@ -15,7 +15,7 @@ const getProducts = async (req, res) => {
 
 const getProductById = async (req, res) => {
 	try {
-		const productManager = new ProductManager();
+		const productManager = new Products();
 		const pid = req.params.pid || null;
 		const result = await productManager.getProductById(pid);
 		if (!result) {
@@ -29,7 +29,7 @@ const getProductById = async (req, res) => {
 
 const createProduct = async (req, res) => {
 	try {
-		const productManager = new ProductManager();
+		const productManager = new Products();
 		const newProd = {
 			title: req.body.title,
 			description: req.body.description,
@@ -55,7 +55,7 @@ const createProduct = async (req, res) => {
 
 const updateProduct = async (req, res) => {
 	try {
-		const productManager = new ProductManager();
+		const productManager = new Products();
 		const pid = req.params.pid || null;
 		productManager.updateProduct(pid, req.body)
 			.then((prod) => {
@@ -70,7 +70,7 @@ const updateProduct = async (req, res) => {
 
 const deleteProduct = async (req, res) => {
 	try {
-		const productManager = new ProductManager();
+		const productManager = new Products();
 		const pid = req.params.pid || null;
 		productManager.deleteProduct(pid)
 			.then((result) => {

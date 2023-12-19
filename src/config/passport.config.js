@@ -2,12 +2,12 @@ import passport from "passport";
 import passportLocal from 'passport-local'
 import passportJWT from 'passport-jwt'
 import passportGitHub from "passport-github2";
-import UserModel from "../dao/mongo/users.model.js";
+import { Users } from "../dao/factory.js";
 import { hashPassword, comparePasswords } from "../helper/utilsPassword.js";
 import { clientID, clientSecret, callbackURL } from "./const.config.js";
 import { generateToken } from "../helper/utilsJwt.js";
 import { secretJWT } from "./const.config.js"
-
+import UsersDto from "../dao/dto/users.dto.js";
 const LocalStratey = passportLocal.Strategy
 const JWTStrategy = passportJWT.Strategy
 
@@ -27,7 +27,7 @@ export const initializePassport = () => {
             console.log(profile)
 
             try {
-                const usersManager = new UserModel();
+                const usersManager = new Users();
 
                 let user = await usersManager.getUserByEmail(profile._json.email);
                 if (user) {
@@ -41,10 +41,11 @@ export const initializePassport = () => {
                     }
                     user = await usersManager.addUser(newUser)
                 }
-                const token = generateToken(user)
-                user.token = token
+                const userDto = new UsersDto(user);
+                const token = generateToken(userDto)
+                userDto.token = token
 
-                return done(null, user)
+                return done(null, userDto)
             } catch (error) {
                 return done('Error to login with github ' + error)
             }
@@ -56,7 +57,7 @@ export const initializePassport = () => {
         usernameField: 'email'
     }, async (req, username, password, done) => {
         try {
-            const usersManager = new UserModel();
+            const usersManager = new Users();
 
             const { first_name, last_name, birth_date } = req.body;
             if (first_name === undefined || last_name === undefined || username === undefined || birth_date === undefined || password === undefined) {
@@ -85,22 +86,21 @@ export const initializePassport = () => {
         usernameField: 'email'
     }, async (username, password, done) => {
         try {
-            const usersManager = new UserModel();
-
+            const usersManager = new Users();
             const user = await usersManager.getUserByEmail(username);
             if (!user) {
                 console.log('User doesnot exists')
                 return done(null, false)
             }
-
             if (!comparePasswords(password, user.password)) {
                 return done(null, false)
             }
 
-            const token = generateToken(user)
-            user.token = token
+            const userDto = new UsersDto(user);
+            const token = generateToken(userDto)
+            userDto.token = token
 
-            return done(null, user)
+            return done(null, userDto)
         } catch (err) {
             return done(null, false)
         }
@@ -119,7 +119,7 @@ export const initializePassport = () => {
     })
 
     passport.deserializeUser(async (id, done) => {
-        const usersManager = new UserModel();
+        const usersManager = new Users();
         const user = await usersManager.getUser(id);
         done(null, user)
     })

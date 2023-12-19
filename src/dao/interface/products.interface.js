@@ -5,9 +5,6 @@ export default class ProductsInterface {
     set setProducts(newArrayProduct) {
         throw new Error('addProduct method not implemented');
     }*/
-    get getConection() {
-        throw new Error('addProduct method not implemented');
-    }
     async addProduct(newProduct) {
         throw new Error('addProduct method not implemented');
     }

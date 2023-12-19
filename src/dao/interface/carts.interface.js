@@ -5,9 +5,6 @@ export default class CartsInterface {
     set setCarts(newArrayCarts) {
         throw new Error('addProduct method not implemented');
     }*/
-    get getConection() {
-        throw new Error('addProduct method not implemented');
-    }
     async addCart() {
         throw new Error('addProduct method not implemented');
     }

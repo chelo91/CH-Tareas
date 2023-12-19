@@ -1,6 +1,6 @@
 import { getCartById, createCart, addProductToCart, getCarts, updateCart, updateCartProductQuantity, deleteCart, deleteProductCart } from "../controllers/cartController.js";
 import express from "express";
-import { parserQueryString } from "../midleware/parserQueryString.js";
+import { parserQueryString } from "../middlewares/parserQueryString.js";
 
 export const router = express.Router();
 
