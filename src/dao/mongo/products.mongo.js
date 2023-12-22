@@ -25,7 +25,6 @@ export default class Products extends ProductManagerInterface {
     /* METHODS */
     _checkProductProp(product, update = false) {
         return validateProps(Products.propProduct, product, update);
-        //return ProductManager.propProduct.every((prop) => product.hasOwnProperty(prop.name));
     }
     async addProduct(newProduct) {
         // Check if the product has all the properties

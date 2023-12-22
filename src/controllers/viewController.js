@@ -1,4 +1,4 @@
-import { Products, Carts } from '../dao/factory.js';
+import { ProductsService, CartsService } from "../services/index.js";
 
 const pages = [
     { name: "home", title: "Home", url: "/" },
@@ -25,8 +25,7 @@ const chat = (req, res) => {
 
 const productById = async (req, res) => {
     const pid = req.params.pid;
-    const productManager = new Products();
-    const product = await productManager.getProductById(pid, true);
+    const product = await ProductsService.getProductById(pid, true);
     if (product == null) {
         res.status(404).send("Product not found");
     }
@@ -35,8 +34,7 @@ const productById = async (req, res) => {
 
 const cartById = async (req, res) => {
     const cid = req.params.cid;
-    const cartManager = new Carts();
-    const cart = await cartManager.getCartById(cid, true);
+    const cart = await CartsService.getCartById(cid, true);
     if (cart == null) {
         res.status(404).send("Cart not found");
     }
@@ -75,4 +73,14 @@ const profile = (req, res) => {
     res.render('profile', { pages: pages, user: req.user });
 };
 
-export { home, products, realTime, chat, productById, cartById, login, register, logout, profile };
+const current = (req, res) => {
+    if (req.user == null) {
+        return res.redirect('/login');
+    }
+    /*if (req.params.id != req.user._id) {
+        return res.redirect('/login');
+    }*/
+    res.render('profile', { pages: pages, user: req.user });
+};
+
+export { home, products, realTime, chat, productById, cartById, login, register, logout, profile, current };

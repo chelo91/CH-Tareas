@@ -14,6 +14,7 @@ router.get('/login', login);
 router.get('/register', register);
 router.get('/logout', passport.authenticate('jwt', { failureRedirect: '/error' }), logout);
 router.get('/profile', passport.authenticate('jwt', { failureRedirect: '/error' }), profile);
+router.get('/current', passport.authenticate('jwt', { failureRedirect: '/error' }), profile);
 router.get('/error', (req, res) => {
     res.render('error', { error: 'Something is wrong' })
 })
