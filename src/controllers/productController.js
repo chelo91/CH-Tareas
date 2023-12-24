@@ -1,23 +1,20 @@
-import { Products } from "../dao/factory.js";
+import { ProductsService } from "../services/index.js";
 import { sucessMessage, errorMessage, sucessMessageCreate, sucessMessageUpdate, sucessMessageDelete } from '../helper/utilsResponse.js';
 import { io } from '../helper/utilsServerVars.js';
 
 const getProducts = async (req, res) => {
-
-	//try {
-	const productManager = new Products();
-	const products = await productManager.getProducts(res.locals.query);
-	return res.status(200).json(sucessMessage(products));
-	/*} catch (err) {
+	try {
+		const products = await ProductsService.getProducts(res.locals.query);
+		return res.status(200).json(sucessMessage(products));
+	} catch (err) {
 		return res.status(400).json(errorMessage("Products not found"));
-	}*/
+	}
 };
 
 const getProductById = async (req, res) => {
 	try {
-		const productManager = new Products();
 		const pid = req.params.pid || null;
-		const result = await productManager.getProductById(pid);
+		const result = await ProductsService.getProductById(pid);
 		if (!result) {
 			return res.status(404).json(errorMessage("Product not found"));
 		}
@@ -29,7 +26,6 @@ const getProductById = async (req, res) => {
 
 const createProduct = async (req, res) => {
 	try {
-		const productManager = new Products();
 		const newProd = {
 			title: req.body.title,
 			description: req.body.description,
@@ -40,7 +36,7 @@ const createProduct = async (req, res) => {
 			category: req.body.category,
 			thumbnail: req.body.images
 		}
-		productManager.addProduct(newProd)
+		ProductsService.addProduct(newProd)
 			.then((pid) => {
 				newProd.id = pid;
 				io.emit('create-product', { product: newProd });
@@ -55,9 +51,8 @@ const createProduct = async (req, res) => {
 
 const updateProduct = async (req, res) => {
 	try {
-		const productManager = new Products();
 		const pid = req.params.pid || null;
-		productManager.updateProduct(pid, req.body)
+		ProductsService.updateProduct(pid, req.body)
 			.then((prod) => {
 				return res.status(200).json(sucessMessageUpdate(prod));
 			}).catch((err) => {
@@ -70,9 +65,8 @@ const updateProduct = async (req, res) => {
 
 const deleteProduct = async (req, res) => {
 	try {
-		const productManager = new Products();
 		const pid = req.params.pid || null;
-		productManager.deleteProduct(pid)
+		ProductsService.deleteProduct(pid)
 			.then((result) => {
 				if (result.deletedCount) {
 					io.emit('delete-product', { id: pid });

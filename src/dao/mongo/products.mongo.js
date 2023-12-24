@@ -25,7 +25,6 @@ export default class Products extends ProductManagerInterface {
     /* METHODS */
     _checkProductProp(product, update = false) {
         return validateProps(Products.propProduct, product, update);
-        //return ProductManager.propProduct.every((prop) => product.hasOwnProperty(prop.name));
     }
     async addProduct(newProduct) {
         // Check if the product has all the properties
@@ -69,13 +68,12 @@ export default class Products extends ProductManagerInterface {
         return productModel.find({ code: code })
     }
     async updateProduct(pid, newProduct) {
-        let bdProduct;
         Products.propProduct.forEach(prop => {
             if (!prop.readOnly) {
-                bdProduct[prop.name] = newProduct[prop.name];
+                newProduct[prop.name] = newProduct[prop.name];
             }
         });
-        return productModel.findOneAndUpdate({ _id: pid }, bdProduct);
+        return productModel.findOneAndUpdate({ _id: pid }, newProduct);
     }
     async deleteProduct(pid) {
         return productModel.deleteOne({ _id: pid });

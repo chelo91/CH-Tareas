@@ -1,0 +1,67 @@
+<h5 class="card-header">{{product._id}}</h5>
+<div class="form-group">
+    <label for="titleInput">title</label>
+    <input type="text" class="form-control" id="titleInput" value="{{product.title}}">
+</div>
+<div class="form-group">
+    <label for="descriptionInput">description</label>
+    <input type="text" class="form-control" id="descriptionInput" value="{{product.description}}">
+</div>
+<div class="form-group">
+    <label for="codeInput">code</label>
+    <input type="text" class="form-control" id="codeInput" value="{{product.code}}">
+</div>
+<div class="form-group">
+    <label for="priceInput">price</label>
+    <input type="number" class="form-control" id="priceInput" value="{{product.price}}">
+</div>
+<div class="form-group">
+    <label for="statusInput">status</label>
+    <input type="text" class="form-control" id="statusInput" value="{{product.status}}">
+</div>
+<div class="form-group">
+    <label for="stockInput">stock</label>
+    <input type="text" class="form-control" id="stockInput" value="{{product.stock}}">
+</div>
+<div class="form-group">
+    <label for="categoryInput">category</label>
+    <input type="text" class="form-control" id="categoryInput" value="{{product.category}}">
+</div>
+<button type="button" class="btn btn-primary" onclick=handleEditProductClick("{{product._id}}")>Modificar</button>
+
+
+
+<script>
+    function handleEditProductClick(id) {
+
+        const updatedProduct = {
+            "title": document.getElementById("titleInput").value,
+            "description": document.getElementById("descriptionInput").value,
+            "code": document.getElementById("codeInput").value,
+            "price": parseFloat(document.getElementById("priceInput").value),
+            "status": document.getElementById("statusInput").value === "true", // Convierte a booleano
+            "stock": parseInt(document.getElementById("stockInput").value),
+            "category": document.getElementById("categoryInput").value,
+        };
+
+        fetch(`/api/products/${id}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(updatedProduct),
+        })
+            .then((res) => {
+                if (res.ok) {
+                    Swal.fire('Producto editado')
+                } else {
+                    Swal.fire('Error al editar el producto')
+                }
+            })
+            .catch((err) => {
+                console.error(err);
+                Swal.fire('Error al editar el producto')
+            });
+    }
+
+</script>

@@ -8,5 +8,7 @@ export default class UsersDto {
         this.age = user.age || null;
         this.cart = user.cart || null;
         this.role = user.role;
+        this.isUser = user.role == "user" ? true : false;// use esto para los handlebars no se como usar el if con comparacion de string
+        this.isAdmin = user.role == "admin" ? true : false;
     }
 }
