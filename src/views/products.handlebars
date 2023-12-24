@@ -54,7 +54,8 @@
                                 <td>${product.category}</td>
                                 <td>
                                     <a href="/products/${product._id}"><i class="bi bi-book"></i></a>
-                                    <a class="cart-icon"><i class="bi bi-cart"></i></a>
+                                    <a href="/products/${product._id}/edit"><i class="bi bi-pencil-square admin"></i></a>
+                                    <a class="cart-icon"><i class="bi bi-cart user"></i></a>
                                 </td>`;
                 const cartIcon = row.querySelector(".cart-icon");
                 cartIcon.addEventListener("click", () => {
@@ -62,6 +63,24 @@
                 });
                 tbody.appendChild(row);
             });
+            userType();
+        }
+
+        function userType() {
+            const userType = `{{user.role}}`;
+            if (userType !== "admin") {
+                const cartIcons = document.querySelectorAll(".admin");
+                cartIcons.forEach((cartIcon) => {
+                    cartIcon.style.display = "none";
+                });
+            }
+            if (userType !== "user") {
+                const cartIcons = document.querySelectorAll(".user");
+                cartIcons.forEach((cartIcon) => {
+                    cartIcon.style.display = "none";
+                });
+            }
+
         }
 
         const nextPageButton = document.getElementById("nextPageButton");

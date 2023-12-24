@@ -8,22 +8,25 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
                 {{#each pages}}
-                    <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="{{this.url}}">{{this.title}}</a>
-                    </li>
+                <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="{{this.url}}">{{this.title}}</a>
+                </li>
                 {{/each}}
+                {{#if user.isUser}}
                 <li class="nav-item">
                     <a id="cart-link" class="nav-link" aria-current="page" href="">Cart</a>
                 </li>
+                {{/if}}
+
             </ul>
         </div>
         <div class="col-md-3 text-end">
             {{#if user}}
-                <a href="/profile"><span class="me-2">Hola {{user.first_name}}</span></a>
-                <a type="button" class="btn btn-outline-primary me-2" href="/logout">Logout</a>
+            <a href="/profile"><span class="me-2">Hola {{user.first_name}}</span></a>
+            <a type="button" class="btn btn-outline-primary me-2" href="/logout">Logout</a>
             {{else}}
-                <a type="button" class="btn btn-outline-primary me-2" href="/login">Iniciar</a>
-                <a type="button" class="btn btn-primary" href="/register">Registrar</a>
+            <a type="button" class="btn btn-outline-primary me-2" href="/login">Iniciar</a>
+            <a type="button" class="btn btn-primary" href="/register">Registrar</a>
             {{/if}}
 
         </div>

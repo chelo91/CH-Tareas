@@ -32,6 +32,15 @@ const productById = async (req, res) => {
     res.render('productDetail', { pages: pages, product: product, user: req.user });
 };
 
+const editProductById = async (req, res) => {
+    const pid = req.params.pid;
+    const product = await ProductsService.getProductById(pid, true);
+    if (product == null) {
+        res.status(404).send("Product not found");
+    }
+    res.render('productEditDetail', { pages: pages, product: product, user: req.user });
+};
+
 const cartById = async (req, res) => {
     const cid = req.params.cid;
     const cart = await CartsService.getCartById(cid, true);
@@ -83,4 +92,4 @@ const current = (req, res) => {
     res.render('profile', { pages: pages, user: req.user });
 };
 
-export { home, products, realTime, chat, productById, cartById, login, register, logout, profile, current };
+export { home, products, realTime, chat, productById, cartById, login, register, logout, profile, current, editProductById };
