@@ -14,4 +14,4 @@ router.put('/:cid/product/:pid', () => updateCartProductQuantity);
 router.delete('/:cid', () => deleteCart);
 router.delete('/:cid/product/:pid', () => deleteProductCart);
 
-router.post('/:cid/purchase', createTicket);
+router.get('/:cid/purchase', createTicket);

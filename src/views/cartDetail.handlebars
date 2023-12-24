@@ -1,2 +1,37 @@
 {{> tableCart products=cart.products}}
-<a href="/carts/{{cart._id}}/purchase" class="btn btn-primary" role="button">Pagar</a>
+<button class="btn btn-primary" onclick=actionPay()>Pagar</button>
+
+<script>
+    function actionPay() {
+        Swal.fire({
+            title: 'Deseas pagar?',
+            showCancelButton: true,
+            confirmButtonText: 'Pagar',
+            showLoaderOnConfirm: true,
+            preConfirm: () => {
+                return fetch(`/api/carts/657f5f16daab2f9d322f2fe1/purchase`)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error(response.statusText)
+                        }
+                        return response.json()
+                    })
+                    .catch(error => {
+                        Swal.showValidationMessage(
+                            `Request failed: ${error}`
+                        )
+                    })
+            },
+            allowOutsideClick: () => !Swal.isLoading()
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire(
+                    'Pago Realizado',
+                    JSON.stringify(result.value.payload),
+                    'success'
+                )
+
+            }
+        })
+    }
+</script>
