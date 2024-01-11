@@ -13,6 +13,7 @@ import { router as sessionsRouter } from './routes/sessions.routes.js';
 import { router as mockingRouter } from './routes/mocking.routes.js';
 import { __dirname, secretSession } from './config/const.config.js';
 import { initializePassport } from "./config/passport.config.js";
+import errorHandler from './middlewares/error.js'
 
 export const startExpressServer = () => {
     /*app.use(session({
@@ -54,4 +55,6 @@ export const startExpressServer = () => {
 
     app.use("/", viewsRouter);
     app.use("/now", viewsRouter);
+
+    app.use(errorHandler)
 }
