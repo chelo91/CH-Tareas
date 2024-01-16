@@ -1,6 +1,6 @@
 import { promises as fs } from 'fs';
 
-const loadFile = async (path) => {
+const loadFile = async (path, isJson = true) => {
     try {
         const data = await fs.readFile(path, 'utf8');
         if (!data) {
@@ -8,6 +8,9 @@ const loadFile = async (path) => {
             return null;
         } else {
             console.log("Archivo cargado")
+            if (!isJson) {
+                return data;
+            }
             return JSON.parse(data);
         }
     } catch (error) {

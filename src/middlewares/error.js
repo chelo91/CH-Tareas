@@ -1,9 +1,9 @@
 import EErrors from "../services/errors/enums.js";
-
+import { logger } from '../helper/utilsLogger.js';
 export default (error, req, res, next) => {
 
-    console.error(error)
-
+    logger.error(error);
+    
     switch (error.code) {
         case EErrors.ROUTING_ERROR:
             return res.status(404).send({

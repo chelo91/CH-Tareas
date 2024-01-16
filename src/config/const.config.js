@@ -25,4 +25,16 @@ const clientID = process.env.GITHUB_CLIENT_ID;
 const clientSecret = process.env.GITHUB_CLIENT_SECRET;
 const callbackURL = process.env.GITHUB_CALLBACK_URL;
 
-export { pathProd, mongoDBName, pathCart, port, url, pathImg, __dirname, mongoUrl, secretSession, secretJWT, saltRounds, clientID, clientSecret, callbackURL, persistence }
+const env = process.env.NODE_ENV || 'development';
+
+if (env === 'production') {
+    // Configuraciones específicas para producción
+    console.log('Estamos en modo producción.');
+} else {
+    // Configuraciones específicas para desarrollo
+    console.log('Estamos en modo desarrollo.');
+}
+
+console.log(`Persistencia con ${persistence}`)
+
+export { pathProd, mongoDBName, pathCart, port, url, pathImg, __dirname, mongoUrl, secretSession, secretJWT, saltRounds, clientID, clientSecret, callbackURL, persistence, env }
