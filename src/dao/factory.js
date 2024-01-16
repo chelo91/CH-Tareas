@@ -1,13 +1,12 @@
 import { persistence, mongoUrl, mongoDBName } from "../config/const.config.js";
 import mongoose from "mongoose";
+import { logger } from '../helper/utilsLogger.js';
 
 export let Carts
 export let Products
 export let Messages
 export let Users
 export let Tickets
-
-console.log(`Persistence with ${persistence}`)
 
 switch (persistence) {
     case "FILE":
@@ -27,22 +26,25 @@ switch (persistence) {
         break;
 
     case "MONGO":
-        await mongoose.connect(mongoUrl, { dbName: mongoDBName })
-        console.log('DB connected 👌')
+        try {
+            await mongoose.connect(mongoUrl, { dbName: mongoDBName })
+            console.log('DB connected 👌')
 
+            const { default: CartsMongo } = await import('./mongo/carts.mongo.js')
+            const { default: ProductsMongo } = await import('./mongo/products.mongo.js')
+            const { default: MessagesMongo } = await import('./mongo/messages.mongo.js')
+            const { default: UsersMongo } = await import('./mongo/users.mongo.js')
+            const { default: TicketsMongo } = await import('./mongo/tickets.mongo.js')
 
-        const { default: CartsMongo } = await import('./mongo/carts.mongo.js')
-        const { default: ProductsMongo } = await import('./mongo/products.mongo.js')
-        const { default: MessagesMongo } = await import('./mongo/messages.mongo.js')
-        const { default: UsersMongo } = await import('./mongo/users.mongo.js')
-        const { default: TicketsMongo } = await import('./mongo/tickets.mongo.js')
-
-        Carts = CartsMongo
-        Products = ProductsMongo
-        Messages = MessagesMongo
-        Users = UsersMongo
-        Tickets = TicketsMongo
-
+            Carts = CartsMongo
+            Products = ProductsMongo
+            Messages = MessagesMongo
+            Users = UsersMongo
+            Tickets = TicketsMongo
+        } catch (error) {
+            logger.fatal(error);
+            process.exit(1);
+        }
         break;
     default:
         throw "Persistence doesn't found"

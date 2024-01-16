@@ -7,5 +7,5 @@ startExpressServer();
 startSocketServer();
 
 httpServer.listen(port, () => {
-    console.log(`API and Socket.IO is listening on port ${port}`);
+    console.log(`API y Socket.IO esta funcionando en el puerto ${port}`);
 });

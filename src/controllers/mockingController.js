@@ -1,6 +1,9 @@
-import { sucessMessageCreate, errorMessage } from "../helper/utilsResponse.js";
+import { sucessMessageCreate } from "../helper/utilsResponse.js";
 import { generateProduct } from "../helper/utilsMocking.js";
 import { ProductsService } from "../services/index.js";
+import CustomError from "../services/errors/customError.js";
+import { productNotExistError, productCustomError, productNullIdError } from "../services/errors/products.js";
+import EErrors from "../services/errors/enums.js";
 
 export const getMockingProducts = async (req, res) => {
     try {
@@ -19,6 +22,7 @@ export const getMockingProducts = async (req, res) => {
         }
         return res.status(200).json(products);
     } catch (error) {
-        return res.status(400).json(errorMessage("Error creating cart"));
+        next(error);
+        //return res.status(400).json(errorMessage("Error creating cart"));
     }
 };
