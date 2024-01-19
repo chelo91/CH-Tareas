@@ -3,9 +3,9 @@ import passportLocal from 'passport-local'
 import passportJWT from 'passport-jwt'
 import passportGitHub from "passport-github2";
 import { Users } from "../dao/factory.js";
-import { hashPassword, comparePasswords } from "../helper/utilsPassword.js";
+import { hashPassword, comparePasswords } from "../helper/password.js";
 import { clientID, clientSecret, callbackURL } from "./const.config.js";
-import { generateToken } from "../helper/utilsJwt.js";
+import { generateToken } from "../helper/jwt.js";
 import { secretJWT } from "./const.config.js"
 import UsersDto from "../dao/dto/users.dto.js";
 const LocalStratey = passportLocal.Strategy

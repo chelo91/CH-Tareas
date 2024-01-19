@@ -1,7 +1,7 @@
 import express from "express";
 import passport from "passport";
 export const router = express.Router();
-
+import { forgotPassword, resetPassword, changePassword } from '../controllers/userController.js';
 router.post('/register',
     passport.authenticate('register', { failureRedirect: '/register' }),
     async (req, res) => {
@@ -56,3 +56,8 @@ router.get(
         res.cookie('cookieJWT', req.user.token).redirect('/')
     }
 )
+
+router.post('/forgot-password', forgotPassword);
+
+router.get('/reset-password', resetPassword);
+router.post('/reset-password', changePassword);

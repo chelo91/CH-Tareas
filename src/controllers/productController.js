@@ -1,6 +1,6 @@
 import { ProductsService } from "../services/index.js";
-import { sucessMessage, sucessMessageCreate, sucessMessageUpdate, sucessMessageDelete } from '../helper/utilsResponse.js';
-import { io } from '../helper/utilsServerVars.js';
+import { sucessMessage, sucessMessageCreate, sucessMessageUpdate, sucessMessageDelete } from '../helper/response.js';
+import { io } from '../helper/serverVars.js';
 import CustomError from "../services/errors/customError.js";
 import { productNotExistError, productCustomError, productNullIdError } from "../services/errors/products.js";
 import EErrors from "../services/errors/enums.js";

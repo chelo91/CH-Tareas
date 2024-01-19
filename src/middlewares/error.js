@@ -1,5 +1,5 @@
 import EErrors from "../services/errors/enums.js";
-import { logger } from '../helper/utilsLogger.js';
+import { logger } from '../helper/logger.js';
 export default (error, req, res, next) => {
 
     logger.error(error);
