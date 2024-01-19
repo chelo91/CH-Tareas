@@ -21,4 +21,8 @@ export default class Users {
         const user = await userModel.findById(id);
         return user;
     }
+    async updateUser(id, user) {
+        const result = await userModel.findByIdAndUpdate(id, user);
+        return result;
+    }
 }

@@ -27,6 +27,11 @@ const callbackURL = process.env.GITHUB_CALLBACK_URL;
 
 const env = process.env.NODE_ENV || 'development';
 
+const smtpHost = process.env.SMTP_HOST;
+const smtpPort = process.env.SMTP_PORT;
+const smtpUser = process.env.SMTP_USER;
+const smtpPass = process.env.SMTP_PASS;
+
 if (env === 'production') {
     // Configuraciones específicas para producción
     console.log('Estamos en modo producción.');
@@ -37,4 +42,8 @@ if (env === 'production') {
 
 console.log(`Persistencia con ${persistence}`)
 
-export { pathProd, mongoDBName, pathCart, port, url, pathImg, __dirname, mongoUrl, secretSession, secretJWT, saltRounds, clientID, clientSecret, callbackURL, persistence, env }
+export {
+    pathProd, mongoDBName, pathCart, port, url, pathImg, __dirname, mongoUrl,
+    secretSession, secretJWT, saltRounds, clientID, clientSecret, callbackURL,
+    persistence, env, smtpHost, smtpPort, smtpUser, smtpPass
+}

@@ -1,5 +1,5 @@
-import { sucessMessageCreate } from "../helper/utilsResponse.js";
-import { generateProduct } from "../helper/utilsMocking.js";
+import { sucessMessageCreate } from "../helper/response.js";
+import { generateProduct } from "../helper/mocking.js";
 import { ProductsService } from "../services/index.js";
 import CustomError from "../services/errors/customError.js";
 import { productNotExistError, productCustomError, productNullIdError } from "../services/errors/products.js";

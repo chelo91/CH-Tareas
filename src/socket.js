@@ -1,4 +1,4 @@
-import { io } from './helper/utilsServerVars.js';
+import { io } from './helper/serverVars.js';
 import { Products, Messages } from './dao/factory.js';
 
 const productManager = new Products();

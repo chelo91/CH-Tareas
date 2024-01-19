@@ -1,7 +1,7 @@
 import { promises as fs } from 'fs';
 import ProductsInterface from '../interface/products.fileManager.js';
 import { validateProps } from '../../middlewares/validateProps.js';
-import { loadFile, saveFile } from '../../helper/utilsFs.js';
+import { loadFile, saveFile } from '../../helper/fs.js';
 import { pathProd } from '../../config/const.config.js';
 
 export default class Products extends ProductsInterface {

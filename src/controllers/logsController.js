@@ -1,8 +1,8 @@
-import { sucessMessageCreate } from "../helper/utilsResponse.js";
+import { sucessMessageCreate } from "../helper/response.js";
 import CustomError from "../services/errors/customError.js";
 import { productNotExistError, productCustomError, productNullIdError } from "../services/errors/products.js";
 import EErrors from "../services/errors/enums.js";
-import { loadFile } from '../helper/utilsFs.js';
+import { loadFile } from '../helper/fs.js';
 
 export const getLogs = async (req, res) => {
     try {

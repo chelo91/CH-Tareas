@@ -1,6 +1,6 @@
 import { persistence, mongoUrl, mongoDBName } from "../config/const.config.js";
 import mongoose from "mongoose";
-import { logger } from '../helper/utilsLogger.js';
+import { logger } from '../helper/logger.js';
 
 export let Carts
 export let Products

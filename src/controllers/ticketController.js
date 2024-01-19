@@ -1,5 +1,5 @@
 import { TicketsService, ProductsService, CartsService } from "../services/index.js";
-import { sucessMessage, sucessMessageCreate, sucessMessageUpdate, sucessMessageDelete } from '../helper/utilsResponse.js';
+import { sucessMessage, sucessMessageCreate, sucessMessageUpdate, sucessMessageDelete } from '../helper/response.js';
 import { uid } from 'uid';
 import CustomError from "../services/errors/customError.js";
 import {

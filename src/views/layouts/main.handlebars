@@ -85,6 +85,29 @@
           Swal.fire('Error al agregar producto al carrito')
         });
     }
+
+    function forgotPassword() {
+      const email = document.getElementById('inputEmail').value;
+      if (email == "") {
+        Swal.fire(`Ingrese un email`);
+        return;
+      }
+      fetch('/api/sessions/forgot-password', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          email: email
+        })
+      }).then(response => response.json())
+        .then(data => {
+          Swal.fire(`Se envio un email a su correo ${email}`);
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+        });
+    }
   </script>
 </body>
 
