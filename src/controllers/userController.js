@@ -83,3 +83,20 @@ export const changePassword = async (req, res) => {
         next(error);
     }
 };
+
+export const changeRole = async (req, res) => {
+    try {
+        const userId = req.params.uid;
+        const newRole = req.body.role;
+        if (!userId || !newRole) {
+            return res.status(400).json({ message: 'Role is required' });
+        }
+        if (newRole !== 'admin' && newRole !== 'user' && newRole !== 'premium') {
+            return res.status(400).json({ message: 'Role is invalid' });
+        }
+        const result = await UsersService.updateUser(userId, { role: newRole });
+        return res.status(200).json({ message: 'Role changed' });
+    } catch (error) {
+        next(error);
+    }
+};

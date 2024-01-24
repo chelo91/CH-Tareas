@@ -78,4 +78,15 @@ export default class Products extends ProductManagerInterface {
     async deleteProduct(pid) {
         return productModel.deleteOne({ _id: pid });
     }
+
+    async canChangeProduct(pid, user) {
+        const product = await this.getProductById(pid);
+        if (user.role === 'admin') {
+            return true;
+        } else if (user.role === 'premium' && product.owner === user.email) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
