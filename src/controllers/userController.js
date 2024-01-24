@@ -1,10 +1,9 @@
 import { UsersService } from "../services/index.js";
 import { url } from "../config/const.config.js";
 import { generateTokenResetPassword, getUserInToken } from '../helper/jwt.js'
-import UsersDto from "../dao/dto/users.dto.js";
+import UsersDto from "../dto/users.dto.js";
 import { mailer } from "../helper/mail.js";
 import { comparePasswords, hashPassword } from "../helper/password.js";
-
 
 export const forgotPassword = async (req, res) => {
     try {

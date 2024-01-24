@@ -7,7 +7,7 @@ import { hashPassword, comparePasswords } from "../helper/password.js";
 import { clientID, clientSecret, callbackURL } from "./const.config.js";
 import { generateToken } from "../helper/jwt.js";
 import { secretJWT } from "./const.config.js"
-import UsersDto from "../dao/dto/users.dto.js";
+import UsersDto from "../dto/users.dto.js";
 const LocalStratey = passportLocal.Strategy
 const JWTStrategy = passportJWT.Strategy
 

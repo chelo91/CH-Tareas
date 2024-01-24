@@ -1,0 +1,78 @@
+openapi: 3.0.0
+info:
+  title: Carts
+  version: 1
+paths:
+  /api/carts:
+    get:
+      summary: Get all carts
+      operationId: getCarts
+      responses:
+        "200":
+          description: OK
+    post:
+      summary: Create a new cart
+      operationId: createCarts
+      responses:
+        "201":
+          description: Created
+  /api/carts/{cid}:
+    get:
+      summary: Get a cart by ID
+      operationId: getCartsById
+      parameters:
+        - name: cid
+          in: path
+          required: true
+          type: integer
+      responses:
+        "200":
+          description: OK
+  /api/carts/{cid}/product/{pid}:
+    post:
+      summary: Add product to cart
+      operationId: addProductToCart
+      parameters:
+        - name: cid
+          in: path
+          required: true
+          type: integer
+        - name: pid
+          in: path
+          required: true
+          type: integer
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/AddProductToCartInput"
+      responses:
+        "200":
+          description: OK
+definitions:
+  ProductInput:
+    type: object
+    properties:
+      title:
+        type: string
+      description:
+        type: string
+      code:
+        type: string
+      price:
+        type: number
+      status:
+        type: boolean
+      stock:
+        type: number
+      category:
+        type: string
+      thumbnail:
+        type: array
+        items:
+          type: string
+  AddProductToCartInput:
+    type: object
+    properties:
+      quantity:
+        type: integer
