@@ -2,7 +2,7 @@ import { ProductsService } from "../services/index.js";
 import { sucessMessage, sucessMessageCreate, sucessMessageUpdate, sucessMessageDelete } from '../helper/response.js';
 import { io } from '../helper/serverVars.js';
 import CustomError from "../services/errors/customError.js";
-import { productNotExistError, productCustomError, productNullIdError } from "../services/errors/products.js";
+import { productNotExistError, productCustomError, productNullIdError, userCantChangeProductError } from "../services/errors/products.js";
 import EErrors from "../services/errors/enums.js";
 
 const getProducts = async (req, res, next) => {
@@ -39,6 +39,7 @@ const getProductById = async (req, res, next) => {
 };
 
 const createProduct = async (req, res, next) => {
+	const user = req.user;
 	const nameError = "Create Product Error";
 	const messageError = "Error trying to create product";
 	try {
@@ -50,7 +51,8 @@ const createProduct = async (req, res, next) => {
 			status: req.body.status,
 			stock: req.body.stock,
 			category: req.body.category,
-			thumbnail: req.body.images
+			thumbnail: req.body.images,
+			owner: user.email
 		}
 		try {
 			pid = await ProductsService.addProduct(newProd)
@@ -77,6 +79,7 @@ const createProduct = async (req, res, next) => {
 };
 
 const updateProduct = async (req, res, next) => {
+	const user = req.user;
 	const nameError = "Update Product Error";
 	const messageError = "Error trying to update product";
 	try {
@@ -89,6 +92,16 @@ const updateProduct = async (req, res, next) => {
 				code: EErrors.ROUTING_ERROR
 			})
 		}
+		const canChange = await ProductsService.canChangeProduct(pid, user);
+		if (!canChange) {
+			CustomError.createError({
+				name: nameError,
+				cause: userCantChangeProductError(pid),
+				message: messageError,
+				code: EErrors.ROUTING_ERROR
+			})
+		}
+
 		try {
 			const prod = await ProductsService.updateProduct(pid, req.body)
 			return res.status(200).json(sucessMessageUpdate(prod));
@@ -108,6 +121,7 @@ const updateProduct = async (req, res, next) => {
 };
 
 const deleteProduct = async (req, res, next) => {
+	const user = req.user;
 	const nameError = "Delete Product Error";
 	const messageError = "Error trying to delete product";
 	try {
@@ -116,6 +130,15 @@ const deleteProduct = async (req, res, next) => {
 			CustomError.createError({
 				name: nameError,
 				cause: productNotExistError(pid),
+				message: messageError,
+				code: EErrors.ROUTING_ERROR
+			})
+		}
+		const canChange = await ProductsService.canChangeProduct(pid, user);
+		if (!canChange) {
+			CustomError.createError({
+				name: nameError,
+				cause: userCantChangeProductError(pid),
 				message: messageError,
 				code: EErrors.ROUTING_ERROR
 			})

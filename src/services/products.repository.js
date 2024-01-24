@@ -10,4 +10,5 @@ export default class ProductsRepository {
     getProductByCode = async (code) => { return await this.dao.getProductByCode(code) }
     updateProduct = async (pid, newProduct) => { return await this.dao.updateProduct(pid, newProduct) }
     deleteProduct = async (pid) => { return await this.dao.deleteProduct(pid) }
+    canChangeProduct = async (pid, user) => { return await this.dao.canChangeProduct(pid, user) }
 }

@@ -68,13 +68,13 @@
 
         function userType() {
             const userType = `{{user.role}}`;
-            if (userType !== "admin") {
+            if (userType !== "admin" && userType !== "premium") {
                 const cartIcons = document.querySelectorAll(".admin");
                 cartIcons.forEach((cartIcon) => {
                     cartIcon.style.display = "none";
                 });
             }
-            if (userType !== "user") {
+            if (userType !== "user" && userType !== "premium") {
                 const cartIcons = document.querySelectorAll(".user");
                 cartIcons.forEach((cartIcon) => {
                     cartIcon.style.display = "none";
