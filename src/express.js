@@ -5,6 +5,9 @@ import cookieParser from 'cookie-parser'
 //import MongoStore from 'connect-mongo'
 import passport from "passport";
 
+import swaggerJSDoc from 'swagger-jsdoc';
+import swaggerUiExpress from 'swagger-ui-express'
+
 import { app } from './helper/serverVars.js';
 import { router as productsRouter } from './routes/products.routes.js';
 import { router as cartsRouter } from './routes/carts.routes.js';
@@ -20,16 +23,16 @@ import { addLogger } from './helper/logger.js'
 
 
 export const startExpressServer = () => {
-    /*app.use(session({
-        store: MongoStore.create({
-            mongoUrl,
-            dbName: 'ecommerce',
-            ttl: 100
-        }),
-        secret: secret,
-        resave: true,
-        saveUninitialized: true
-    }));*/
+    const swaggerOptions = {
+        definition: {
+            openapi: '3.0.1',
+            info: {
+                title: 'Documentacion de Ecommerce',
+                description: 'Este proyecto es de Ecommerce'
+            }
+        },
+        apis: [`${__dirname}/dao/docs/**/*.yaml`]
+    }
     // Session
     app.use(session({
         secret: secretSession,
@@ -53,15 +56,8 @@ export const startExpressServer = () => {
     app.set('views', __dirname + '/views');
     app.set('view engine', 'handlebars');
 
-    /*app.use("*", (req, res, next) => {
-        req.logger.fatal('fatal')
-        req.logger.error('error')
-        req.logger.warning('warning')
-        req.logger.info('info')
-        req.logger.http('http')
-        req.logger.debug('debug')
-        next();
-    });*/
+    const specs = swaggerJSDoc(swaggerOptions)
+    app.use('/apidocs', swaggerUiExpress.serve, swaggerUiExpress.setup(specs))
 
     app.use("/api/products", productsRouter);
     app.use("/api/carts", cartsRouter);
