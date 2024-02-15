@@ -6,6 +6,7 @@ dotenv.config();
 
 const persistence = process.env.PERSISTENCE || "MONGO";
 const mongoDBName = process.env.MONGO_DB_NAME || "ecommerce";
+const mongoDBNameTest = process.env.MONGO_DB_NAME_TEST || "ecommerce-test";
 const pathProd = process.env.PATH_PRODUCTS || "./db/products.json";
 const pathCart = process.env.PATH_CARTS || "./db/carts.json";
 const port = process.env.PORT || 3000;
@@ -17,7 +18,10 @@ const secretJWT = process.env.SECRET_JWT || "";
 const __filename = fileURLToPath(import.meta.url);
 const helperFolder = dirname(__filename);
 const __dirname = path.join(helperFolder, '..');
-const pathImg = path.join(__dirname, "/public/img");
+
+const pathFileProfile = path.join(__dirname, "/public/profile");
+const pathFileDocuments = path.join(__dirname, "/public/documents");
+const pathFileProducts = path.join(__dirname, "/public/products");
 
 const saltRounds = 10;
 
@@ -43,7 +47,8 @@ if (env === 'production') {
 console.log(`Persistencia con ${persistence}`)
 
 export {
-    pathProd, mongoDBName, pathCart, port, url, pathImg, __dirname, mongoUrl,
-    secretSession, secretJWT, saltRounds, clientID, clientSecret, callbackURL,
+    pathProd, mongoDBName, mongoDBNameTest, pathCart, port, url,
+    pathFileProfile, pathFileDocuments, pathFileProducts, __dirname,
+    mongoUrl, secretSession, secretJWT, saltRounds, clientID, clientSecret, callbackURL,
     persistence, env, smtpHost, smtpPort, smtpUser, smtpPass
 }

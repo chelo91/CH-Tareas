@@ -7,5 +7,6 @@ export default class UsersRepository {
     getUserByEmail = async (email) => { return await this.dao.getUserByEmail(email) }
     getUser = async (id) => { return await this.dao.getUser(id) }
     updateUser = async (id, user) => { return await this.dao.updateUser(id, user) }
+    refreshLastLoginUser = async (id) => { return await this.dao.refreshLastLoginUser(id) }
 
 }

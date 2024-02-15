@@ -1,9 +1,8 @@
 import multer from "multer";
-import { pathImg } from '../config/const.config.js';
 
-const storage = multer.diskStorage({
+const storage = (destination) => multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, pathImg);
+        cb(null, destination);
     },
     filename: function (req, file, cb) {
         const fileName = file.originalname.replace(/\s+/g, '');
@@ -11,4 +10,4 @@ const storage = multer.diskStorage({
     }
 });
 
-export const upload = multer({ storage: storage });
+export const upload = (destination) => multer({ storage: storage(destination) });

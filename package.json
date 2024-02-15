@@ -7,7 +7,7 @@
   "scripts": {
     "start": "node src/app.js",
     "dev": "nodemon src/app.js",
-    "test": "npx playwright test"
+    "test": "mocha src/test/Users.test.js"
   },
   "author": "Marcelo Aguirre",
   "license": "ISC",
@@ -40,6 +40,8 @@
   "devDependencies": {
     "@faker-js/faker": "^8.3.1",
     "@playwright/test": "^1.39.0",
-    "@types/node": "^20.8.9"
+    "@types/node": "^20.8.9",
+    "chai": "^5.0.3",
+    "supertest": "^6.3.4"
   }
 }

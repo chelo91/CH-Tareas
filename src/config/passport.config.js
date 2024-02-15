@@ -42,6 +42,7 @@ export const initializePassport = () => {
                     user = await usersManager.addUser(newUser)
                 }
                 const userDto = new UsersDto(user);
+                usersManager.refreshLastLoginUser(user._id);
                 const token = generateToken(userDto)
                 userDto.token = token
 
@@ -97,7 +98,8 @@ export const initializePassport = () => {
             }
 
             const userDto = new UsersDto(user);
-            const token = generateToken(userDto)
+            usersManager.refreshLastLoginUser(user._id);
+            const token = generateToken(userDto);
             userDto.token = token
 
             return done(null, userDto)
