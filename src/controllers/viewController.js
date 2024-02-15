@@ -1,4 +1,4 @@
-import { ProductsService, CartsService } from "../services/index.js";
+import { ProductsService, CartsService, UsersService } from "../services/index.js";
 
 const pages = [
     { name: "home", title: "Home", url: "/" },
@@ -60,6 +60,10 @@ const register = (req, res) => {
 
 const logout = async (req, res) => {
     try {
+        if (req.user != null) {
+            console.log("User logged out: ", req.user.email);
+            UsersService.refreshLastLoginUser(req.user._id);
+        }
         res.clearCookie('cookieJWT');
         req.session.destroy(err => {
             if (err) {

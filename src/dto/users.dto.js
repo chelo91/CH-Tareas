@@ -10,5 +10,8 @@ export default class UsersDto {
         this.role = user.role;
         this.isUser = user.role == "user" ? true : false;// use esto para los handlebars no se como usar el if con comparacion de string
         this.isAdmin = user.role == "admin" ? true : false;
+        this.documents = user.documents || [];
+        this.last_connection = user.last_connection || Date.now();
+
     }
 }

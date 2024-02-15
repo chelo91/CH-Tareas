@@ -25,4 +25,9 @@ export default class Users {
         const result = await userModel.findByIdAndUpdate(id, user);
         return result;
     }
+    async refreshLastLoginUser(id) {
+        const user = await userModel.findById(id);
+        user.last_connection = Date.now();
+        return user.save();
+    }
 }

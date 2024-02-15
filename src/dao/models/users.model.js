@@ -13,7 +13,9 @@ const userSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'carts'
     },
-    role: { type: String, required: true, default: 'user' }
+    role: { type: String, required: true, default: 'user' },
+    documents: { type: Array, default: [] },
+    last_connection: { type: Date, default: Date.now }
 });
 
 const userModel = mongoose.model(userCollection, userSchema)
