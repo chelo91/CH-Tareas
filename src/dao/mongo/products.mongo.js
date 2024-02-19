@@ -26,6 +26,7 @@ export default class Products extends ProductManagerInterface {
     _checkProductProp(product, update = false) {
         return validateProps(Products.propProduct, product, update);
     }
+
     async addProduct(newProduct) {
         // Check if the product has all the properties
         const isValid = this._checkProductProp(newProduct);
@@ -42,7 +43,7 @@ export default class Products extends ProductManagerInterface {
         }
     }
     /* CRUD */
-    async getProducts(query) {
+    async getProductsInPages(query) {
         const products = await productModel.paginate(
             query.filters,
             {
@@ -54,7 +55,7 @@ export default class Products extends ProductManagerInterface {
         );
         return products;
     }
-    async getAllProducts() {
+    async getProducts() {
         const products = await productModel.find({}).lean();
         return products;
     }
@@ -83,7 +84,7 @@ export default class Products extends ProductManagerInterface {
         const product = await this.getProductById(pid);
         if (user.role === 'admin') {
             return true;
-        } else if (user.role === 'premium' && product.owner === user.email) {
+        } else if (user.role === 'premium' && product.user.email === user.email) {
             return true;
         } else {
             return false;

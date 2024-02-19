@@ -5,10 +5,11 @@ export default class Messages {
 
     /* PROPERTIES */
     constructor() {
-       
+    
     }
+
     async addMessage(message) {
-        if (message.session && message.email && message.message) {
+        if (message.session && message.message && message.user) {
             message.date = Date.now();
             const bdMessage = new messageModel(message);
             return bdMessage.save();

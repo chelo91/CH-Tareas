@@ -7,7 +7,7 @@ const ticketSchema = new mongoose.Schema({
         unique: true,
         required: true,
     },
-    purchase_datetime: {
+    datetime: {
         type: Date,
         default: Date.now,
     },
@@ -15,14 +15,24 @@ const ticketSchema = new mongoose.Schema({
         type: Number,
         required: true,
     },
-    purchaser: {
-        type: String,
-        required: true,
-    },
     user: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'users'
+        ref: 'users',
+        required: true,
     },
+    products: [
+        {
+            product: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'products',
+                required: true,
+            },
+            quantity: {
+                type: Number,
+                required: true,
+            },
+        }
+    ],
 });
 
 // Define el modelo Ticket utilizando el esquema definido anteriormente

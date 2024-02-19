@@ -7,11 +7,16 @@ const productSchema = new mongoose.Schema({
     description: { type: String, required: true },
     code: { type: String, required: true },
     price: { type: Number, required: true },
-    status: { type: Boolean, required: true },
+    status: { type: String, enum: ['available', 'unavailable', 'presale'], default: 'available' },
     stock: { type: Number, required: true },
     category: { type: String, required: true },
     thumbnail: { type: [String], required: true },
-    owner: { type: String, required: true, default: 'admin' }
+    owner: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'users',
+        required: true,
+        default: null,
+    }
 });
 
 productSchema.plugin(mongoosePaginate);
