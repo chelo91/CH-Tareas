@@ -11,9 +11,23 @@ export default class Carts extends CartManagerInterface {
         super();
     }
     /* METHODS */
-    async addCart() {
+    async addCart(user, role = 'cart') {
         const newCart = new cartModel();
+        newCart.user = user;
+        newCart.role = role;
         return newCart.save();
+    }
+    async findOrAddCart(user, role = 'cart') {
+        const findCart = await cartModel.findOne({ user: user, role: role });
+        if (findCart == null) {
+            const newCart = new cartModel();
+            newCart.user = user;
+            newCart.role = role;
+            const returnCart = await newCart.save();
+            return returnCart;
+        }
+        return findCart;
+
     }
     async addProduct(idCart, newProduct) {
         const cart = await this.getCartById(idCart);

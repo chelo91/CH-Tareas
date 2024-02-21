@@ -25,7 +25,7 @@
     {{{body}}}
   </main>
   <script>
-    document.addEventListener("DOMContentLoaded", async function () {
+    /*document.addEventListener("DOMContentLoaded", async function () {
       let cart = localStorage.getItem("cart") || null;
       if (cart !== null) {
         try {
@@ -63,9 +63,9 @@
           console.error("Error en la solicitud:", error);
         }
       }
-    });
+    });*/
 
-    function handleCartIconClick(id) {
+    /*function handleCartIconClick(id) {
       const cart = localStorage.getItem("cart");
       fetch(`/api/carts/${cart}/product/${id}`, {
         method: "POST",
@@ -84,7 +84,7 @@
           console.error(err);
           Swal.fire('Error al agregar producto al carrito')
         });
-    }
+    }*/
 
     function forgotPassword() {
       const email = document.getElementById('inputEmail').value;

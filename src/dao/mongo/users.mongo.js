@@ -5,9 +5,10 @@ export default class Users {
     /* PROPERTIES */
     constructor() {
     }
+    /*
     get getConection() {
         return Users.conection;
-    }
+    }*/
     /* METHODS */
     async addUser(newUser) {
         const user = new userModel(newUser);

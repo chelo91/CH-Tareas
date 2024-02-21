@@ -29,6 +29,12 @@ cartSchema.pre('findOne', function () {
 cartSchema.pre('find', function () {
     this.populate('products.product')
 })
+cartSchema.pre('findOne', function () {
+    this.populate('user')
+})
+cartSchema.pre('find', function () {
+    this.populate('user')
+})
 
 cartSchema.plugin(mongoosePaginate);
 const cartModel = mongoose.model(cartCollection, cartSchema)

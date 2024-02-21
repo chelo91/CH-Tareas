@@ -43,7 +43,7 @@ export default class Products extends ProductManagerInterface {
         }
     }
     /* CRUD */
-    async getProductsInPages(query) {
+    async getProducts(query) {
         const products = await productModel.paginate(
             query.filters,
             {
@@ -55,7 +55,7 @@ export default class Products extends ProductManagerInterface {
         );
         return products;
     }
-    async getProducts() {
+    async getAllProducts() {
         const products = await productModel.find({}).lean();
         return products;
     }

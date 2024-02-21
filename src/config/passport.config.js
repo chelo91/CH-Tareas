@@ -2,7 +2,7 @@ import passport from "passport";
 import passportLocal from 'passport-local'
 import passportJWT from 'passport-jwt'
 import passportGitHub from "passport-github2";
-import { Users } from "../dao/factory.js";
+import { Users, Carts } from "../dao/factory.js";
 import { hashPassword, comparePasswords } from "../helper/password.js";
 import { clientID, clientSecret, callbackURL } from "./const.config.js";
 import { generateToken } from "../helper/jwt.js";
@@ -62,7 +62,7 @@ export const initializePassport = () => {
 
             const { first_name, last_name, birth_date } = req.body;
             if (first_name === undefined || last_name === undefined || username === undefined || birth_date === undefined || password === undefined) {
-                return done(null, false)
+                return done(null, false, { message: 'Usuario no existe' })
             }
 
             const newUser = { first_name, last_name };
@@ -71,9 +71,8 @@ export const initializePassport = () => {
             newUser.email = username;
             const user = await usersManager.addUser(newUser);
             if (!user) {
-                return done(null, false)
+                return done(null, false, { message: 'Error al crear el usuario' })
             }
-
             const token = generateToken(user)
             user.token = token
 
@@ -90,11 +89,11 @@ export const initializePassport = () => {
             const usersManager = new Users();
             const user = await usersManager.getUserByEmail(username);
             if (!user) {
-                console.log('User doesnot exists')
-                return done(null, false)
+                console.log('User doesnt exists')
+                return done(null, false, { message: 'Usuario no existe' })
             }
             if (!comparePasswords(password, user.password)) {
-                return done(null, false)
+                return done(null, false, { message: 'Contraseña incorrecta' })
             }
 
             const userDto = new UsersDto(user);
@@ -111,7 +110,13 @@ export const initializePassport = () => {
     passport.use('jwt', new JWTStrategy({
         jwtFromRequest: passportJWT.ExtractJwt.fromExtractors([extractCookie]),
         secretOrKey: secretJWT,
-    }, (jwt_payload, done) => {
+    }, async (jwt_payload, done) => {
+        if (jwt_payload.user != "admin") {
+            const cartsManager = new Carts();
+            const cart = await cartsManager.findOrAddCart(jwt_payload.user._id, 'cart');
+            jwt_payload.user.cart = cart.id;
+        }
+
         console.log({ jwt_payload })
         done(null, jwt_payload.user)
     }))

@@ -14,7 +14,7 @@
                 {{/each}}
                 {{#if user.isUser}}
                 <li class="nav-item">
-                    <a id="cart-link" class="nav-link" aria-current="page" href="">Cart</a>
+                    <a id="cart-link" class="nav-link" aria-current="page" href="/carts/{{user.cart}}">Cart</a>
                 </li>
                 {{/if}}
 
@@ -33,10 +33,10 @@
     </div>
 </nav>
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
+    /*document.addEventListener("DOMContentLoaded", function () {
         const cartLink = document.getElementById('cart-link');
         const cartValue = localStorage.getItem("cart");
         cartLink.href = "/carts/" + cartValue;
-    });
+    });*/
 
 </script>

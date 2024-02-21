@@ -1,8 +1,9 @@
 import { io } from './helper/serverVars.js';
-import { Products, Messages } from './dao/factory.js';
+import { Products, Messages, Users } from './dao/factory.js';
 
 const productManager = new Products();
 const messageManager = new Messages();
+const userManager = new Users();
 
 const products = await productManager.getAllProducts();
 const messages = await messageManager.getMessages();
@@ -22,6 +23,8 @@ export const startSocketServer = async () => {
         });
 
         socket.on('send-message', async (message) => {
+            const user = await userManager.getUserByEmail(message.email);
+            message.user = user._id;
             await messageManager.addMessage(message);
             messages.push(message);
             io.emit('new-message', message);

@@ -25,9 +25,9 @@ router.post('/register',
 router.post('/login',
     passport.authenticate('login', { failureRedirect: '/login' }),
     async (req, res) => {
-        if (!req.user) {
-            return res.redirect('/login');
-        }
+        /*if (!req.user) {
+            return res.redirect('/login', { message: 'Usuario no existe' });
+        }*/
         return res.cookie('cookieJWT', req.user.token).redirect('/')
     })
 
