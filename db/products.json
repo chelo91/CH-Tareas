@@ -1,116 +1,122 @@
 [
     {
-        "title": "Laptop ASUS ROG",
-        "description": "Potente laptop para juegos con pantalla Full HD.",
-        "code": "P001",
-        "price": 1499.99,
-        "status": true,
-        "stock": 30,
-        "category": "Computadoras",
-        "thumbnail": [
-            "public/img/1696094644738-Captura de pantalla 2023-04-11 181815.png",
-            "public/img/1696094644740-Captura de pantalla 2023-04-13 145136.png",
-            "public/img/1696094644742-Captura de pantalla 2023-04-20 103743.png"
-        ],
-        "id": 1
-    },
-    {
-        "title": "Smartphone Google Pixel 6",
-        "description": "Teléfono inteligente con cámara de alta calidad.",
-        "code": "P002",
-        "price": 799.99,
-        "status": true,
+        "title": "Smartphone iPhone 13 Pro",
+        "description": "Último modelo de iPhone con pantalla Super Retina XDR de 6.1 pulgadas, procesador A15 Bionic, cámara triple de 12 MP y resistencia al agua.",
+        "code": "IPHONE13PRO",
+        "price": 1099.99,
+        "status": "available",
         "stock": 50,
-        "category": "Teléfonos",
-        "thumbnail": [],
-        "id": 2
+        "category": "Electrónicos",
+        "thumbnail": [
+        ],
+        "owner": null
     },
     {
-        "title": "Router WiFi Mesh",
-        "description": "Router de malla para una conexión WiFi rápida y confiable.",
-        "code": "P003",
-        "price": 129.99,
-        "status": true,
+        "title": "Televisor OLED LG CX Series",
+        "description": "Televisor OLED 4K con panel de 55 pulgadas, procesador α9 Gen 3, Dolby Vision IQ, Dolby Atmos, y compatibilidad con HDMI 2.1 y NVIDIA G-Sync.",
+        "code": "LGTVCX55",
+        "price": 1499.99,
+        "status": "available",
         "stock": 20,
-        "category": "Redes",
-        "thumbnail": [],
-        "id": 3
+        "category": "Electrónicos",
+        "thumbnail": [
+        ],
+        "owner": null
     },
     {
-        "title": "Auriculares Bluetooth Sony",
-        "description": "Auriculares inalámbricos con cancelación de ruido.",
-        "code": "P004",
-        "price": 199.99,
-        "status": true,
-        "stock": 40,
-        "category": "Audio",
-        "thumbnail": [],
-        "id": 4
+        "title": "Portátil MacBook Pro 14 pulgadas",
+        "description": "Portátil con chip M1 Pro, pantalla Retina XDR de 14 pulgadas, hasta 32 GB de memoria unificada y hasta 8 TB de almacenamiento SSD.",
+        "code": "MACBOOKPRO14",
+        "price": 1999.99,
+        "status": "available",
+        "stock": 30,
+        "category": "Electrónicos",
+        "thumbnail": [
+        ],
+        "owner": null
     },
     {
-        "title": "Impresora HP LaserJet",
-        "description": "Impresora láser de alta velocidad para la oficina.",
-        "code": "P005",
-        "price": 299.99,
-        "status": true,
+        "title": "Cámara Mirrorless Sony Alpha A7 III",
+        "description": "Cámara mirrorless full-frame con sensor CMOS Exmor R de 24.2 MP, enfoque automático rápido, estabilización de imagen de 5 ejes y grabación de video 4K.",
+        "code": "SONYA7III",
+        "price": 1999.99,
+        "status": "available",
         "stock": 15,
-        "category": "Impresoras",
-        "thumbnail": [],
-        "id": 5
+        "category": "Electrónicos",
+        "thumbnail": [
+        ],
+        "owner": null
     },
     {
-        "title": "Monitor Gaming Acer",
-        "description": "Monitor curvo de alta tasa de actualización para juegos.",
-        "code": "P006",
-        "price": 399.99,
-        "status": true,
+        "title": "Tableta Apple iPad Air (4ta generación)",
+        "description": "Tableta con chip A14 Bionic, pantalla Liquid Retina de 10.9 pulgadas, compatibilidad con Apple Pencil y Magic Keyboard, y Touch ID integrado.",
+        "code": "IPADAIR4",
+        "price": 599.99,
+        "status": "available",
+        "stock": 40,
+        "category": "Electrónicos",
+        "thumbnail": [
+        ],
+        "owner": null
+    },
+    {
+        "title": "Smartwatch Garmin Fenix 6X Pro",
+        "description": "Smartwatch premium con GPS, sensor de frecuencia cardíaca, mapas topográficos, resistencia al agua hasta 100 metros y autonomía de la batería hasta 21 días.",
+        "code": "GARMINFENIX6X",
+        "price": 749.99,
+        "status": "available",
         "stock": 25,
-        "category": "Monitores",
-        "thumbnail": [],
-        "id": 6
+        "category": "Electrónicos",
+        "thumbnail": [
+        ],
+        "owner": null
     },
     {
-        "title": "Teclado Mecánico Corsair",
-        "description": "Teclado mecánico para jugadores con retroiluminación RGB.",
-        "code": "P007",
-        "price": 129.99,
-        "status": true,
-        "stock": 35,
-        "category": "Periféricos",
-        "thumbnail": [],
-        "id": 7
-    },
-    {
-        "title": "Disco Duro Externo WD",
-        "description": "Unidad de almacenamiento externo de 2 TB con USB 3.0.",
-        "code": "P008",
-        "price": 79.99,
-        "status": true,
+        "title": "Altavoz inteligente Amazon Echo (4ta generación)",
+        "description": "Altavoz inteligente con sonido premium, control por voz con Alexa, y compatibilidad con servicios de música, hogar inteligente y llamadas manos libres.",
+        "code": "ECHO4GEN",
+        "price": 99.99,
+        "status": "available",
         "stock": 60,
-        "category": "Almacenamiento",
-        "thumbnail": [],
-        "id": 8
+        "category": "Electrónicos",
+        "thumbnail": [
+        ],
+        "owner": null
     },
     {
-        "title": "Cámara de Seguridad Nest",
-        "description": "Cámara de seguridad para el hogar con visión nocturna.",
-        "code": "P009",
-        "price": 149.99,
-        "status": true,
-        "stock": 10,
-        "category": "Seguridad",
-        "thumbnail": [],
-        "id": 9
+        "title": "Impresora 3D Creality Ender 3 V2",
+        "description": "Impresora 3D de nivel de entrada con estructura integrada, extrusor actualizado, placa base silenciosa, y área de impresión de 220 x 220 x 250 mm.",
+        "code": "ENDER3V2",
+        "price": 279.99,
+        "status": "available",
+        "stock": 35,
+        "category": "Electrónicos",
+        "thumbnail": [
+        ],
+        "owner": null
     },
     {
-        "title": "Tableta Gráfica Wacom",
-        "description": "Tableta gráfica para ilustradores y diseñadores.",
-        "code": "P010",
-        "price": 249.99,
-        "status": true,
-        "stock": 18,
-        "category": "Diseño",
-        "thumbnail": [],
-        "id": 10
+        "title": "Drone DJI Mavic Air 2",
+        "description": "Drone plegable con cámara 4K de 48 MP, sensor CMOS de 1/2 pulgada, sistema de evitación de obstáculos, y autonomía de vuelo de hasta 34 minutos.",
+        "code": "DJIMAVICAIR2",
+        "price": 799.99,
+        "status": "available",
+        "stock": 20,
+        "category": "Electrónicos",
+        "thumbnail": [
+        ],
+        "owner": null
+    },
+    {
+        "title": "Consola de videojuegos Sony PlayStation 5",
+        "description": "Consola de última generación con unidad de estado sólido ultrarrápida, gráficos de alta fidelidad, retrocompatibilidad con juegos de PS4, y controlador DualSense.",
+        "code": "PS5",
+        "price": 499.99,
+        "status": "available",
+        "stock": 15,
+        "category": "Electrónicos",
+        "thumbnail": [
+        ],
+        "owner": null
     }
 ]

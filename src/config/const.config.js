@@ -36,6 +36,8 @@ const smtpPort = process.env.SMTP_PORT;
 const smtpUser = process.env.SMTP_USER;
 const smtpPass = process.env.SMTP_PASS;
 
+const mercadoPagoKey = process.env.MERCADO_PAGO_KEY;
+
 if (env === 'production') {
     // Configuraciones específicas para producción
     console.log('Estamos en modo producción.');
@@ -50,5 +52,5 @@ export {
     pathProd, mongoDBName, mongoDBNameTest, pathCart, port, url,
     pathFileProfile, pathFileDocuments, pathFileProducts, __dirname,
     mongoUrl, secretSession, secretJWT, saltRounds, clientID, clientSecret, callbackURL,
-    persistence, env, smtpHost, smtpPort, smtpUser, smtpPass
+    persistence, env, smtpHost, smtpPort, smtpUser, smtpPass, mercadoPagoKey
 }

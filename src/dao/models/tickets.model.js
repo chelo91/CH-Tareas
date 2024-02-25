@@ -1,4 +1,5 @@
 import mongoose from 'mongoose'
+import { type } from 'os';
 
 const ticketCollection = 'tickets'
 const ticketSchema = new mongoose.Schema({
@@ -20,6 +21,25 @@ const ticketSchema = new mongoose.Schema({
         ref: 'users',
         required: true,
     },
+    paymentType: {
+        type: String,
+        enum: ['mp', 'cash'],
+        default: 'cash'
+    },
+    paymentStatus: {
+        type: String,
+        enum: ['pending', 'approved', 'cancelled'],
+        default: 'pending'
+    },
+    paymentId: {
+        type: String,
+        default: null
+    },
+    status: {
+        type: String,
+        enum: ['preparing', 'ready', 'delivered', 'cancelled', 'available', 'unavailable', 'presale'],
+        default: 'preparing'
+    },
     products: [
         {
             product: {
@@ -34,6 +54,13 @@ const ticketSchema = new mongoose.Schema({
         }
     ],
 });
+
+ticketSchema.pre('findOne', function () {
+    this.populate('products.product')
+})
+ticketSchema.pre('find', function () {
+    this.populate('products.product')
+})
 
 // Define el modelo Ticket utilizando el esquema definido anteriormente
 const ticketModel = mongoose.model(ticketCollection, ticketSchema);

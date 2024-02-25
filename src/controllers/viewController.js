@@ -1,4 +1,6 @@
-import { ProductsService, CartsService, UsersService } from "../services/index.js";
+import { ProductsService, CartsService, UsersService, TicketsService } from "../services/index.js";
+import { MercadoPagoConfig, Preference } from 'mercadopago';
+import { mercadoPagoKey, url } from '../config/const.config.js';
 
 const pages = [
     { name: "home", title: "Home", url: "/" },
@@ -96,4 +98,61 @@ const current = (req, res) => {
     res.render('profile', { pages: pages, user: req.user });
 };
 
-export { home, products, realTime, chat, productById, cartById, login, register, logout, profile, current, editProductById };
+const tickets = async (req, res) => {
+    const tickets = await TicketsService.getTicketbyUser(req.user._id);
+    res.render('tickets', { pages: pages, myPage: pages, user: req.user, tickets: tickets });
+};
+
+const ticketById = async (req, res) => {
+    const tid = req.params.tid;
+    const ticket = await TicketsService.getTicketbyId(tid);
+    if (ticket == null) {
+        res.status(404).send("Ticket not found");
+    }
+    res.render('ticketsDetail', { pages: pages, ticket: ticket, user: req.user });
+};
+
+const gratitude = (req, res) => {
+    res.render('gratitude', { pages: pages, user: req.user });
+};
+
+const payment = async (req, res) => {
+    const client = new MercadoPagoConfig({ accessToken: mercadoPagoKey });
+    const preference = new Preference(client);
+    const cid = req.params.cid;
+    const cart = await CartsService.getCartById(cid, true);
+    if (cart == null) {
+        res.status(404).send("Cart not found");
+    }
+    const items = [];
+    for (let i = 0; i < cart.products.length; i++) {
+        const row = cart.products[i];
+        //product = await ProductsService.getProductById(row.product);
+        items.push({
+            title: row.product.title,
+            quantity: row.quantity,
+            unit_price: row.product.price
+        });
+        //fixear esto a futuro porque tomo el precio del carrito y no el real si llega a cambiar
+    }
+    const response = await preference.create({
+        body: {
+            items: items,
+            back_urls: {
+                "success": `${url}/payment/mercadopago/success`,
+                "failure": `${url}/payment/mercadopago/failure`,
+                "pending": `${url}/payment/mercadopago/pending`
+            },
+            auto_return: "approved",
+
+        }
+    })
+
+    //console.log(preference);
+    //const idPay = preference.id;
+    res.render('payment', { pages: pages, user: req.user, idPayMP: response.id });
+};
+export {
+    home, products, realTime, chat, productById, cartById, login, register, logout,
+    profile, current, editProductById, tickets, ticketById, gratitude, payment
+};

@@ -1,0 +1,48 @@
+<div id="wallet_container"></div>
+<button class="btn btn btn-success col-12" onclick=actionPay()>Pagar en efectivo</button>
+
+<script>
+    const mp = new MercadoPago('TEST-cb960759-0211-40ff-bb01-716cf6b991c1', {
+        locale: 'es-UY'
+    });
+    const bricksBuilder = mp.bricks();
+    mp.bricks().create("wallet", "wallet_container", {
+        initialization: {
+            preferenceId: "{{idPayMP}}",
+        },
+
+    });
+
+    function actionPay() {
+        Swal.fire({
+            title: 'Deseas pagar?',
+            showCancelButton: true,
+            confirmButtonText: 'Pagar',
+            showLoaderOnConfirm: true,
+            preConfirm: () => {
+                return fetch(`/api/carts/{{user.cart}}/purchase`)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error(response.statusText)
+                        }
+                        return response.json()
+                    })
+                    .catch(error => {
+                        Swal.showValidationMessage(
+                            `Request failed: ${error}`
+                        )
+                    })
+            },
+            allowOutsideClick: () => !Swal.isLoading()
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire(
+                    'Pago Realizado',
+                    JSON.stringify(result.value.payload),
+                    'success'
+                )
+                window.location = "/gracias";
+            }
+        })
+    }
+</script>

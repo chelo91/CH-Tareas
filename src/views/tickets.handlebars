@@ -1,0 +1,31 @@
+<table id="tableTickets" class="table">
+    <thead>
+        <tr>
+            <th scope="col" data-field="_id">ID</th>
+            <th scope="col" data-field="code">code</th>
+            <th scope="col" data-field="datetime">datetime</th>
+            <th scope="col" data-field="amount">amount</th>
+            <th scope="col" data-field="paymentType">paymentType</th>
+            <th scope="col" data-field="paymentStatus">paymentStatus</th>
+            <th scope="col" data-field="status">status</th>
+            <th scope="col" data-field="actions">actions</th>
+        </tr>
+    </thead>
+    <tbody id="tableTicketsBody">
+        {{#each tickets}}
+        <tr>
+            <td>{{this._id}}</td>
+            <td>{{this.code}}</td>
+            <td>{{this.datetime}}</td>
+            <td>{{this.amount}}</td>
+            <td>{{this.paymentType}}</td>
+            <td>{{this.paymentStatus}}</td>
+            <td>{{this.status}}</td>
+
+            <td>
+                <a href="/tickets/{{this._id}}"><i class="bi bi-book"></i>Detalles</a>
+            </td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>

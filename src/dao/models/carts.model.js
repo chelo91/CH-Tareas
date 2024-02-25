@@ -21,6 +21,10 @@ const cartSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'users'
     },
+    amount: {
+        type: Number,
+        required: true,
+    },
 });
 
 cartSchema.pre('findOne', function () {

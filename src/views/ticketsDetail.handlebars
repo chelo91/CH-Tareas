@@ -1,0 +1,33 @@
+<div class="card">
+    <h5 class="card-header">{{ticket._id}}</h5>
+    <div class="card-body">
+        <h5 class="card-title">Code: {{ticket.code}}</h5>
+        <p class="card-text">Fecha: {{ticket.datetime}}</p>
+        <p class="card-text">Total: {{ticket.amount}}</p>
+        <table id="tableTicketProducts" class="table">
+            <thead>
+                <tr>
+                    <th scope="col" data-field="title">title</th>
+                    <th scope="col" data-field="description">description</th>
+                    <th scope="col" data-field="category">category</th>
+                    <th scope="col" data-field="amount">amount</th>
+                </tr>
+            </thead>
+            <tbody id="tableTicketProductsBody">
+                {{#each ticket.products}}
+                <tr>
+                    <td>{{this.product.title}}</td>
+                    <td>{{this.product.description}}</td>
+                    <td>{{this.product.category}}</td>
+                    <td>{{this.quantity}}</td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<script>
+
+</script>

@@ -82,4 +82,9 @@ export default class Carts extends CartManagerInterface {
             { $set: { "products.$.quantity": quantity } }
         );
     }
+    async cleanCart(idCart) {
+        const cart = await this.getCartById(idCart);
+        cart.products = [];
+        return cart.save();
+    }
 }
